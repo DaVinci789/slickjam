@@ -1,0 +1,935 @@
+[gd_scene format=3 uid="uid://dvt6nt8nquoop"]
+
+[ext_resource type="Script" uid="uid://cm5b0l43jsp32" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://b8yjd70m22eby" path="res://entity.gd" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://di113mxwjea43" path="res://image/arm_nohose.png" id="2_dg77c"]
+[ext_resource type="AudioStream" uid="uid://c8dkem08pk4ud" path="res://sound/bgm_carwash.mp3" id="2_lswn8"]
+[ext_resource type="Texture2D" uid="uid://p6j7hq4jmtse" path="res://image/car_front.png" id="3_dg77c"]
+[ext_resource type="Texture2D" uid="uid://bxk3ikcuqmj15" path="res://image/car_left.png" id="3_efxa6"]
+[ext_resource type="AudioStream" uid="uid://brbkwmxnlqe5e" path="res://sound/bgm_battle.mp3" id="3_qsp4k"]
+[ext_resource type="Texture2D" uid="uid://bdxc2w7vitasb" path="res://image/background_purpledots.png" id="4_getpj"]
+[ext_resource type="Texture2D" uid="uid://xvewa53ftudd" path="res://image/car_back.png" id="5_ycdy4"]
+[ext_resource type="Texture2D" uid="uid://bp63q80oeubs5" path="res://image/background_red_yellow_checkers.png" id="7_ryguw"]
+[ext_resource type="Shader" uid="uid://b3oxh1w78wt5q" path="res://battle_background_axis.gdshader" id="7_ycdy4"]
+[ext_resource type="Texture2D" uid="uid://dbcmhskhxnm5u" path="res://image/background_space.png" id="8_d13ii"]
+[ext_resource type="Shader" uid="uid://bt04e0mygf7ol" path="res://battle_background_planar.gdshader" id="9_vivmo"]
+[ext_resource type="Texture2D" uid="uid://npat2krrkr1" path="res://image/background_yellow.png" id="9_w48qg"]
+[ext_resource type="Texture2D" uid="uid://c2emkappadiwp" path="res://image/enemy_grime_dirt_2.png" id="10_facbu"]
+[ext_resource type="Texture2D" uid="uid://b6ewuv0ojdlmd" path="res://image/background_pink.png" id="10_vivmo"]
+[ext_resource type="Texture2D" uid="uid://ckhkrjnqrwfcu" path="res://image/enemy_grime_dirt_9.png" id="11_b1qrp"]
+[ext_resource type="Texture2D" uid="uid://bo5lnjnftbmkt" path="res://fuzzy.png" id="11_efxa6"]
+[ext_resource type="Texture2D" uid="uid://dynmtt7jp5w28" path="res://image/recticle.png" id="11_xuqvo"]
+[ext_resource type="Script" uid="uid://b3f3p8iyk26ih" path="res://water_test.gd" id="13_ycdy4"]
+[ext_resource type="Texture2D" uid="uid://o8mu7tkhl8lk" path="res://black_circle.png" id="14_w48qg"]
+[ext_resource type="Texture2D" uid="uid://nrpsjhe3rdlb" path="res://image/background_carwash_back.png" id="22_1u8w0"]
+[ext_resource type="Texture2D" uid="uid://ba6n63p0as7vj" path="res://image/background_carwash_front.png" id="23_0odxb"]
+[ext_resource type="SpriteFrames" uid="uid://eow0lqtcy3m4" path="res://frames_droplet.tres" id="24_0odxb"]
+[ext_resource type="Texture2D" uid="uid://0bkel2ix8e3e" path="res://image/background_carwash_side.png" id="24_lswn8"]
+[ext_resource type="Texture2D" uid="uid://cpq5a4mcqbnuc" path="res://image/enemy_0.png" id="25_0odxb"]
+[ext_resource type="Texture2D" uid="uid://dk05lsb21o8jl" path="res://image/battle_combat_box.png" id="25_a6jrf"]
+[ext_resource type="Texture2D" uid="uid://c6wwe2k5rmfai" path="res://image/battle_cursor.png" id="26_xuqvo"]
+[ext_resource type="Texture2D" uid="uid://cqfeunkwdcecv" path="res://image/ui_arrow.png" id="29_qsp4k"]
+[ext_resource type="Texture2D" uid="uid://bhfge4modnkma" path="res://battle_bubble_med.tres" id="30_kq58d"]
+[ext_resource type="FontFile" uid="uid://bcaucot1vbi7m" path="res://Game Paused DEMO.otf" id="31_seu75"]
+[ext_resource type="Shader" uid="uid://y0km58c6v77b" path="res://test.gdshader" id="32_htxhm"]
+[ext_resource type="Texture2D" uid="uid://cs7gsp6w2vehn" path="res://image/battle_bubble_med.png" id="33_4k2k6"]
+[ext_resource type="FontFile" uid="uid://b24tqcg2epwie" path="res://PICK3 FONT 12pxor18px.ttf" id="34_0rl1p"]
+
+[sub_resource type="Shader" id="Shader_1u8w0"]
+code = "shader_type canvas_item;
+
+uniform float hit_effect : hint_range(0,1) = 0.0;
+uniform float shake_intensity = 10.0;
+uniform float flash_speed = 30.0;
+uniform vec4 flash_color : source_color = vec4(1.0, 0.0, 0.0, 1.0);
+
+uniform sampler2D flash_curve; // CurveTexture
+
+float rand(vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898,78.233))) * 43758.5453);
+}
+
+void vertex() {
+    if (hit_effect > 0.0) {
+        float time = TIME * 30.0;
+        vec2 random_offset = vec2(
+            rand(vec2(time, 0.0)) * 2.0 - 1.0,
+            rand(vec2(time, 10.0)) * 2.0 - 1.0
+        );
+        VERTEX += random_offset * shake_intensity * hit_effect;
+    }
+}
+
+void fragment() {
+    if (hit_effect > 0.0) {
+        vec4 base_color = texture(TEXTURE, UV) * COLOR;
+        
+        float t = fract(TIME * flash_speed);
+        float curve_value = texture(flash_curve, vec2(t, 0.5)).r;
+        curve_value *= base_color.a * hit_effect;
+
+        vec4 flashed = mix(base_color, flash_color * base_color.a, curve_value);
+        flashed.a = base_color.a;
+
+        COLOR = flashed;
+    } else {
+        COLOR = texture(TEXTURE, UV);
+    }
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d13ii"]
+shader = SubResource("Shader_1u8w0")
+shader_parameter/hit_effect = 0.0
+shader_parameter/shake_intensity = 10.0
+shader_parameter/flash_speed = 30.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0odxb"]
+shader = SubResource("Shader_1u8w0")
+shader_parameter/hit_effect = 0.0
+shader_parameter/shake_intensity = 10.0
+shader_parameter/flash_speed = 30.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lswn8"]
+shader = SubResource("Shader_1u8w0")
+shader_parameter/hit_effect = 0.0
+shader_parameter/shake_intensity = 10.0
+shader_parameter/flash_speed = 30.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_a6jrf"]
+load_path = "res://.godot/imported/enemy_grime_dirt_5.png-89aef497a703d2c25eea376ed324bd8f.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ryguw"]
+shader = SubResource("Shader_1u8w0")
+shader_parameter/hit_effect = 0.0
+shader_parameter/shake_intensity = 10.0
+shader_parameter/flash_speed = 30.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_d13ii"]
+load_path = "res://.godot/imported/grime_dirt_20.png-73d5142be11cf7dcb0139cbe6299eaee.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_074og"]
+shader = SubResource("Shader_1u8w0")
+shader_parameter/hit_effect = 0.0
+shader_parameter/shake_intensity = 10.0
+shader_parameter/flash_speed = 30.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cegan"]
+load_path = "res://.godot/imported/grime_dirt_0.png-3d2fb6af65c2c6753433712f8909280b.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_82xsv"]
+shader = SubResource("Shader_1u8w0")
+shader_parameter/hit_effect = 0.0
+shader_parameter/shake_intensity = 10.0
+shader_parameter/flash_speed = 30.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_getpj"]
+load_path = "res://.godot/imported/grime_dirt_21.png-38076cc219efdf7b1c777f579765c974.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1u8w0"]
+shader = SubResource("Shader_1u8w0")
+shader_parameter/hit_effect = 0.0
+shader_parameter/shake_intensity = 10.0
+shader_parameter/flash_speed = 30.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0odxb"]
+load_path = "res://.godot/imported/grime_dirt_11.png-7ffa855039ceebdb8ca1c0b7a850546e.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a6jrf"]
+shader = SubResource("Shader_1u8w0")
+shader_parameter/hit_effect = 0.0
+shader_parameter/shake_intensity = 10.0
+shader_parameter/flash_speed = 30.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xuqvo"]
+load_path = "res://.godot/imported/grime_dirt_22.png-f911b12111b1bd3946f4ef64956339d9.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dg77c"]
+atlas = ExtResource("11_efxa6")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycdy4"]
+atlas = ExtResource("11_efxa6")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w48qg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dg77c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycdy4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Curve2D" id="Curve2D_vivmo"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 46.475006, -30.120003, 0, 0, 0, 0, 45.475006, -18.120003, 0, 0, 0, 0, 44.475006, -0.12000275, 0, 0, 0, 0, -5.524994, 1.8799973, 0, 0, 0, 0, -41.524994, 1.8799973, 0, 0, 0, 0, -64.524994, 2.8799973, 0, 0, 0, 0, -74.524994, 23.879997, 0, 0, 0, 0, -75.524994, 37.879997)
+}
+point_count = 8
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1u8w0"]
+size = Vector2(30, 145)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0odxb"]
+size = Vector2(30, 146)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yaehf"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 1
+shader_parameter/opacity = 1.0
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(0, 53)
+shader_parameter/axis_amplitude = Vector2i(0, 27)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/auto_animate = true
+shader_parameter/animation_speed = Vector2(50, 50)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xuqvo"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 1
+shader_parameter/opacity = 1.0
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(7, 6)
+shader_parameter/axis_amplitude = Vector2i(8, 8)
+shader_parameter/axis_shift = Vector2(22, 22)
+shader_parameter/auto_animate = true
+shader_parameter/animation_speed = Vector2(10, 5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cegan"]
+shader = ExtResource("9_vivmo")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.38
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7mycd"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 4
+shader_parameter/opacity = 0.16
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(50, 21)
+shader_parameter/axis_amplitude = Vector2i(-27, 36)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/auto_animate = true
+shader_parameter/animation_speed = Vector2(10, 5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qsp4k"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 3
+shader_parameter/opacity = 1.0
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(9, 12)
+shader_parameter/axis_amplitude = Vector2i(10, 16)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/auto_animate = true
+shader_parameter/animation_speed = Vector2(10, 5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kq58d"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 1
+shader_parameter/opacity = 1.0
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(10, 10)
+shader_parameter/axis_amplitude = Vector2i(5, 5)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/auto_animate = true
+shader_parameter/animation_speed = Vector2(10, 5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_seu75"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 4
+shader_parameter/opacity = 0.985
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(35, 64)
+shader_parameter/axis_amplitude = Vector2i(2, -5)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = Vector2(14, 5)
+
+[sub_resource type="Animation" id="Animation_xuqvo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ui_battle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(158, 200)]
+}
+
+[sub_resource type="Animation" id="Animation_a6jrf"]
+resource_name = "battle_end"
+length = 0.5
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.033333335),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"ui_anim_enemy_exit"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ui_battle:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(158, 39), Vector2(158, 200)]
+}
+
+[sub_resource type="Animation" id="Animation_qsp4k"]
+resource_name = "battle_start"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ui_battle:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(158, 200), Vector2(158, 39)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"ui_anim_enemy_enter"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kq58d"]
+_data = {
+&"RESET": SubResource("Animation_xuqvo"),
+&"battle_end": SubResource("Animation_a6jrf"),
+&"battle_start": SubResource("Animation_qsp4k")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_htxhm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jq2sk"]
+shader = ExtResource("32_htxhm")
+shader_parameter/a = 26
+shader_parameter/b = 8
+shader_parameter/time_mod = 12.0
+
+[node name="main" type="Node2D" unique_id=14358364]
+script = ExtResource("1_ig7tw")
+
+[node name="bgm_carwash" type="AudioStreamPlayer" parent="." unique_id=223904313]
+stream = ExtResource("2_lswn8")
+volume_db = -33.429
+autoplay = true
+
+[node name="bgm_battle" type="AudioStreamPlayer" parent="." unique_id=1654221125]
+stream = ExtResource("3_qsp4k")
+volume_db = -33.0
+
+[node name="debug" type="CanvasLayer" parent="." unique_id=366246311]
+
+[node name="debug_edit" type="LineEdit" parent="debug" unique_id=940149932]
+unique_name_in_owner = true
+offset_left = 188.0
+offset_top = 3.0
+offset_right = 274.0
+offset_bottom = 34.0
+
+[node name="scene_carwash" type="Node2D" parent="." unique_id=821586071]
+visible = false
+
+[node name="background_carwash" type="Node2D" parent="scene_carwash" unique_id=1208680804]
+unique_name_in_owner = true
+
+[node name="carwash_front" type="Sprite2D" parent="scene_carwash/background_carwash" unique_id=1870088629]
+texture = ExtResource("23_0odxb")
+centered = false
+
+[node name="carwash_right" type="Sprite2D" parent="scene_carwash/background_carwash" unique_id=1056256635]
+texture = ExtResource("24_lswn8")
+centered = false
+
+[node name="carwash_back" type="Sprite2D" parent="scene_carwash/background_carwash" unique_id=1839733410]
+texture = ExtResource("22_1u8w0")
+centered = false
+
+[node name="carwash_left" type="Sprite2D" parent="scene_carwash/background_carwash" unique_id=747611830]
+texture = ExtResource("24_lswn8")
+centered = false
+
+[node name="car" type="CharacterBody2D" parent="scene_carwash" unique_id=502861986]
+unique_name_in_owner = true
+script = ExtResource("2_0xm2m")
+metadata/_custom_type_script = "uid://b8yjd70m22eby"
+
+[node name="car_front" type="Sprite2D" parent="scene_carwash/car" unique_id=1376043320]
+visible = false
+texture = ExtResource("3_dg77c")
+centered = false
+
+[node name="Marker2D" type="Marker2D" parent="scene_carwash/car/car_front" unique_id=952182588]
+position = Vector2(161, 80)
+
+[node name="car_right" type="Sprite2D" parent="scene_carwash/car" unique_id=1151394709]
+visible = false
+texture = ExtResource("3_efxa6")
+centered = false
+flip_h = true
+
+[node name="Marker2D" type="Marker2D" parent="scene_carwash/car/car_right" unique_id=25308516]
+position = Vector2(170, 78)
+
+[node name="car_back" type="Sprite2D" parent="scene_carwash/car" unique_id=754638086]
+visible = false
+texture = ExtResource("5_ycdy4")
+centered = false
+
+[node name="Marker2D" type="Marker2D" parent="scene_carwash/car/car_back" unique_id=1100713482]
+position = Vector2(157, 77)
+
+[node name="car_left" type="Sprite2D" parent="scene_carwash/car" unique_id=198745480]
+texture = ExtResource("3_efxa6")
+centered = false
+
+[node name="Marker2D" type="Marker2D" parent="scene_carwash/car/car_left" unique_id=24051328]
+position = Vector2(173, 79)
+
+[node name="EnemyGrimeDirt2" type="Sprite2D" parent="scene_carwash/car/car_left" unique_id=236155343]
+material = SubResource("ShaderMaterial_d13ii")
+position = Vector2(33, 133)
+texture = ExtResource("10_facbu")
+
+[node name="EnemyGrimeDirt9" type="Sprite2D" parent="scene_carwash/car/car_left" unique_id=490420360]
+material = SubResource("ShaderMaterial_0odxb")
+position = Vector2(132, 110)
+texture = ExtResource("11_b1qrp")
+
+[node name="EnemyGrimeDirt5" type="Sprite2D" parent="scene_carwash/car/car_left" unique_id=1798102055]
+material = SubResource("ShaderMaterial_lswn8")
+position = Vector2(280, 116)
+texture = SubResource("CompressedTexture2D_a6jrf")
+
+[node name="GrimeDirt20" type="Sprite2D" parent="scene_carwash/car/car_left" unique_id=1199319982]
+material = SubResource("ShaderMaterial_ryguw")
+position = Vector2(69, 101)
+texture = SubResource("CompressedTexture2D_d13ii")
+
+[node name="GrimeDirt0" type="Sprite2D" parent="scene_carwash/car/car_left" unique_id=1276350713]
+material = SubResource("ShaderMaterial_074og")
+position = Vector2(162, 112)
+texture = SubResource("CompressedTexture2D_cegan")
+
+[node name="GrimeDirt21" type="Sprite2D" parent="scene_carwash/car/car_left" unique_id=1548959757]
+material = SubResource("ShaderMaterial_82xsv")
+position = Vector2(284, 135)
+texture = SubResource("CompressedTexture2D_getpj")
+
+[node name="GrimeDirt11" type="Sprite2D" parent="scene_carwash/car/car_left" unique_id=1702349889]
+material = SubResource("ShaderMaterial_1u8w0")
+position = Vector2(252, 98)
+texture = SubResource("CompressedTexture2D_0odxb")
+
+[node name="GrimeDirt22" type="Sprite2D" parent="scene_carwash/car/car_left" unique_id=470707479]
+material = SubResource("ShaderMaterial_a6jrf")
+position = Vector2(130, 134)
+texture = SubResource("CompressedTexture2D_xuqvo")
+
+[node name="recticle" type="Sprite2D" parent="scene_carwash" unique_id=595531368]
+unique_name_in_owner = true
+texture = ExtResource("11_xuqvo")
+
+[node name="fuzzy" type="CharacterBody2D" parent="scene_carwash" unique_id=1806714988]
+unique_name_in_owner = true
+visible = false
+position = Vector2(223, 57)
+script = ExtResource("2_0xm2m")
+metadata/_custom_type_script = "uid://b8yjd70m22eby"
+
+[node name="sprite" type="AnimatedSprite2D" parent="scene_carwash/fuzzy" unique_id=824526788]
+sprite_frames = SubResource("SpriteFrames_w48qg")
+autoplay = "default"
+frame_progress = 0.4168879
+
+[node name="Path2D" type="Path2D" parent="scene_carwash" unique_id=2145080062]
+visible = false
+position = Vector2(176, 86)
+curve = SubResource("Curve2D_vivmo")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="scene_carwash/Path2D" unique_id=888641617]
+unique_name_in_owner = true
+position = Vector2(46.475006, -30.120003)
+rotation = 1.6539376
+
+[node name="water_stream" type="Node2D" parent="scene_carwash" unique_id=392763176]
+unique_name_in_owner = true
+modulate = Color(0.12156863, 1, 1, 0.60784316)
+position = Vector2(202, 118)
+script = ExtResource("13_ycdy4")
+droplet_count = 5
+end_x = -13.0
+end_height = -40.0
+arc_height = 20.0
+stream_speed = 0.5
+droplet_spacing = 1.0
+min_scale = 0.01
+max_scale = 0.5
+segments = Array[float]([0.2, 0.5])
+show_droplets = false
+show_debug_arc = true
+show_segment_markers = false
+droplet_texture = ExtResource("14_w48qg")
+
+[node name="ui_left" type="CharacterBody2D" parent="scene_carwash" unique_id=1780826448 node_paths=PackedStringArray("area_clickable")]
+unique_name_in_owner = true
+position = Vector2(22, 93)
+input_pickable = true
+script = ExtResource("2_0xm2m")
+area_clickable = [NodePath("Area2D")]
+metadata/_custom_type_script = "uid://b8yjd70m22eby"
+
+[node name="UiArrow" type="Sprite2D" parent="scene_carwash/ui_left" unique_id=735868117]
+texture = ExtResource("29_qsp4k")
+
+[node name="Area2D" type="Area2D" parent="scene_carwash/ui_left" unique_id=901804235]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="scene_carwash/ui_left/Area2D" unique_id=210259203]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_1u8w0")
+
+[node name="ui_right" type="CharacterBody2D" parent="scene_carwash" unique_id=2136211968 node_paths=PackedStringArray("area_clickable")]
+unique_name_in_owner = true
+position = Vector2(295, 91)
+input_pickable = true
+script = ExtResource("2_0xm2m")
+area_clickable = [NodePath("Area2D")]
+metadata/_custom_type_script = "uid://b8yjd70m22eby"
+
+[node name="UiArrow" type="Sprite2D" parent="scene_carwash/ui_right" unique_id=1780381754]
+texture = ExtResource("29_qsp4k")
+flip_h = true
+
+[node name="Area2D" type="Area2D" parent="scene_carwash/ui_right" unique_id=1447828643]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="scene_carwash/ui_right/Area2D" unique_id=1066163857]
+shape = SubResource("RectangleShape2D_0odxb")
+
+[node name="scene_battle" type="Node2D" parent="." unique_id=1952120662]
+
+[node name="battlebackground" type="Control" parent="scene_battle" unique_id=1055773115]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 320.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="scene_battle/battlebackground" unique_id=1390299369]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="background_pink" type="TextureRect" parent="scene_battle/battlebackground" unique_id=760805290]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_yaehf")
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+texture = ExtResource("10_vivmo")
+stretch_mode = 1
+
+[node name="background_purple_dots" type="TextureRect" parent="scene_battle/battlebackground" unique_id=659600134]
+visible = false
+material = SubResource("ShaderMaterial_xuqvo")
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+texture = ExtResource("4_getpj")
+
+[node name="BackBufferCopy3" type="BackBufferCopy" parent="scene_battle/battlebackground" unique_id=1992222455]
+position = Vector2(160, 89.5)
+scale = Vector2(1.6000001, 0.905)
+copy_mode = 2
+
+[node name="planar_pink" type="ColorRect" parent="scene_battle/battlebackground" unique_id=1836141940]
+material = SubResource("ShaderMaterial_cegan")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="planar_purple_dots" type="ColorRect" parent="scene_battle/battlebackground" unique_id=1493725585]
+visible = false
+layout_mode = 0
+offset_left = 160.0
+offset_top = 90.0
+offset_right = 200.0
+offset_bottom = 130.0
+mouse_filter = 2
+
+[node name="background_yellow" type="TextureRect" parent="scene_battle/battlebackground" unique_id=2077121295]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_7mycd")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("9_w48qg")
+stretch_mode = 1
+
+[node name="background_red_yellow_checkers" type="TextureRect" parent="scene_battle/battlebackground" unique_id=608001463]
+visible = false
+material = SubResource("ShaderMaterial_qsp4k")
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+texture = ExtResource("7_ryguw")
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="scene_battle/battlebackground" unique_id=1032217077]
+position = Vector2(160, 90)
+scale = Vector2(1.6, 0.90000004)
+copy_mode = 2
+
+[node name="planar_yellow" type="ColorRect" parent="scene_battle/battlebackground" unique_id=912644636]
+material = SubResource("ShaderMaterial_cegan")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="planar_red_yellow_checker" type="ColorRect" parent="scene_battle/battlebackground" unique_id=224824824]
+visible = false
+material = SubResource("ShaderMaterial_kq58d")
+layout_mode = 0
+offset_left = 160.0
+offset_top = 90.0
+offset_right = 200.0
+offset_bottom = 130.0
+mouse_filter = 2
+
+[node name="background_space" type="TextureRect" parent="scene_battle/battlebackground" unique_id=1227851630]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_seu75")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("8_d13ii")
+stretch_mode = 1
+
+[node name="BackBufferCopy4" type="BackBufferCopy" parent="scene_battle/battlebackground" unique_id=2128064155]
+position = Vector2(160, 90)
+scale = Vector2(1.6, 0.90000004)
+copy_mode = 2
+
+[node name="planar_space" type="ColorRect" parent="scene_battle/battlebackground" unique_id=800797648]
+visible = false
+layout_mode = 0
+offset_left = 160.0
+offset_top = 90.0
+offset_right = 200.0
+offset_bottom = 130.0
+mouse_filter = 2
+
+[node name="enemy" type="CharacterBody2D" parent="scene_battle" unique_id=1712404673]
+unique_name_in_owner = true
+position = Vector2(160, 90)
+script = ExtResource("2_0xm2m")
+metadata/_custom_type_script = "uid://b8yjd70m22eby"
+
+[node name="sprite" type="Sprite2D" parent="scene_battle/enemy" unique_id=5557547]
+texture = ExtResource("25_0odxb")
+
+[node name="enemy_place_while_battle" type="Marker2D" parent="scene_battle" unique_id=1414813986]
+unique_name_in_owner = true
+position = Vector2(77, 62)
+
+[node name="ui_battle" type="NinePatchRect" parent="scene_battle" unique_id=1706828421]
+unique_name_in_owner = true
+offset_left = 158.0
+offset_top = 200.0
+offset_right = 299.0
+offset_bottom = 327.99988
+texture = ExtResource("25_a6jrf")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="battle_cursor" type="TextureRect" parent="scene_battle/ui_battle" unique_id=1774323359]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 55.0
+offset_top = 24.0
+offset_right = 73.0
+offset_bottom = 50.0
+texture = ExtResource("26_xuqvo")
+stretch_mode = 2
+
+[node name="ui_anim" type="AnimationPlayer" parent="scene_battle" unique_id=1127700609]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_kq58d")
+
+[node name="battle_emitter_timer" type="Timer" parent="scene_battle" unique_id=2104519664]
+unique_name_in_owner = true
+wait_time = 0.5
+
+[node name="droplets" type="Node2D" parent="." unique_id=375487935]
+unique_name_in_owner = true
+
+[node name="player_hose" type="CharacterBody2D" parent="." unique_id=1925250550]
+unique_name_in_owner = true
+visible = false
+position = Vector2(98, 31)
+script = ExtResource("2_0xm2m")
+metadata/_custom_type_script = "uid://b8yjd70m22eby"
+
+[node name="hose_image" type="Sprite2D" parent="player_hose" unique_id=190429222]
+texture = ExtResource("2_dg77c")
+offset = Vector2(46, 110)
+
+[node name="hose_emit" type="Marker2D" parent="player_hose" unique_id=442827405]
+position = Vector2(0, 28)
+
+[node name="water_drop" type="CharacterBody2D" parent="." unique_id=1711030542]
+script = ExtResource("2_0xm2m")
+metadata/_custom_type_script = "uid://b8yjd70m22eby"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="water_drop" unique_id=1014164715]
+sprite_frames = ExtResource("24_0odxb")
+animation = &"drop"
+
+[node name="emitter0" type="CharacterBody2D" parent="." unique_id=184759116]
+unique_name_in_owner = true
+position = Vector2(160, 203)
+script = ExtResource("2_0xm2m")
+metadata/_custom_type_script = "uid://b8yjd70m22eby"
+
+[node name="RayCast2D" type="RayCast2D" parent="emitter0" unique_id=1704617740]
+rotation = -0.7853982
+target_position = Vector2(0, 23)
+
+[node name="emitter1" type="CharacterBody2D" parent="." unique_id=258956599]
+unique_name_in_owner = true
+position = Vector2(297, 204)
+script = ExtResource("2_0xm2m")
+metadata/_custom_type_script = "uid://b8yjd70m22eby"
+
+[node name="RayCast2D" type="RayCast2D" parent="emitter1" unique_id=1978291442]
+rotation = 0.7853982
+target_position = Vector2(0, 23)
+
+[node name="emitter2" type="CharacterBody2D" parent="." unique_id=1129718665]
+unique_name_in_owner = true
+position = Vector2(298, 326)
+script = ExtResource("2_0xm2m")
+metadata/_custom_type_script = "uid://b8yjd70m22eby"
+
+[node name="RayCast2D" type="RayCast2D" parent="emitter2" unique_id=381323575]
+rotation = 2.3561945
+target_position = Vector2(0, 23)
+
+[node name="emitter3" type="CharacterBody2D" parent="." unique_id=1295013824]
+unique_name_in_owner = true
+position = Vector2(160, 326)
+script = ExtResource("2_0xm2m")
+metadata/_custom_type_script = "uid://b8yjd70m22eby"
+
+[node name="RayCast2D" type="RayCast2D" parent="emitter3" unique_id=91812666]
+rotation = 3.9269907
+target_position = Vector2(0, 23)
+
+[node name="projectiles" type="Node2D" parent="." unique_id=2049331763]
+unique_name_in_owner = true
+
+[node name="Sprite2D" type="Sprite2D" parent="projectiles" unique_id=1442931205]
+texture = ExtResource("30_kq58d")
+
+[node name="Control" type="Control" parent="." unique_id=2040637009]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 320.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1552356653]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Control" unique_id=1149318990]
+modulate = Color(1, 0.30980393, 1, 1)
+material = SubResource("ShaderMaterial_htxhm")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 3.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("31_seu75")
+theme_override_font_sizes/normal_font_size = 50
+text = "CARWASH
+CALAMITY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control" unique_id=683145025]
+material = SubResource("ShaderMaterial_htxhm")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("31_seu75")
+theme_override_font_sizes/normal_font_size = 50
+text = "CARWASH
+CALAMITY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="Control" unique_id=269103232]
+position = Vector2(161, 86)
+copy_mode = 2
+
+[node name="ColorRect2" type="ColorRect" parent="Control" unique_id=136595149]
+material = SubResource("ShaderMaterial_jq2sk")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BattleBubbleMed" type="TextureRect" parent="Control" unique_id=996536134]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 149.0
+offset_right = 95.0
+offset_bottom = 159.0
+texture = ExtResource("33_4k2k6")
+
+[node name="BattleBubbleMed2" type="TextureRect" parent="Control" unique_id=1618754375]
+layout_mode = 0
+offset_left = 223.0
+offset_top = 149.0
+offset_right = 233.0
+offset_bottom = 159.0
+texture = ExtResource("33_4k2k6")
+
+[node name="Label" type="Label" parent="Control" unique_id=1168375183]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -23.5
+offset_top = -36.0
+offset_right = 23.5
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("34_0rl1p")
+text = "CLICK TO START"

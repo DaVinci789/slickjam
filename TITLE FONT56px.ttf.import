@@ -1,0 +1,36 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://des0l8nlgyyuu"
+path="res://.godot/imported/TITLE FONT56px.ttf-d736affa68b40aeac9de508e30b50061.fontdata"
+
+[deps]
+
+source_file="res://TITLE FONT56px.ttf"
+dest_files=["res://.godot/imported/TITLE FONT56px.ttf-d736affa68b40aeac9de508e30b50061.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=1
+generate_mipmaps=false
+disable_embedded_bitmaps=true
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
+msdf_size=48
+allow_system_fallback=true
+force_autohinter=false
+modulate_color_glyphs=false
+hinting=1
+subpixel_positioning=4
+keep_rounding_remainders=true
+oversampling=0.0
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=true
+preload=[]
+language_support={}
+script_support={}
+opentype_features={}

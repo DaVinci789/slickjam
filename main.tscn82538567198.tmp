@@ -1,0 +1,294 @@
+[gd_scene format=3 uid="uid://dvt6nt8nquoop"]
+
+[ext_resource type="Script" uid="uid://cm5b0l43jsp32" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://b8yjd70m22eby" path="res://entity.gd" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://di113mxwjea43" path="res://image/arm_nohose.png" id="2_dg77c"]
+[ext_resource type="Texture2D" uid="uid://p6j7hq4jmtse" path="res://image/car_front.png" id="3_dg77c"]
+[ext_resource type="Texture2D" uid="uid://bxk3ikcuqmj15" path="res://image/car_left.png" id="3_efxa6"]
+[ext_resource type="Texture2D" uid="uid://df88g3lwnxfl2" path="res://blank.png" id="3_h2yge"]
+[ext_resource type="Texture2D" uid="uid://yhq4uvmrio0l" path="res://recticle.png" id="5_lquwl"]
+[ext_resource type="Texture2D" uid="uid://xvewa53ftudd" path="res://image/car_back.png" id="5_ycdy4"]
+[ext_resource type="Shader" uid="uid://b3oxh1w78wt5q" path="res://battle_background_axis.gdshader" id="7_ycdy4"]
+[ext_resource type="Shader" uid="uid://bt04e0mygf7ol" path="res://battle_background_planar.gdshader" id="9_vivmo"]
+[ext_resource type="Texture2D" uid="uid://npat2krrkr1" path="res://image/background_yellow.png" id="9_w48qg"]
+[ext_resource type="Texture2D" uid="uid://b6ewuv0ojdlmd" path="res://image/background_pink.png" id="10_vivmo"]
+[ext_resource type="Texture2D" uid="uid://bo5lnjnftbmkt" path="res://fuzzy.png" id="11_efxa6"]
+[ext_resource type="Script" uid="uid://b3f3p8iyk26ih" path="res://water_test.gd" id="13_ycdy4"]
+[ext_resource type="Texture2D" uid="uid://o8mu7tkhl8lk" path="res://black_circle.png" id="14_w48qg"]
+
+[sub_resource type="Shader" id="Shader_dg77c"]
+code = "shader_type canvas_item;
+
+uniform float hit_effect : hint_range(0,1) = 0.0;
+uniform float shake_intensity = 10.0;
+uniform float flash_speed = 30.0;
+uniform vec4 flash_color : source_color = vec4(1.0, 0.0, 0.0, 1.0);
+
+uniform sampler2D flash_curve; // CurveTexture
+
+float rand(vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898,78.233))) * 43758.5453);
+}
+
+void vertex() {
+    if (hit_effect > 0.0) {
+        float time = TIME * 30.0;
+        vec2 random_offset = vec2(
+            rand(vec2(time, 0.0)) * 2.0 - 1.0,
+            rand(vec2(time, 10.0)) * 2.0 - 1.0
+        );
+        VERTEX += random_offset * shake_intensity * hit_effect;
+    }
+}
+
+void fragment() {
+    vec4 base_color = texture(TEXTURE, UV) * COLOR;
+
+    if (hit_effect > 0.0) {
+        float t = fract(TIME * flash_speed);
+        float curve_value = texture(flash_curve, vec2(t, 0.5)).r;
+        curve_value *= base_color.a * hit_effect;
+
+        vec4 flashed = mix(base_color, flash_color * base_color.a, curve_value);
+        flashed.a = base_color.a;
+
+        COLOR = flashed;
+    } else {
+        COLOR = base_color;
+    }
+}
+"
+
+[sub_resource type="Curve" id="Curve_1bvp3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_lquwl"]
+curve = SubResource("Curve_1bvp3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1bvp3"]
+shader = SubResource("Shader_dg77c")
+shader_parameter/hit_effect = 0.0
+shader_parameter/shake_intensity = 2.0
+shader_parameter/flash_speed = 2.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_curve = SubResource("CurveTexture_lquwl")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
+size = Vector2(34, 24)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7mycd"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(256, 256)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(10, 10)
+shader_parameter/axis_amplitude = Vector2i(5, 5)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/auto_animate = true
+shader_parameter/animation_speed = Vector2(10, 5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yaehf"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(0, 53)
+shader_parameter/axis_amplitude = Vector2i(0, 27)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = Vector2(50, 50)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2cqfq"]
+shader = ExtResource("9_vivmo")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.385
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dg77c"]
+atlas = ExtResource("11_efxa6")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycdy4"]
+atlas = ExtResource("11_efxa6")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w48qg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dg77c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycdy4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Curve2D" id="Curve2D_vivmo"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 46.475006, -30.120003, 0, 0, 0, 0, 45.475006, -18.120003, 0, 0, 0, 0, 44.475006, -0.12000275, 0, 0, 0, 0, -5.524994, 1.8799973, 0, 0, 0, 0, -41.524994, 1.8799973, 0, 0, 0, 0, -64.524994, 2.8799973, 0, 0, 0, 0, -74.524994, 23.879997, 0, 0, 0, 0, -75.524994, 37.879997)
+}
+point_count = 8
+
+[node name="main" type="Node2D" unique_id=14358364]
+script = ExtResource("1_ig7tw")
+
+[node name="car_sprites" type="Node" parent="." unique_id=487311395]
+unique_name_in_owner = true
+
+[node name="car_front" type="Sprite2D" parent="car_sprites" unique_id=1376043320]
+visible = false
+z_index = -1
+texture = ExtResource("3_dg77c")
+centered = false
+
+[node name="Marker2D" type="Marker2D" parent="car_sprites/car_front" unique_id=952182588]
+position = Vector2(-4, -134)
+
+[node name="car_right" type="Sprite2D" parent="car_sprites" unique_id=1151394709]
+visible = false
+z_index = -1
+texture = ExtResource("3_efxa6")
+centered = false
+flip_h = true
+
+[node name="Marker2D" type="Marker2D" parent="car_sprites/car_right" unique_id=25308516]
+position = Vector2(44, -102)
+
+[node name="car_back" type="Sprite2D" parent="car_sprites" unique_id=754638086]
+visible = false
+z_index = -1
+texture = ExtResource("5_ycdy4")
+centered = false
+
+[node name="Marker2D" type="Marker2D" parent="car_sprites/car_back" unique_id=1100713482]
+visible = false
+position = Vector2(16, -125)
+
+[node name="car_left" type="Sprite2D" parent="car_sprites" unique_id=198745480]
+visible = false
+z_index = -1
+texture = ExtResource("3_efxa6")
+centered = false
+
+[node name="Marker2D" type="Marker2D" parent="car_sprites/car_left" unique_id=24051328]
+position = Vector2(-41, -106)
+
+[node name="test" type="CharacterBody2D" parent="." unique_id=458779691 node_paths=PackedStringArray("area_clickable")]
+unique_name_in_owner = true
+position = Vector2(172, 78)
+script = ExtResource("2_0xm2m")
+area_clickable = [NodePath("Area2D")]
+metadata/_custom_type_script = "uid://b8yjd70m22eby"
+
+[node name="Blank" type="Sprite2D" parent="test" unique_id=1069694006]
+modulate = Color(0, 0.3840427, 0.38518932, 1)
+material = SubResource("ShaderMaterial_1bvp3")
+scale = Vector2(1.2142855, 0.85714257)
+texture = ExtResource("3_h2yge")
+
+[node name="Area2D" type="Area2D" parent="test" unique_id=495502626]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="test/Area2D" unique_id=952395131]
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1498297502]
+layer = -2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer" unique_id=2077121295]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_7mycd")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_w48qg")
+stretch_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer" unique_id=760805290]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_yaehf")
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("10_vivmo")
+stretch_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1933914003]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_2cqfq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Recticle" type="Sprite2D" parent="." unique_id=595531368]
+unique_name_in_owner = true
+position = Vector2(136, 93)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("5_lquwl")
+
+[node name="fuzzy" type="CharacterBody2D" parent="." unique_id=1806714988]
+unique_name_in_owner = true
+visible = false
+position = Vector2(223, 57)
+script = ExtResource("2_0xm2m")
+metadata/_custom_type_script = "uid://b8yjd70m22eby"
+
+[node name="sprite" type="AnimatedSprite2D" parent="fuzzy" unique_id=824526788]
+sprite_frames = SubResource("SpriteFrames_w48qg")
+autoplay = "default"
+frame_progress = 0.4168879
+
+[node name="Path2D" type="Path2D" parent="." unique_id=2145080062]
+position = Vector2(176, 86)
+curve = SubResource("Curve2D_vivmo")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D" unique_id=888641617]
+unique_name_in_owner = true
+position = Vector2(46.475006, -30.120003)
+rotation = 1.6539376
+
+[node name="water_test" type="Node2D" parent="." unique_id=392763176]
+modulate = Color(0.12156863, 1, 1, 0.60784316)
+position = Vector2(202, 118)
+script = ExtResource("13_ycdy4")
+droplet_count = 5
+end_x = -13.0
+end_height = -25.0
+arc_height = 20.0
+stream_speed = 0.5
+droplet_spacing = 1.0
+min_scale = 0.01
+max_scale = 0.5
+segments = Array[float]([0.25, 0.75])
+show_droplets = false
+show_segment_markers = false
+droplet_texture = ExtResource("14_w48qg")
+
+[node name="player_hose" type="CharacterBody2D" parent="." unique_id=1925250550]
+script = ExtResource("2_0xm2m")
+metadata/_custom_type_script = "uid://b8yjd70m22eby"
+
+[node name="hose_image" type="Sprite2D" parent="player_hose" unique_id=190429222]
+texture = ExtResource("2_dg77c")
+offset = Vector2(46, 110)
+
+[node name="hose_emit" type="Marker2D" parent="player_hose" unique_id=442827405]
+position = Vector2(0, 28)
