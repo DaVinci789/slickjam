@@ -7,30 +7,37 @@
 [ext_resource type="AudioStream" uid="uid://d348ej2xsexy2" path="res://sound/bgm_wash_loop_1.wav" id="5_1dk6e"]
 [ext_resource type="AudioStream" uid="uid://bw063wmyubj15" path="res://sound/bgm_battle_loop_1.wav" id="6_8e1u0"]
 
-[sub_resource type="Resource" id="Resource_1dk6e"]
+[sub_resource type="Resource" id="Resource_rcc7q"]
 script = ExtResource("2_gmbc1")
 sound_effect = ExtResource("3_xmksn")
+bus = &"Sound Effect"
+limit = 1
 metadata/_custom_type_script = "uid://dd251rhonu7ym"
 
-[sub_resource type="Resource" id="Resource_8e1u0"]
+[sub_resource type="Resource" id="Resource_1dk6e"]
 script = ExtResource("2_gmbc1")
 sound_effect = ExtResource("4_rcc7q")
+bus = &"Sound Effect"
 metadata/_custom_type_script = "uid://dd251rhonu7ym"
 
 [sub_resource type="Resource" id="Resource_gjm0y"]
 script = ExtResource("2_gmbc1")
 sound_effect = ExtResource("5_1dk6e")
+bus = &"Music"
+limit = 1
 metadata/_custom_type_script = "uid://dd251rhonu7ym"
 
 [sub_resource type="Resource" id="Resource_t0jgv"]
 script = ExtResource("2_gmbc1")
 sound_effect = ExtResource("6_8e1u0")
+bus = &"Music"
+limit = 1
 metadata/_custom_type_script = "uid://dd251rhonu7ym"
 
 [node name="Audio" type="Node2D" unique_id=1812916011]
 script = ExtResource("1_jxh8p")
-sound_effect_Water_Hose = SubResource("Resource_1dk6e")
-sound_effect_Car_Done = SubResource("Resource_8e1u0")
+sound_effect_Water_Hose = SubResource("Resource_rcc7q")
+sound_effect_Car_Done = SubResource("Resource_1dk6e")
 music_Wash = SubResource("Resource_gjm0y")
 music_Battle = SubResource("Resource_t0jgv")
 

@@ -16,7 +16,6 @@ extends Resource
 
 var audio_count: int = 0 ## The instances of this [AudioStreamMP3] currently playing.
 
-
 func _validate_property(property: Dictionary) -> void:
     if property.name == "bus":
         var bus_names: PackedStringArray = PackedStringArray()
@@ -26,16 +25,13 @@ func _validate_property(property: Dictionary) -> void:
         property.hint = PROPERTY_HINT_ENUM
         property.hint_string = ",".join(bus_names)
 
-
 ## Takes [param amount] to change the [member audio_count]. 
 func change_audio_count(amount: int) -> void:
     audio_count = max(0, audio_count + amount)
 
-
 ## Checkes whether the audio limit is reached. Returns true if the [member audio_count] is less than the [member limit].
 func has_open_limit() -> bool:
     return audio_count < limit
-
 
 ## Connected to the [member sound_effect]'s finished signal to decrement the [member audio_count].
 func on_audio_finished() -> void:

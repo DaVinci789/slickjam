@@ -14,6 +14,145 @@ enum MusicType {
 var _sound_effect_values: Dictionary[String, Resource] = {}
 var _music_values: Dictionary[String, Resource] = {}
 
+# @MightBeAProblem (Feb 3) this keys a Sound/Music Type to a node. 
+# The obvious problem occurs when there's multiple of the same sound
+# like a sound effect
+# well, this is supposed to make stop() work anyway
+# any you're probably stopping a single instance of music or looping sound anyway
+var playing_sounds: Dictionary[String, Node] = {}
+
+func _ready() -> void:
+    if get_tree().current_scene == self:
+        # This scene is being run directly (not as autoload)
+        return
+    if not Engine.is_editor_hint():
+        $Control.visible = true
+        %stop_all.pressed.connect(
+            func() -> void:
+                for child: Node in get_children():
+                    if child is AudioStreamPlayer:
+                        child.queue_free()
+                add_music_buttons()
+                pass)
+        add_music_buttons()
+
+func stop_all_music() -> void:
+    var keys_erased := []
+    for key: String in playing_sounds.keys():
+        if key in MusicType.keys():
+            playing_sounds[key].queue_free()
+            keys_erased.append(key)
+    for key: String in keys_erased:
+        playing_sounds.erase(key)
+
+func stop_sound(sound: SoundEffectType) -> void:
+    var key: String = SoundEffectType.keys()[sound]
+    var node := playing_sounds[key]
+    remove_child(node)
+    node.queue_free()
+
+func stop_music(sound: MusicType) -> void:
+    var key: String = MusicType.keys()[sound]
+    var node := playing_sounds[key]
+    remove_child(node)
+    node.queue_free()
+
+func create_music(type: MusicType) -> void:
+    var key: String = MusicType.keys()[type]
+    if _music_values.has(key):
+        var music: SoundEffect = _music_values[key]
+        var new_music: AudioStreamPlayer = create_audio_node(music)
+        playing_sounds[key] = new_music
+        add_child(new_music)
+        new_music.play()
+    else:
+        push_error("Audio failed to find music for type ", key)
+
+## Creates a sound effect at a specific location if the limit has not been reached. Pass [param location] for the global position of the audio effect, and [param type] for the SoundEffect to be queued.
+func create_2d_sfx_at_location(location: Vector2, type: SoundEffectType) -> void:
+    var key: String = SoundEffectType.keys()[type]
+    if _sound_effect_values.has(key):
+        var sound_effect: SoundEffect = _sound_effect_values[key]
+        if sound_effect.has_open_limit():
+            sound_effect.change_audio_count(1)
+            var new_2D_audio: AudioStreamPlayer2D = create_audio_node(sound_effect, location)
+            playing_sounds[key] = new_2D_audio
+            add_child(new_2D_audio)
+            new_2D_audio.play()
+    else:
+        push_error("Audio failed to find setting for type ", type)
+
+## Creates a sound effect if the limit has not been reached. Pass [param type] for the SoundEffect to be queued.
+func create_sfx(type: SoundEffectType) -> void:
+    var key: String = SoundEffectType.keys()[type]
+    if _sound_effect_values.has(key):
+        var sound_effect: SoundEffect = _sound_effect_values[key]
+        if sound_effect.has_open_limit():
+            sound_effect.change_audio_count(1)
+            var new_audio: AudioStreamPlayer = create_audio_node(sound_effect)
+            playing_sounds[key] = new_audio
+            add_child(new_audio)
+            new_audio.play()
+    else:
+        push_error("Audio failed to find setting for type ", type)
+
+func kill_debug() -> void:
+    var node := $Control
+    remove_child($Control)
+    node.queue_free()
+
+func add_music_buttons() -> void:
+    reload_resources_from_disk()
+    reload_audio_buses()
+    for child: Node in %container_sfx.get_children():
+        %container_sfx.remove_child(child)
+        child.queue_free()
+    for child: Node in %container_music.get_children():
+        %container_music.remove_child(child)
+        child.queue_free()
+    for key: String in _sound_effect_values:
+        var button := Button.new()
+        button.text = key
+        button.add_theme_font_size_override("font_size", 9)
+        button.pressed.connect(
+            func() -> void:
+                var sfx: SoundEffect = _sound_effect_values[key]
+                if sfx and sfx.sound_effect:
+                    var audio: AudioStreamPlayer = create_audio_node(sfx)
+                    add_child(audio)
+                    audio.play()
+                else:
+                    push_warning("sfx or stream not found for %s" % key))
+        %container_sfx.add_child(button)
+    for key: String in _music_values:
+        var button := Button.new()
+        button.text = key
+        button.add_theme_font_size_override("font_size", 9)
+        button.pressed.connect(
+            func() -> void:
+                var music: SoundEffect = _music_values[key]
+                if music and music.sound_effect:
+                    var audio: AudioStreamPlayer = create_audio_node(music)
+                    add_child(audio)
+                    audio.play()
+                else:
+                    push_warning("music or stream not found for %s" % key))
+        %container_music.add_child(button)
+
+func create_audio_node(sound: SoundEffect, where: Vector2 = Vector2.INF) -> Variant:
+    var node: Variant = AudioStreamPlayer.new()
+    if where != Vector2.INF:
+        node = AudioStreamPlayer2D.new()
+        node.global_position = where
+    node.stream = sound.sound_effect
+    node.volume_db = sound.volume
+    node.bus = sound.bus
+    node.pitch_scale = sound.pitch_scale
+    node.pitch_scale += randf_range(-sound.pitch_randomness, sound.pitch_randomness)
+    node.finished.connect(sound.on_audio_finished)
+    node.finished.connect(node.queue_free) # might be a problem with music?
+    return node
+
 func reload_resources_from_disk() -> void:
     # Get the scene file path
     var scene_path: String = scene_file_path
@@ -44,72 +183,17 @@ func reload_resources_from_disk() -> void:
     
     fresh_instance.queue_free()
 
-func add_music_buttons() -> void:
-    reload_resources_from_disk()
-    for child: Node in %container_sfx.get_children():
-        %container_sfx.remove_child(child)
-        child.queue_free()
-    for child: Node in %container_music.get_children():
-        %container_music.remove_child(child)
-        child.queue_free()
-    for key: String in _sound_effect_values:
-        var button := Button.new()
-        button.text = key
-        button.add_theme_font_size_override("font_size", 9)
-        button.pressed.connect(
-            func() -> void:
-                var sfx: SoundEffect = _sound_effect_values[key]
-                if sfx and sfx.sound_effect:
-                    var audio := create_audio_node(sfx)
-                    add_child(audio)
-                    audio.play()
-                else:
-                    push_warning("sfx or stream not found for %s" % key))
-        %container_sfx.add_child(button)
-    for key: String in _music_values:
-        var button := Button.new()
-        button.text = key
-        button.add_theme_font_size_override("font_size", 9)
-        button.pressed.connect(
-            func() -> void:
-                var music: SoundEffect = _music_values[key]
-                if music and music.sound_effect:
-                    var audio := create_audio_node(music)
-                    add_child(audio)
-                    audio.play()
-                else:
-                    push_warning("music or stream not found for %s" % key))
-        %container_music.add_child(button)
-
-func _ready() -> void:
-    if get_tree().current_scene == self:
-        # This scene is being run directly (not as autoload)
-        return
-    if not Engine.is_editor_hint():
-        $Control.visible = true
-        %stop_all.pressed.connect(
-            func() -> void:
-                for child: Node in get_children():
-                    if child is AudioStreamPlayer:
-                        child.queue_free()
-                add_music_buttons()
-                pass)
-        add_music_buttons()
-
-func kill_debug() -> void:
-    var node := $Control
-    remove_child($Control)
-    node.queue_free()
-
-func create_audio_node(sound: SoundEffect) -> AudioStreamPlayer:
-    var node := AudioStreamPlayer.new()
-    node.stream = sound.sound_effect
-    node.volume_db = sound.volume
-    node.pitch_scale = sound.pitch_scale
-    node.pitch_scale += randf_range(-sound.pitch_randomness, sound.pitch_randomness)
-    node.finished.connect(sound.on_audio_finished)
-    node.finished.connect(node.queue_free) # might be a problem with music?
-    return node
+func reload_audio_buses() -> void:
+    # Get the default audio bus layout path from project settings
+    var bus_layout_path: String = ProjectSettings.get_setting("audio/buses/default_bus_layout", "res://default_bus_layout.tres")
+    
+    # Reload the bus layout from disk
+    var bus_layout: AudioBusLayout = load(bus_layout_path)
+    if bus_layout:
+        AudioServer.set_bus_layout(bus_layout)
+        print("Audio buses reloaded from disk")
+    else:
+        push_warning("Failed to reload audio bus layout from: " + bus_layout_path)
 
 func _get_property_list() -> Array[Dictionary]:
     var properties: Array[Dictionary] = []
