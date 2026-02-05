@@ -1,27 +1,19 @@
 extends Node2D
 
-var projectiles_coord_raw: Array[Vector2] = []
-var battle_bubble_med_tex := preload("res://battle_bubble_med.tres")
+##### Resource Constants #####
+const battle_bubble_med_tex := preload("res://battle_bubble_med.tres")
+const droplet_frames := preload("res://frames_droplet.tres")
 
-var droplet_frames := preload("res://frames_droplet.tres")
-var pink_offset := Vector2.ZERO
-var yellow_offset := Vector2.ZERO
-
-var thing_battling: Entity
-
+##### Enums #####
 enum BattleState {
     Player,
     Enemy,
 }
 
-var battle_state_current := BattleState.Enemy
-
 enum Scene {
     Wash,
     Battle,
 }
-
-var scene_current := Scene.Wash
 
 enum CommandType {
     None,
@@ -39,6 +31,7 @@ enum CommandType {
     Battle_End,
 }
 
+##### Classes #####
 class Command:
     var type: CommandType
     var args: Array[Variant]
@@ -59,13 +52,20 @@ class Droplet:
         droplet_sprite.sprite_frames = frames
         droplets_parent.add_child(droplet_sprite)
 
+##### Instance Variables #####
 var commands: Array[Command] = []
+var scene_current := Scene.Wash
+var battle_state_current := BattleState.Enemy
 
 var locations := ["front", "side_right", "back", "side_left",]
 var location_index := 0
 @export var path_progress := 0.0
-var path_forward := false
 
+var thing_battling: Entity
+var pink_offset := Vector2.ZERO
+var yellow_offset := Vector2.ZERO
+
+var projectiles_coord_raw: Array[Vector2] = []
 var drops: Array[Droplet] = []
 var grime: Array[Node2D] = []
 
@@ -106,6 +106,7 @@ func _ready() -> void:
         commands.append(command)
         pass)
 
+##### UI Animation Functions #####
 func ui_anim_enemy_enter() -> void:
     var tween := get_tree().create_tween()
     tween\
@@ -137,9 +138,11 @@ func _process(_delta: float) -> void:
     yellow_offset += Vector2(17 * -0.00005, 74 * -0.00005)
     
 func _physics_process(_delta: float) -> void:
+    ##### Command Processing #####
     var command: Command = commands.pop_back()
     while command:
         match command.type:
+            ##### Movement Commands #####
             CommandType.Move_Left:
                 if location_index == 0:
                     location_index = len(locations) - 1
@@ -158,12 +161,13 @@ func _physics_process(_delta: float) -> void:
                 for child in %car.get_child(location_index).get_children():
                     if child is Entity:
                         grime.append(child)
+            ##### Droplet Commands #####
             CommandType.Droplet_New:
                 var stream := %water_stream.duplicate()
                 var droplet := Droplet.new(%droplets, stream, droplet_frames)
                 droplet.droplet_sprite.global_position = %player_hose/hose_emit.global_position
-                droplet.droplet_sprite.reset_physics_interpolation()
                 droplet.droplet_sprite.animation = "drop"
+                droplet.droplet_sprite.reset_physics_interpolation()
                 
                 get_tree().get_root().add_child(stream)
                 drops.append(droplet)
@@ -214,6 +218,7 @@ func _physics_process(_delta: float) -> void:
                                     pass)
                         else:
                             %battle_enemy.scene_tree_timer.time_left = shake_timer
+            ##### Grime and Battle Commands #####
             CommandType.Grime_Dead:
                 var the_grime: Entity = command.args[0]
                 if the_grime.grime_type == Entity.GrimeType.Enemy:
@@ -227,33 +232,6 @@ func _physics_process(_delta: float) -> void:
                     particler.finished.connect(func() -> void: particler.queue_free())
                     add_child(particler)
                     particler.emitting = true
-            CommandType.Battle_Enemy:
-                battle_state_current = BattleState.Enemy
-                var battle_rect: Rect2 = %ui_battle.get_global_rect()
-                Input.warp_mouse(Util.game_to_window(self, Vector2(battle_rect.position + battle_rect.size * 0.5)))
-                %battle_cursor.visible = true
-                %emitter0.global_position = battle_rect.position
-                %emitter1.global_position = battle_rect.position + Vector2(battle_rect.size.x, 0)
-                %emitter2.global_position = battle_rect.position + battle_rect.size
-                %emitter3.global_position = battle_rect.position + Vector2(0, battle_rect.size.y)
-                %battle_emitter_timer.start()
-                projectiles_coord_raw.append(%emitter0.global_position)
-                projectiles_coord_raw.append(%emitter1.global_position)
-                projectiles_coord_raw.append(%emitter2.global_position)
-                projectiles_coord_raw.append(%emitter3.global_position)
-                %battle_emitter_timer.timeout.connect(
-                    func() -> void:
-                        projectiles_coord_raw.append(%emitter0.global_position)
-                        projectiles_coord_raw.append(%emitter1.global_position)
-                        projectiles_coord_raw.append(%emitter2.global_position)
-                        projectiles_coord_raw.append(%emitter3.global_position)
-                        pass)
-            CommandType.Battle_Player:
-                projectiles_coord_raw.clear()
-                %battle_emitter_timer.stop()
-                %ui_anim.play("battle_end") # calls ui_anim_enemy_exit()
-                await %ui_anim.animation_finished
-                battle_state_current = BattleState.Player
             CommandType.Battle_Start:
                 var what_fighting: Entity = command.args[0]
                 %battle_enemy.hp = what_fighting.base_hp
@@ -284,11 +262,6 @@ func _physics_process(_delta: float) -> void:
                     timer = get_tree().create_timer(3.0)
                     await timer.timeout
                     path_progress = 0.0
-                #tween.tween_callback(
-                    #func() -> void:
-                        #var callback_command := Command.new(CommandType.Debug_Submit)
-                        #callback_command.args = ["do battle"]
-                        #commands.append(callback_command))
             CommandType.Battle_End:
                 var tween := get_tree().create_tween()
                 tween.tween_method(
@@ -312,6 +285,34 @@ func _physics_process(_delta: float) -> void:
                         thing_battling.grime_type = Entity.GrimeType.None
                         commands.append(Command.new(CommandType.Grime_Dead, [thing_battling]))
                         pass)
+            CommandType.Battle_Enemy:
+                battle_state_current = BattleState.Enemy
+                var battle_rect: Rect2 = %ui_battle.get_global_rect()
+                Input.warp_mouse(Util.game_to_window(self, Vector2(battle_rect.position + battle_rect.size * 0.5)))
+                %battle_cursor.visible = true
+                %emitter0.global_position = battle_rect.position
+                %emitter1.global_position = battle_rect.position + Vector2(battle_rect.size.x, 0)
+                %emitter2.global_position = battle_rect.position + battle_rect.size
+                %emitter3.global_position = battle_rect.position + Vector2(0, battle_rect.size.y)
+                %battle_emitter_timer.start()
+                projectiles_coord_raw.append(%emitter0.global_position)
+                projectiles_coord_raw.append(%emitter1.global_position)
+                projectiles_coord_raw.append(%emitter2.global_position)
+                projectiles_coord_raw.append(%emitter3.global_position)
+                %battle_emitter_timer.timeout.connect(
+                    func() -> void:
+                        projectiles_coord_raw.append(%emitter0.global_position)
+                        projectiles_coord_raw.append(%emitter1.global_position)
+                        projectiles_coord_raw.append(%emitter2.global_position)
+                        projectiles_coord_raw.append(%emitter3.global_position)
+                        pass)
+            CommandType.Battle_Player:
+                projectiles_coord_raw.clear()
+                %battle_emitter_timer.stop()
+                %ui_anim.play("battle_end") # calls ui_anim_enemy_exit()
+                await %ui_anim.animation_finished
+                battle_state_current = BattleState.Player
+            ##### Debug Commands #####
             CommandType.Debug_Submit:
                 var debug_command: String = command.args[0]
                 var cut := Util.cut(debug_command, " ")
@@ -328,18 +329,6 @@ func _physics_process(_delta: float) -> void:
                         scene_current = Scene.Battle
                     ["do", "battle"]:
                         assert(false)
-                        #if scene_current == Scene.Battle:
-                            #while %battle_enemy.hp > 0.0:
-                                #%ui_anim.play("battle_start") # calls ui_anim_enemy_enter()
-                                #battle_state_current = BattleState.Enemy
-                                #await %ui_anim.animation_finished
-                                #commands.append(Command.new(CommandType.Battle_Enemy))
-                                #var timer := get_tree().create_timer(3.0)
-                                #await timer.timeout
-                                #commands.append(Command.new(CommandType.Battle_Player))
-                                #timer = get_tree().create_timer(3.0)
-                                #await timer.timeout
-                                #path_progress = 0.0
                     ["do", "player"]:
                         if scene_current == Scene.Battle:
                             battle_state_current = BattleState.Player
@@ -347,31 +336,17 @@ func _physics_process(_delta: float) -> void:
                             %ui_anim.play("battle_end") # calls ui_anim_enemy_exit()
                     ["go", "transition"]:
                         commands.append(Command.new(CommandType.Battle_Start))
-                        #var tween := get_tree().create_tween()
-                        #tween.tween_property(%transition_battle, "frame", 17, 0.5)
-                        #tween.tween_method(
-                            #func(value: Color) -> void:
-                                #%transition_battle.material.set_shader_parameter("transition_color", value)
-                        #, Color(%transition_battle.material.get_shader_parameter("transition_color")), Color.BLACK, 0.5)
-                        #tween.tween_callback(
-                            #func() -> void:
-                                #var callback_command := Command.new(CommandType.Debug_Submit)
-                                #callback_command.args = ["go battle"]
-                                #commands.append(callback_command))
-                        #tween.tween_method(
-                            #func(value: float) -> void:
-                                #%transition_battle.material.set_shader_parameter("transition_color", Color(0.0,0.0,0.0,value))
-                        #, 1.0, 0.0, 0.5)
-                        #tween.tween_callback(
-                            #func() -> void:
-                                #var callback_command := Command.new(CommandType.Debug_Submit)
-                                #callback_command.args = ["do battle"]
-                                #commands.append(callback_command))
                     _:
                         push_warning("%s not found" % debug_command)
                 %debug_edit.text = ""
         command = commands.pop_back()
     
+    ##### Projectile Updates #####
+    for child in %projectiles.get_children():
+        %projectiles.remove_child(child)
+        child.queue_free()
+
+##### Scene and Rendering Updates #####
     match scene_current:
         Scene.Wash:
             %player_hose.visible = true
@@ -382,52 +357,47 @@ func _physics_process(_delta: float) -> void:
             #%transition_battle.frame = 0
             $scene_battle.visible  = true
             $scene_carwash.visible = false
-            
-    for child in %projectiles.get_children():
-        %projectiles.remove_child(child)
-        child.queue_free()
         
-    if scene_current == Scene.Battle:
-        match battle_state_current:
-            BattleState.Player:
-                %player_hose.visible = true
-                %droplets.visible = true
-                #if not %ui_anim.is_playing():
-                path_progress += 0.007
-                if path_progress >= 1.0:
-                    path_progress = 0.0
-                var curve: Curve2D = %enemy_path.curve
-                %battle_enemy.global_position = curve.sample_baked(path_progress * curve.get_baked_length())
-            BattleState.Enemy:
-                %player_hose.visible = false
-                %droplets.visible = false
-                %battle_cursor.global_position = get_global_mouse_position()
-                var cursor_rect: Rect2 = %battle_cursor.get_global_rect()
-                var battle_box_rect: Rect2 = %ui_battle.get_global_rect()
-                var result := Util.clamp_rect(cursor_rect, battle_box_rect)
-                %battle_cursor.global_position = result.position
+            match battle_state_current:
+                BattleState.Player:
+                    %player_hose.visible = true
+                    %droplets.visible = true
+                    path_progress += 0.007
+                    if path_progress >= 1.0:
+                        path_progress = 0.0
+                    var curve: Curve2D = %enemy_path.curve
+                    %battle_enemy.global_position = curve.sample_baked(path_progress * curve.get_baked_length())
+                BattleState.Enemy:
+                    %player_hose.visible = false
+                    %droplets.visible = false
+                    %battle_cursor.global_position = get_global_mouse_position()
+                    var cursor_rect: Rect2 = %battle_cursor.get_global_rect()
+                    var battle_box_rect: Rect2 = %ui_battle.get_global_rect()
+                    var result := Util.clamp_rect(cursor_rect, battle_box_rect)
+                    %battle_cursor.global_position = result.position
 
-                for i in range(len(projectiles_coord_raw)):
-                    var sprite := Sprite2D.new()
-                    sprite.texture = battle_bubble_med_tex
-                    var coord := projectiles_coord_raw[i]
-                    var speed := 0.5
-                    if i % 4 == 0:
-                        var ir := Vector2.DOWN.rotated(%emitter0/RayCast2D.rotation)
-                        coord += ir * speed
-                    elif i % 4 == 1:
-                        var ir := Vector2.DOWN.rotated(%emitter1/RayCast2D.rotation)
-                        coord += ir * speed
-                    elif i % 4 == 2:
-                        var ir := Vector2.DOWN.rotated(%emitter2/RayCast2D.rotation)
-                        coord += ir * speed
-                    elif i % 4 == 3:
-                        var ir := Vector2.DOWN.rotated(%emitter3/RayCast2D.rotation)
-                        coord += ir * speed
-                    sprite.global_position = coord
-                    projectiles_coord_raw[i] = coord
-                    %projectiles.add_child(sprite)
+                    for i in range(len(projectiles_coord_raw)):
+                        var sprite := Sprite2D.new()
+                        sprite.texture = battle_bubble_med_tex
+                        var coord := projectiles_coord_raw[i]
+                        var speed := 0.5
+                        if i % 4 == 0:
+                            var ir := Vector2.DOWN.rotated(%emitter0/RayCast2D.rotation)
+                            coord += ir * speed
+                        elif i % 4 == 1:
+                            var ir := Vector2.DOWN.rotated(%emitter1/RayCast2D.rotation)
+                            coord += ir * speed
+                        elif i % 4 == 2:
+                            var ir := Vector2.DOWN.rotated(%emitter2/RayCast2D.rotation)
+                            coord += ir * speed
+                        elif i % 4 == 3:
+                            var ir := Vector2.DOWN.rotated(%emitter3/RayCast2D.rotation)
+                            coord += ir * speed
+                        sprite.global_position = coord
+                        projectiles_coord_raw[i] = coord
+                        %projectiles.add_child(sprite)
     
+    ##### Car and Background Updates #####
     var car_sprite_index := 0
     for car_sprite: Sprite2D in %car.get_children():
         if car_sprite_index == location_index:
@@ -441,24 +411,10 @@ func _physics_process(_delta: float) -> void:
     %background_pink.material.set_shader_parameter("tex_offset", pink_offset)
     %background_yellow.material.set_shader_parameter("tex_offset", yellow_offset)
     
-    #if path_forward:
-        #if 1.0 - path_progress >= 0.01:
-            #path_progress += 0.01
-            #%PathFollow2D.progress_ratio = path_progress
-            #%fuzzy.global_position = %PathFollow2D.global_position
-        #else:
-            #path_forward = false
-    #else:
-        #if path_progress >= 0.01:
-            #path_progress -= 0.01
-            #%PathFollow2D.progress_ratio = path_progress
-            #%fuzzy.global_position = %PathFollow2D.global_position
-        #else:
-            #path_forward = true
-    
     $player_hose.global_position = get_global_mouse_position()
     %water_stream.global_position = %player_hose/hose_emit.global_position
     
+    ##### Droplet Animation #####
     for droplet: Droplet in drops:
         var progress_left := 1.0 - droplet.stream_progress
         if progress_left >= 0.05:
@@ -482,4 +438,5 @@ func _physics_process(_delta: float) -> void:
             commands.append(droplet_finish)
     drops = drops.filter(func(d: Droplet) -> bool: return d.stream_progress < 1.0)
     
+    ##### Reticle Positioning #####
     %recticle.global_position = %water_stream.global_position + %water_stream.get_end_position()

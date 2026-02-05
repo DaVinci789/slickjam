@@ -40,6 +40,7 @@ sound_effect_Water_Hose = SubResource("Resource_rcc7q")
 sound_effect_Car_Done = SubResource("Resource_1dk6e")
 music_Wash = SubResource("Resource_gjm0y")
 music_Battle = SubResource("Resource_t0jgv")
+metadata/_edit_lock_ = true
 
 [node name="Control" type="Control" parent="." unique_id=2123847212]
 visible = false
