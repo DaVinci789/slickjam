@@ -14,6 +14,8 @@ uniform sampler2D palette_texture;
 uniform float palette_index = 0.0;
 
 // Axis distortion properties
+uniform ivec2 scrolling_position = ivec2(0, 0);
+uniform ivec2 static_position = ivec2(0, 0);
 uniform ivec2 axis_mode = ivec2(0, 0);
 uniform ivec2 axis_frequency = ivec2(10, 10);
 uniform ivec2 axis_amplitude = ivec2(5, 5);

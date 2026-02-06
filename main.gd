@@ -3,9 +3,11 @@ extends Node2D
 ##### Resource Constants #####
 const battle_bubble_med_tex := preload("res://battle_bubble_med.tres")
 const droplet_frames := preload("res://frames_droplet.tres")
+var enemy_data: ConfigFile = ConfigFile.new()
 
 ##### Enums #####
 enum BattleState {
+    Intermediate,
     Player,
     Enemy,
 }
@@ -52,27 +54,72 @@ class Droplet:
         droplet_sprite.sprite_frames = frames
         droplets_parent.add_child(droplet_sprite)
 
+class EnemyVisualData:
+    var transition_color := Color.BLUE_VIOLET
+    var background_layers: Array[String] = []
+
+func get_sprite_rect(sprite: Variant) -> Rect2:
+    var result: Rect2 = Rect2(Vector2.INF, Vector2.ZERO)
+    if sprite is Sprite2D:
+        result = sprite.get_rect()
+    elif sprite is AnimatedSprite2D:
+        var tex: Texture2D = sprite.sprite_frames.get_frame_texture(
+            sprite.animation,
+            sprite.frame
+        )
+        result = Rect2(Vector2.ZERO, tex.get_size())
+
+    return result
+
 ##### Instance Variables #####
 var commands: Array[Command] = []
-var scene_current := Scene.Wash
-var battle_state_current := BattleState.Enemy
+var scene_current: Scene = Scene.Wash
+var battle_state_current: BattleState = BattleState.Enemy
+var enemy_visual_data: Dictionary[String, EnemyVisualData] = {}
 
-var locations := ["front", "side_right", "back", "side_left",]
-var location_index := 0
-@export var path_progress := 0.0
+var locations: Array[String] = ["front", "side_right", "back", "side_left",]
+var location_index: int = 0
+@export var path_progress: float = 0.0
 
 var thing_battling: Entity
-var pink_offset := Vector2.ZERO
-var yellow_offset := Vector2.ZERO
+var pink_offset: Vector2 = Vector2.ZERO
+var yellow_offset: Vector2 = Vector2.ZERO
 
 var projectiles_coord_raw: Array[Vector2] = []
 var drops: Array[Droplet] = []
 var grime: Array[Node2D] = []
 
+# Hit effect tracking
+var hit_effect_timers: Dictionary[Entity, float] = {}  # Entity -> time remaining
+var hit_sounds: Dictionary[Entity, Audio.PlayingSound] = {}
+
 func _ready() -> void:
+    var data_result: Error = enemy_data.load("res://enemy_data.cfg")
+    assert(data_result == OK)
+    for enemy_name: String in Entity.EnemyType.keys():
+        if enemy_name == "None":
+            continue
+        var enemy_visual_datum: EnemyVisualData = EnemyVisualData.new()
+        enemy_visual_datum.transition_color = enemy_data.get_value(enemy_name, "transition_color")
+        var which_background: String = enemy_data.get_value(enemy_name, "background")
+        var background_layers: Array = enemy_data.get_value(which_background, "layers")
+        enemy_visual_datum.background_layers.assign(background_layers)
+        enemy_visual_data[enemy_name] = enemy_visual_datum
+        
     Audio.kill_debug()
     Audio.create_music(Audio.MusicType.Wash)
     for area: Area2D in %ui_left.area_clickable:
+        area.area_entered.connect(
+            func(other_area: Area2D) -> void:
+                if other_area.name == "recticle_area" and scene_current == Scene.Wash:
+                    %ui_left.mouse_hover = true
+                    %ui_left.mouse_just_hover = true
+                pass)
+        area.area_exited.connect(
+            func(other_area: Area2D) -> void:
+                if other_area.name == "recticle_area":
+                    %ui_left.mouse_hover = false
+                pass)
         area.connect("mouse_entered",
         func() -> void:
             %ui_left.mouse_hover = true
@@ -87,6 +134,17 @@ func _ready() -> void:
             if event.is_action_pressed("input_action"):
                 %ui_left.just_pressed = true)
     for area: Area2D in %ui_right.area_clickable:
+        area.area_entered.connect(
+            func(other_area: Area2D) -> void:
+                if other_area.name == "recticle_area" and scene_current == Scene.Wash:
+                    %ui_right.mouse_hover = true
+                    %ui_right.mouse_just_hover = true
+                pass)
+        area.area_exited.connect(
+            func(other_area: Area2D) -> void:
+                if other_area.name == "recticle_area":
+                    %ui_left.mouse_hover = false
+                pass)
         area.connect("mouse_entered",
         func() -> void:
             %ui_right.mouse_hover = true
@@ -101,34 +159,49 @@ func _ready() -> void:
             if event.is_action_pressed("input_action"):
                 %ui_right.just_pressed = true)
     %debug_edit.connect("text_submitted", func(text: String) -> void: 
-        var command := Command.new(CommandType.Debug_Submit)
+        var command: Command = Command.new(CommandType.Debug_Submit)
         command.args = [text]
         commands.append(command)
         pass)
+    
+    # Initialize grime for starting location
+    grime.clear()
+    for child in %car0.get_child(location_index).get_children():
+        if child is Entity:
+            grime.append(child)
 
 ##### UI Animation Functions #####
 func ui_anim_enemy_enter() -> void:
-    var tween := get_tree().create_tween()
+    var tween: Tween = get_tree().create_tween()
     tween\
         .tween_property(%battle_enemy, "global_position", %enemy_place_while_battle.global_position, 0.5)\
         .set_trans(Tween.TRANS_QUAD)
 
 func ui_anim_enemy_exit() -> void:
-    var tween := get_tree().create_tween()
+    var tween: Tween = get_tree().create_tween()
     @warning_ignore("integer_division")
     tween.tween_property(%battle_enemy, "global_position", Vector2(320/2, 180/2), 0.5).set_trans(Tween.TRANS_QUAD)
 
-func _process(_delta: float) -> void:
-    var check_hose := true
-    if %ui_left.just_pressed:
+var check_hose: bool = true
+
+func _process(delta: float) -> void:
+    if (not %ui_left.mouse_hover and not %ui_right.mouse_hover) or Input.is_action_just_released("input_action"):
+        check_hose = true
+    #if scene_current == Scene.Wash:
+    if %ui_left.mouse_hover and Input.is_action_just_pressed("input_action"):
         commands.append(Command.new(CommandType.Move_Left))
         check_hose = false
-    if %ui_right.just_pressed:
+    if %ui_right.mouse_hover and Input.is_action_just_pressed("input_action"):
         commands.append(Command.new(CommandType.Move_Right))
+        check_hose = false
+    if scene_current == Scene.Battle and battle_state_current != BattleState.Player:
         check_hose = false
     if check_hose and Input.is_action_pressed("input_action"):
         commands.append(Command.new(CommandType.Droplet_New))
-
+    if check_hose and Input.is_action_just_pressed("input_action"):
+        Audio.stop_sound(Audio.SoundEffectType.Water_Hose, 0.5)
+        Audio.create_2d_sfx_at_location(%player_hose.global_position, Audio.SoundEffectType.Water_Hose)
+        
     %ui_left.mouse_just_hover = false
     %ui_right.mouse_just_hover = false
     %ui_left.just_pressed = false
@@ -136,6 +209,38 @@ func _process(_delta: float) -> void:
     
     pink_offset += Vector2(-3 * -0.00005, 20 * -0.00005)
     yellow_offset += Vector2(17 * -0.00005, 74 * -0.00005)
+    
+    # Update hit effect timers and clean up finished sounds
+    var to_clear: Array[Entity] = []
+    for entity: Entity in hit_effect_timers:
+        hit_effect_timers[entity] -= delta
+        if hit_effect_timers[entity] <= 0.0:
+            if entity.hp > 0.0:  # Only clear effect if still alive
+                entity.sprite.material.set_shader_parameter("hit_effect", 0.0)
+            to_clear.append(entity)
+            # Stop the sound with a fade when effect ends
+            var existing_sound: Audio.PlayingSound = hit_sounds.get(entity, null)
+            if existing_sound:
+                Audio.stop_specific_sound(existing_sound, 0.5)
+    
+    for entity: Entity in to_clear:
+        hit_effect_timers.erase(entity)
+    
+    # Clean up hit_sounds dict - remove entries where sound nodes are gone
+    var sounds_to_remove: Array[Entity] = []
+    for entity: Entity in hit_sounds.keys():
+        var sound: Audio.PlayingSound = hit_sounds[entity]
+        # Check if both nodes are gone/invalid
+        if sound:
+            var node_valid: bool = sound.node and not sound.node.is_queued_for_deletion()
+            var node2d_valid: bool = sound.node2d and not sound.node2d.is_queued_for_deletion()
+            if not node_valid and not node2d_valid:
+                sounds_to_remove.append(entity)
+    
+    for entity: Entity in sounds_to_remove:
+        hit_sounds.erase(entity)
+    
+    queue_redraw()
     
 func _physics_process(_delta: float) -> void:
     ##### Command Processing #####
@@ -149,7 +254,7 @@ func _physics_process(_delta: float) -> void:
                 else:
                     location_index -= 1
                 grime.clear()
-                for child in %car.get_child(location_index).get_children():
+                for child in %car0.get_child(location_index).get_children():
                     if child is Entity:
                         grime.append(child)
             CommandType.Move_Right:
@@ -158,13 +263,13 @@ func _physics_process(_delta: float) -> void:
                 else:
                     location_index = 0
                 grime.clear()
-                for child in %car.get_child(location_index).get_children():
+                for child in %car0.get_child(location_index).get_children():
                     if child is Entity:
                         grime.append(child)
             ##### Droplet Commands #####
             CommandType.Droplet_New:
-                var stream := %water_stream.duplicate()
-                var droplet := Droplet.new(%droplets, stream, droplet_frames)
+                var stream: WaterStream = %water_stream.duplicate()
+                var droplet: Droplet = Droplet.new(%droplets, stream, droplet_frames)
                 droplet.droplet_sprite.global_position = %player_hose/hose_emit.global_position
                 droplet.droplet_sprite.animation = "drop"
                 droplet.droplet_sprite.reset_physics_interpolation()
@@ -175,49 +280,36 @@ func _physics_process(_delta: float) -> void:
                 var droplet: Droplet = command.args[0]
                 droplet.droplet_sprite.queue_free()
                 droplet.stream_source.queue_free()
-                if scene_current == Scene.Wash:
-                    for the_grime: Entity in grime:
-                        if the_grime.hp > 0.0 and the_grime.sprite.get_rect().has_point(the_grime.sprite.to_local(droplet.droplet_sprite.global_position)):
-                            the_grime.hp -= droplet.damage_deals
-                            the_grime.sprite.material.set_shader_parameter("hit_effect", 0.5)
-                            if the_grime.hp <= 0.0:
-                                var death_command := Command.new(CommandType.Grime_Dead)
-                                death_command.args = [the_grime]
-                                commands.append(death_command)
-                            var shake_timer := 0.2
-                            if not the_grime.scene_tree_timer:
-                                the_grime.scene_tree_timer = get_tree().create_timer(shake_timer)
-                                the_grime.scene_tree_timer.timeout.connect(
-                                    func() -> void:
-                                        if the_grime.hp > 0.0: # @Hack (Feb 4) ideally this function wouldn't trigger at all if the enemy is dead.
-                                            the_grime.sprite.material.set_shader_parameter("hit_effect", 0.0)
-                                        the_grime.scene_tree_timer = null
-                                        pass)
-                            else:
-                                the_grime.scene_tree_timer.time_left = shake_timer
-                elif scene_current == Scene.Battle:
-                    var enemy_alive: bool = %battle_enemy.hp > 0.0
-                    var enemy_hit: bool = %battle_enemy.sprite.get_rect().has_point(%battle_enemy.sprite.to_local(droplet.droplet_sprite.global_position))
-                    var player_turn := battle_state_current == BattleState.Player
-                    if player_turn and enemy_alive and enemy_hit:
-                        # @CopyAndPaste from above
-                        %battle_enemy.hp -= droplet.damage_deals
-                        %battle_enemy.sprite.material.set_shader_parameter("hit_effect", 0.5)
+                
+                # Unified collision check - works for both wash and battle
+                for the_grime: Entity in grime:
+                    if the_grime.hp > 0.0 and get_sprite_rect(the_grime.sprite).has_point(
+                        the_grime.sprite.to_local(droplet.droplet_sprite.global_position)):
+                        var death_command: Command
+                        if scene_current == Scene.Wash:
+                            death_command = Command.new(CommandType.Grime_Dead, [the_grime])
+                        elif scene_current == Scene.Battle:
+                            death_command = Command.new(CommandType.Battle_End, [the_grime])
                         
-                        if %battle_enemy.hp <= 0.0:
-                            commands.append(Command.new(CommandType.Battle_End))
+                        #the_grime.hp -= droplet.damage_deals
+                        the_grime.sprite.material.set_shader_parameter("hit_effect", 0.5)
                         
-                        var shake_timer := 0.2
-                        if not %battle_enemy.scene_tree_timer:
-                            %battle_enemy.scene_tree_timer = get_tree().create_timer(shake_timer)
-                            %battle_enemy.scene_tree_timer.timeout.connect(
-                                func() -> void:
-                                    if %battle_enemy.hp > 0.0: # @Hack (Feb 4) ideally this function wouldn't trigger at all if the enemy is dead.
-                                        %battle_enemy.sprite.material.set_shader_parameter("hit_effect", 0.0)
-                                    %battle_enemy.scene_tree_timer = null
-                                    pass)
-                        else:
-                            %battle_enemy.scene_tree_timer.time_left = shake_timer
+                        # Only create/restart sound if entity wasn't already being hit
+                        var was_already_being_hit: bool = hit_effect_timers.has(the_grime)
+                        
+                        hit_effect_timers[the_grime] = 0.2
+                        
+                        if not was_already_being_hit:
+                            # Entity wasn't flashing - create new sound
+                            if the_grime.grime_type == Entity.GrimeType.Enemy:
+                                hit_sounds[the_grime] = Audio.create_2d_sfx_at_location(droplet.droplet_sprite.global_position, Audio.SoundEffectType.Wash_Monster)
+                            elif the_grime.grime_type == Entity.GrimeType.None:
+                                hit_sounds[the_grime] = Audio.create_2d_sfx_at_location(droplet.droplet_sprite.global_position, Audio.SoundEffectType.Wash_Dirt)
+                        # else: entity was already flashing, keep existing sound playing
+                        
+                        if the_grime.hp <= 0.0:
+                            commands.append(death_command)
+            
             ##### Grime and Battle Commands #####
             CommandType.Grime_Dead:
                 var the_grime: Entity = command.args[0]
@@ -226,56 +318,85 @@ func _physics_process(_delta: float) -> void:
                     commands.append(Command.new(CommandType.Battle_Start, [the_grime]))
                     thing_battling = the_grime
                 elif the_grime.grime_type == Entity.GrimeType.None:
+                    Audio.create_2d_sfx_at_location(the_grime.global_position, Audio.SoundEffectType.Cleaned_Dirt) # all good
                     the_grime.visible = false
-                    var particler := %CPUParticles2D.duplicate()
+                    var particler: CPUParticles2D = %CPUParticles2D.duplicate()
                     particler.global_position = the_grime.global_position
                     particler.finished.connect(func() -> void: particler.queue_free())
                     add_child(particler)
                     particler.emitting = true
             CommandType.Battle_Start:
+                battle_state_current = BattleState.Intermediate
                 var what_fighting: Entity = command.args[0]
                 %battle_enemy.hp = what_fighting.base_hp
-                var tween := get_tree().create_tween()
-                tween.tween_property(%transition_battle, "frame", 17, 0.5)
+                
+                var enemy_key: String = Entity.EnemyType.keys()[what_fighting.enemy_type]
+                %battle_enemy/sprite.animation = enemy_key
+                var transition_color: Color = enemy_visual_data[enemy_key].transition_color
+                for child: CanvasItem in %battlebackground.get_children():
+                    if child is Control:
+                        if child.name in enemy_visual_data[enemy_key].background_layers:
+                            child.visible = true
+                        else:
+                            child.visible = false
+                            
+                transition_color.a = 0.5
+                %transition_battle.visible = true
+                %transition_battle.material.set_shader_parameter("transition_color", transition_color)
+                %transition_battle.play(["circle", "horizontal", "split"].pick_random())
+                await %transition_battle.animation_finished
+                
+                var tween: Tween = get_tree().create_tween()
+                #tween.tween_property(%transition_battle, "frame", 17, 0.5)
                 tween.tween_method(
                     func(value: Color) -> void:
                         %transition_battle.material.set_shader_parameter("transition_color", value)
                 , Color(%transition_battle.material.get_shader_parameter("transition_color")), Color.BLACK, 0.5)
                 tween.tween_callback(
                     func() -> void:
-                        var callback_command := Command.new(CommandType.Debug_Submit)
+                        var callback_command: Command = Command.new(CommandType.Debug_Submit)
                         callback_command.args = ["go battle"]
-                        commands.append(callback_command))
+                        commands.append(callback_command)
+                        # Populate grime array with battle enemy
+                        grime.clear()
+                        grime.append(%battle_enemy))
                 tween.tween_method(
                     func(value: float) -> void:
                         %transition_battle.material.set_shader_parameter("transition_color", Color(0.0,0.0,0.0,value))
                 , 1.0, 0.0, 0.5)
                 await tween.finished
+                %transition_battle.visible = false
                 while %battle_enemy.hp > 0.0:
-                    %ui_anim.play("battle_start") # calls ui_anim_enemy_enter()
-                    battle_state_current = BattleState.Enemy
+                    %ui_anim.play("battle_enemy") # calls ui_anim_enemy_enter()
                     await %ui_anim.animation_finished
                     commands.append(Command.new(CommandType.Battle_Enemy))
-                    var timer := get_tree().create_timer(3.0)
+                    var timer: SceneTreeTimer = get_tree().create_timer(3.0)
                     await timer.timeout
                     commands.append(Command.new(CommandType.Battle_Player))
                     timer = get_tree().create_timer(3.0)
                     await timer.timeout
                     path_progress = 0.0
             CommandType.Battle_End:
-                var tween := get_tree().create_tween()
+                battle_state_current = BattleState.Intermediate
+                %transition_battle.visible = true
+                var tween: Tween = get_tree().create_tween()
                 tween.tween_method(
                     func(value: Color) -> void:
                         %transition_battle.material.set_shader_parameter("transition_color", value)
                 , Color(%transition_battle.material.get_shader_parameter("transition_color")), Color.BLACK, 0.5)
-                tween.tween_callback( # Reset battle scene
+                tween.tween_callback(
                     func() -> void:
-                        battle_state_current = BattleState.Enemy
                         %battle_enemy.global_position = Vector2(320.0/2.0, 180.0/2.0)
                         %battle_enemy.sprite.material.set_shader_parameter("hit_effect", 0.0)
-                        var callback_command := Command.new(CommandType.Debug_Submit)
+                        %transition_battle.frame = 0
+                        var callback_command: Command = Command.new(CommandType.Debug_Submit)
                         callback_command.args = ["go wash"]
-                        commands.append(callback_command))
+                        commands.append(callback_command)
+                        # Restore grime array to current car location
+                        grime.clear()
+                        for child: Node in %car0.get_child(location_index).get_children():
+                            if child is Entity:
+                                grime.append(child))
                 tween.tween_method(
                     func(value: float) -> void:
                         %transition_battle.material.set_shader_parameter("transition_color", Color(0.0,0.0,0.0,value))
@@ -284,6 +405,7 @@ func _physics_process(_delta: float) -> void:
                     func() -> void:
                         thing_battling.grime_type = Entity.GrimeType.None
                         commands.append(Command.new(CommandType.Grime_Dead, [thing_battling]))
+                        battle_state_current = BattleState.Enemy
                         pass)
             CommandType.Battle_Enemy:
                 battle_state_current = BattleState.Enemy
@@ -309,13 +431,13 @@ func _physics_process(_delta: float) -> void:
             CommandType.Battle_Player:
                 projectiles_coord_raw.clear()
                 %battle_emitter_timer.stop()
-                %ui_anim.play("battle_end") # calls ui_anim_enemy_exit()
+                %ui_anim.play("battle_player") # calls ui_anim_enemy_exit()
                 await %ui_anim.animation_finished
                 battle_state_current = BattleState.Player
             ##### Debug Commands #####
             CommandType.Debug_Submit:
                 var debug_command: String = command.args[0]
-                var cut := Util.cut(debug_command, " ")
+                var cut: Util.Cut = Util.cut(debug_command, " ")
                 match [cut.head, cut.tail]:
                     ["bus", ..]:
                         Audio.reload_audio_buses()
@@ -350,11 +472,10 @@ func _physics_process(_delta: float) -> void:
     match scene_current:
         Scene.Wash:
             %player_hose.visible = true
+            %droplets.visible = true
             $scene_carwash.visible = true
             $scene_battle.visible = false
         Scene.Battle:
-            #%transition_battle.material.set_shader_parameter("transition_color", Color("#94380085"))
-            #%transition_battle.frame = 0
             $scene_battle.visible  = true
             $scene_carwash.visible = false
         
@@ -373,33 +494,37 @@ func _physics_process(_delta: float) -> void:
                     %battle_cursor.global_position = get_global_mouse_position()
                     var cursor_rect: Rect2 = %battle_cursor.get_global_rect()
                     var battle_box_rect: Rect2 = %ui_battle.get_global_rect()
-                    var result := Util.clamp_rect(cursor_rect, battle_box_rect)
+                    var result: Rect2 = Util.clamp_rect(cursor_rect, battle_box_rect)
                     %battle_cursor.global_position = result.position
 
-                    for i in range(len(projectiles_coord_raw)):
-                        var sprite := Sprite2D.new()
+                    for i: int in range(len(projectiles_coord_raw)):
+                        var sprite: Sprite2D = Sprite2D.new()
                         sprite.texture = battle_bubble_med_tex
-                        var coord := projectiles_coord_raw[i]
-                        var speed := 0.5
+                        var coord: Vector2 = projectiles_coord_raw[i]
+                        var speed: float = 0.5
                         if i % 4 == 0:
-                            var ir := Vector2.DOWN.rotated(%emitter0/RayCast2D.rotation)
+                            var ir: Vector2 = Vector2.DOWN.rotated(%emitter0/RayCast2D.rotation)
                             coord += ir * speed
                         elif i % 4 == 1:
-                            var ir := Vector2.DOWN.rotated(%emitter1/RayCast2D.rotation)
+                            var ir: Vector2 = Vector2.DOWN.rotated(%emitter1/RayCast2D.rotation)
                             coord += ir * speed
                         elif i % 4 == 2:
-                            var ir := Vector2.DOWN.rotated(%emitter2/RayCast2D.rotation)
+                            var ir: Vector2 = Vector2.DOWN.rotated(%emitter2/RayCast2D.rotation)
                             coord += ir * speed
                         elif i % 4 == 3:
-                            var ir := Vector2.DOWN.rotated(%emitter3/RayCast2D.rotation)
+                            var ir: Vector2 = Vector2.DOWN.rotated(%emitter3/RayCast2D.rotation)
                             coord += ir * speed
                         sprite.global_position = coord
                         projectiles_coord_raw[i] = coord
                         %projectiles.add_child(sprite)
+                BattleState.Intermediate:
+                    # During transitions, don't update battle-specific visuals
+                    %player_hose.visible = false
+                    %droplets.visible = false
     
     ##### Car and Background Updates #####
-    var car_sprite_index := 0
-    for car_sprite: Sprite2D in %car.get_children():
+    var car_sprite_index: int = 0
+    for car_sprite: Sprite2D in %car0.get_children():
         if car_sprite_index == location_index:
             car_sprite.visible = true
             %background_carwash.get_child(car_sprite_index).visible = true
@@ -416,7 +541,7 @@ func _physics_process(_delta: float) -> void:
     
     ##### Droplet Animation #####
     for droplet: Droplet in drops:
-        var progress_left := 1.0 - droplet.stream_progress
+        var progress_left: float = 1.0 - droplet.stream_progress
         if progress_left >= 0.05:
             droplet.stream_progress += 0.05
         else:
@@ -433,10 +558,15 @@ func _physics_process(_delta: float) -> void:
                 droplet.droplet_sprite.frame = [1, 2, 6].pick_random()
                 droplet.droplet_sprite.scale = Vector2(0.4, 0.4)
         if droplet.stream_progress >= 1.0:
-            var droplet_finish := Command.new(CommandType.Droplet_Finish)
+            var droplet_finish: Command = Command.new(CommandType.Droplet_Finish)
             droplet_finish.args = [droplet]
             commands.append(droplet_finish)
     drops = drops.filter(func(d: Droplet) -> bool: return d.stream_progress < 1.0)
+    if drops.is_empty():
+        Audio.stop_sound(Audio.SoundEffectType.Water_Hose, 0.5)
     
     ##### Reticle Positioning #####
     %recticle.global_position = %water_stream.global_position + %water_stream.get_end_position()
+
+func _draw() -> void:
+    draw_rect(get_sprite_rect(%battle_enemy.sprite), Color.RED)

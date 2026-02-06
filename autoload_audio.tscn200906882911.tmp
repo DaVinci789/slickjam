@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://byjaqvgtlhakg"]
+
+[ext_resource type="Script" uid="uid://736xltbdymup" path="res://autoload_audio.gd" id="1_jxh8p"]
+
+[node name="Audio" type="Node2D" unique_id=1812916011]
+script = ExtResource("1_jxh8p")
+metadata/_edit_lock_ = true
+
+[node name="Control" type="Control" parent="." unique_id=2123847212]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 180.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control" unique_id=388682430]
+layout_mode = 0
+offset_left = 87.0
+offset_right = 189.0
+offset_bottom = 156.0
+
+[node name="container_sfx" type="VBoxContainer" parent="Control/ScrollContainer" unique_id=807565380]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="Control" unique_id=1946185489]
+layout_mode = 0
+offset_left = 192.0
+offset_right = 295.0
+offset_bottom = 159.0
+
+[node name="container_music" type="VBoxContainer" parent="Control/ScrollContainer2" unique_id=378708647]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="stop_all" type="Button" parent="Control" unique_id=138802712]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_font_sizes/font_size = 9
+text = "Stop sounds"

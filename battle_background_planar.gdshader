@@ -73,15 +73,11 @@ void fragment() {
     
     vec4 base_color;
     
-    if (use_pixelation) {
-        // Snap to pixel grid for hard pixel edges
-        vec2 scale = vec2(tex_size);
-        vec2 pixelated_uv = (floor(distortion * scale) + 0.5) / scale;
-        base_color = texture(SCREEN_TEXTURE, pixelated_uv);
-    } else {
-        // Smooth sampling (hardware filtering)
-        base_color = texture(TEXTURE, distortion);
-    }
+    // Snap to pixel grid for hard pixel edges
+    vec2 scale = vec2(tex_size);
+    vec2 pixelated_uv = (floor(distortion * scale) + 0.5) / scale;
+    base_color = texture(SCREEN_TEXTURE, pixelated_uv);
+ 
     
     COLOR = base_color;
     COLOR.a = 1.0;
