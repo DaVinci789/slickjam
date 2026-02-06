@@ -3,9 +3,12 @@
 [ext_resource type="Script" uid="uid://736xltbdymup" path="res://autoload_audio.gd" id="1_jxh8p"]
 [ext_resource type="Script" uid="uid://dd251rhonu7ym" path="res://sound_effect.gd" id="2_gmbc1"]
 [ext_resource type="AudioStream" uid="uid://c4spshpwitxbv" path="res://sound/sfx_water_hose_loop.wav" id="3_xmksn"]
-[ext_resource type="AudioStream" uid="uid://d4eimpqourice" path="res://sound/sfx_car_done_bell.wav" id="4_rcc7q"]
+[ext_resource type="AudioStream" uid="uid://d4eimpqourice" path="res://sound/sfx_car_done_bell_oneshot.wav" id="4_rcc7q"]
 [ext_resource type="AudioStream" uid="uid://d348ej2xsexy2" path="res://sound/bgm_wash_loop_1.wav" id="5_1dk6e"]
+[ext_resource type="AudioStream" uid="uid://robh7ujvk4kt" path="res://sound/sfx_cleaned_dirt_oneshot.wav" id="5_t0jgv"]
+[ext_resource type="AudioStream" uid="uid://bd8jwmuqxc8qm" path="res://sound/sfx_wash_monster_loop.wav" id="6_4wlc2"]
 [ext_resource type="AudioStream" uid="uid://bw063wmyubj15" path="res://sound/bgm_battle_loop_1.wav" id="6_8e1u0"]
+[ext_resource type="AudioStream" uid="uid://b7go87mluhyet" path="res://sound/sfx_wash_dirt_loop.wav" id="7_xu6jv"]
 
 [sub_resource type="Resource" id="Resource_rcc7q"]
 script = ExtResource("2_gmbc1")
@@ -18,6 +21,27 @@ metadata/_custom_type_script = "uid://dd251rhonu7ym"
 script = ExtResource("2_gmbc1")
 sound_effect = ExtResource("4_rcc7q")
 bus = &"Sound Effect"
+metadata/_custom_type_script = "uid://dd251rhonu7ym"
+
+[sub_resource type="Resource" id="Resource_4wlc2"]
+script = ExtResource("2_gmbc1")
+sound_effect = ExtResource("5_t0jgv")
+bus = &"Sound Effect"
+volume = -18.0
+metadata/_custom_type_script = "uid://dd251rhonu7ym"
+
+[sub_resource type="Resource" id="Resource_xu6jv"]
+script = ExtResource("2_gmbc1")
+sound_effect = ExtResource("6_4wlc2")
+bus = &"Sound Effect"
+volume = -10.0
+metadata/_custom_type_script = "uid://dd251rhonu7ym"
+
+[sub_resource type="Resource" id="Resource_357nh"]
+script = ExtResource("2_gmbc1")
+sound_effect = ExtResource("7_xu6jv")
+bus = &"Sound Effect"
+volume = -11.0
 metadata/_custom_type_script = "uid://dd251rhonu7ym"
 
 [sub_resource type="Resource" id="Resource_gjm0y"]
@@ -38,6 +62,9 @@ metadata/_custom_type_script = "uid://dd251rhonu7ym"
 script = ExtResource("1_jxh8p")
 sound_effect_Water_Hose = SubResource("Resource_rcc7q")
 sound_effect_Car_Done = SubResource("Resource_1dk6e")
+sound_effect_Cleaned_Dirt = SubResource("Resource_4wlc2")
+sound_effect_Wash_Monster = SubResource("Resource_xu6jv")
+sound_effect_Wash_Dirt = SubResource("Resource_357nh")
 music_Wash = SubResource("Resource_gjm0y")
 music_Battle = SubResource("Resource_t0jgv")
 metadata/_edit_lock_ = true
