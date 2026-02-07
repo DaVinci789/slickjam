@@ -3,36 +3,53 @@
 [ext_resource type="Script" uid="uid://cm5b0l43jsp32" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://b8yjd70m22eby" path="res://entity.gd" id="2_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://di113mxwjea43" path="res://image/arm_nohose.png" id="2_dg77c"]
-[ext_resource type="Texture2D" uid="uid://p6j7hq4jmtse" path="res://image/car_front.png" id="3_dg77c"]
-[ext_resource type="Texture2D" uid="uid://bxk3ikcuqmj15" path="res://image/car_left.png" id="3_efxa6"]
+[ext_resource type="Texture2D" uid="uid://ty4m6o4h65jm" path="res://image/pause_bg.png" id="2_hrvbo"]
+[ext_resource type="Texture2D" uid="uid://p6j7hq4jmtse" path="res://image/car1_front.png" id="3_dg77c"]
+[ext_resource type="Texture2D" uid="uid://bxk3ikcuqmj15" path="res://image/car1_left.png" id="3_efxa6"]
+[ext_resource type="Texture2D" uid="uid://dx0wtdbqyqcrq" path="res://image/pause_label_resume.png" id="4_4w656"]
 [ext_resource type="Texture2D" uid="uid://bdxc2w7vitasb" path="res://image/background_purpledots.png" id="4_getpj"]
-[ext_resource type="Texture2D" uid="uid://xvewa53ftudd" path="res://image/car_back.png" id="5_ycdy4"]
+[ext_resource type="Texture2D" uid="uid://chsxixkc83i4m" path="res://image/pause_label_audio.png" id="5_e71vb"]
+[ext_resource type="Texture2D" uid="uid://xvewa53ftudd" path="res://image/car1_back.png" id="5_ycdy4"]
+[ext_resource type="Texture2D" uid="uid://bq634wuv4puwb" path="res://image/pause_label_fullscreen.png" id="6_rnkwl"]
 [ext_resource type="Texture2D" uid="uid://bp63q80oeubs5" path="res://image/background_red_yellow_checkers.png" id="7_ryguw"]
+[ext_resource type="Texture2D" uid="uid://bortajccocswt" path="res://image/pause_label_exit.png" id="7_vke2r"]
 [ext_resource type="Shader" uid="uid://b3oxh1w78wt5q" path="res://battle_background_axis.gdshader" id="7_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://dbcmhskhxnm5u" path="res://image/background_space.png" id="8_d13ii"]
 [ext_resource type="Texture2D" uid="uid://b73jnfr0vbqja" path="res://image/grime_enemy_dirt_2.png" id="9_ok6jj"]
+[ext_resource type="Texture2D" uid="uid://28tnr7cwa4t1" path="res://image/pause_label_back.png" id="9_uit24"]
 [ext_resource type="Shader" uid="uid://bt04e0mygf7ol" path="res://battle_background_planar.gdshader" id="9_vivmo"]
 [ext_resource type="Texture2D" uid="uid://npat2krrkr1" path="res://image/background_yellow.png" id="9_w48qg"]
 [ext_resource type="Texture2D" uid="uid://dvfkpfvd3jr3w" path="res://image/grime_enemy_dirt_9.png" id="10_facbu"]
+[ext_resource type="Texture2D" uid="uid://dilqrvebn8cpe" path="res://image/pause_label_sfx.png" id="10_gx4rg"]
+[ext_resource type="Texture2D" uid="uid://c0tv1py37g36" path="res://image/pause_sound_bar.png" id="10_ruth0"]
 [ext_resource type="Texture2D" uid="uid://b6ewuv0ojdlmd" path="res://image/background_pink.png" id="10_vivmo"]
+[ext_resource type="Texture2D" uid="uid://cogmtc8h4dkw4" path="res://image/pause_label_music.png" id="11_5dllo"]
 [ext_resource type="Texture2D" uid="uid://bx4nem8yigbjv" path="res://image/grime_enemy_dirt_5.png" id="11_b1qrp"]
 [ext_resource type="Texture2D" uid="uid://bo5lnjnftbmkt" path="res://fuzzy.png" id="11_efxa6"]
+[ext_resource type="Texture2D" uid="uid://csoi3krabfgsy" path="res://image/pause_sound_bar_color.png" id="11_rm4vd"]
 [ext_resource type="Texture2D" uid="uid://dynmtt7jp5w28" path="res://image/recticle.png" id="11_xuqvo"]
+[ext_resource type="Texture2D" uid="uid://dufericenlkf" path="res://image/pause_sound_bar_inner.png" id="12_pjyto"]
 [ext_resource type="Script" uid="uid://b3f3p8iyk26ih" path="res://water_test.gd" id="13_ycdy4"]
 [ext_resource type="Shader" uid="uid://cs4iittkxg7ej" path="res://transition.gdshader" id="14_4k2k6"]
 [ext_resource type="Texture2D" uid="uid://o8mu7tkhl8lk" path="res://black_circle.png" id="14_w48qg"]
 [ext_resource type="Texture2D" uid="uid://c7dqpmd8rvu41" path="res://image/transition_horizontal.png" id="15_0rl1p"]
+[ext_resource type="Texture2D" uid="uid://q74t2lxbdyek" path="res://image/background_carwash_right.png" id="16_5dllo"]
 [ext_resource type="Texture2D" uid="uid://bk8we3akbnu57" path="res://image/background_toothpaste.png" id="18_h8e4i"]
+[ext_resource type="Texture2D" uid="uid://bld5a6y3gw2eb" path="res://image/background_carwash_left.png" id="18_phcyf"]
 [ext_resource type="Texture2D" uid="uid://riabpwpq6pby" path="res://image/background_bubbles.png" id="19_4lmeg"]
 [ext_resource type="Shader" uid="uid://dppq1xdjs8tht" path="res://flash.gdshader" id="21_0rl1p"]
+[ext_resource type="Texture2D" uid="uid://cpiheayuqg2sb" path="res://image/car1_right.png" id="21_phcyf"]
 [ext_resource type="Texture2D" uid="uid://nrpsjhe3rdlb" path="res://image/background_carwash_back.png" id="22_1u8w0"]
 [ext_resource type="Texture2D" uid="uid://lgvbaegwde6a" path="res://image/background_checker.png" id="23_0cp0l"]
 [ext_resource type="Texture2D" uid="uid://ba6n63p0as7vj" path="res://image/background_carwash_front.png" id="23_0odxb"]
+[ext_resource type="Texture2D" uid="uid://d08ijgm6mebx6" path="res://image/grime_enemy_dirt_3.png" id="23_c2n8d"]
 [ext_resource type="Texture2D" uid="uid://cvclnixh81oht" path="res://image/enemy_receiptpete.png" id="23_ok6jj"]
 [ext_resource type="SpriteFrames" uid="uid://eow0lqtcy3m4" path="res://frames_droplet.tres" id="24_0odxb"]
 [ext_resource type="Texture2D" uid="uid://cothl1p70r255" path="res://image/background_rainbowcircles.png" id="24_d2t1y"]
-[ext_resource type="Texture2D" uid="uid://0bkel2ix8e3e" path="res://image/background_carwash_side.png" id="24_lswn8"]
+[ext_resource type="Texture2D" uid="uid://eek7o3ecnj08" path="res://image/grime_enemy_dirt_4.png" id="24_wy5fy"]
 [ext_resource type="Texture2D" uid="uid://dk05lsb21o8jl" path="res://image/battle_combat_box.png" id="25_a6jrf"]
+[ext_resource type="Texture2D" uid="uid://d1ii1xportf5s" path="res://image/grime_enemy_dirt_6.png" id="25_gx4rg"]
+[ext_resource type="Texture2D" uid="uid://bp41tpnbtpl76" path="res://image/grime_enemy_dirt_7.png" id="26_5dllo"]
 [ext_resource type="Texture2D" uid="uid://c6wwe2k5rmfai" path="res://image/battle_cursor.png" id="26_xuqvo"]
 [ext_resource type="Texture2D" uid="uid://7fedirinx5b5" path="res://image/enemy_tailz.png" id="27_h8e4i"]
 [ext_resource type="Texture2D" uid="uid://dy8i60i162laf" path="res://image/enemy_battlebottle.png" id="27_wnkbs"]
@@ -49,6 +66,19 @@
 [ext_resource type="FontFile" uid="uid://b24tqcg2epwie" path="res://PICK3 FONT 12pxor18px.ttf" id="34_0rl1p"]
 [ext_resource type="Texture2D" uid="uid://cme6n2a6xvm1m" path="res://image/transition_circle.png" id="38_0cbny"]
 [ext_resource type="Texture2D" uid="uid://bbv81nbpbxsy4" path="res://image/transition_split.png" id="40_hrvbo"]
+[ext_resource type="PackedScene" uid="uid://vib4b00hr1u" path="res://enemy_patterns.tscn" id="45_0dhbp"]
+[ext_resource type="Texture2D" uid="uid://di5h4ssrs04wo" path="res://image/title_overlay.png" id="48_uypp3"]
+[ext_resource type="Texture2D" uid="uid://bsrwxbqbwa5l5" path="res://image/timer_back.png" id="58_rm4vd"]
+[ext_resource type="Texture2D" uid="uid://c22ine55bdmf1" path="res://image/timer_0.png" id="59_0dhbp"]
+[ext_resource type="Texture2D" uid="uid://c26bsdarm17f2" path="res://image/timer_1.png" id="60_jx0wj"]
+[ext_resource type="Texture2D" uid="uid://cjo5lmpgiu4l6" path="res://image/timer_2.png" id="61_kkkcx"]
+[ext_resource type="Texture2D" uid="uid://bwsnqw0cp1g7r" path="res://image/timer_3.png" id="62_34ol3"]
+[ext_resource type="Texture2D" uid="uid://dq667vm06wdaw" path="res://image/timer_4.png" id="63_c2n8d"]
+[ext_resource type="Texture2D" uid="uid://xh1vves2kywi" path="res://image/timer_5.png" id="64_wy5fy"]
+[ext_resource type="Texture2D" uid="uid://c21qdcnjywq08" path="res://image/timer_6.png" id="65_gx4rg"]
+[ext_resource type="Texture2D" uid="uid://b73tdn0t4rm2s" path="res://image/timer_7.png" id="66_5dllo"]
+[ext_resource type="Texture2D" uid="uid://d4gr72u2uknbe" path="res://image/timer_8.png" id="67_phcyf"]
+[ext_resource type="Texture2D" uid="uid://clas710ie03se" path="res://image/timer_9.png" id="68_birbe"]
 
 [sub_resource type="Shader" id="Shader_1u8w0"]
 code = "shader_type canvas_item;
@@ -121,18 +151,12 @@ shader_parameter/shake_intensity = 10.0
 shader_parameter/flash_speed = 30.0
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_d13ii"]
-load_path = "res://.godot/imported/grime_dirt_20.png-73d5142be11cf7dcb0139cbe6299eaee.ctex"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_074og"]
 shader = SubResource("Shader_1u8w0")
 shader_parameter/hit_effect = 0.0
 shader_parameter/shake_intensity = 10.0
 shader_parameter/flash_speed = 30.0
 shader_parameter/flash_color = Color(1, 1, 1, 1)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cegan"]
-load_path = "res://.godot/imported/grime_dirt_0.png-3d2fb6af65c2c6753433712f8909280b.ctex"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_82xsv"]
 shader = SubResource("Shader_1u8w0")
@@ -141,9 +165,6 @@ shader_parameter/shake_intensity = 10.0
 shader_parameter/flash_speed = 30.0
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_getpj"]
-load_path = "res://.godot/imported/grime_dirt_21.png-38076cc219efdf7b1c777f579765c974.ctex"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a6jrf"]
 shader = SubResource("Shader_1u8w0")
 shader_parameter/hit_effect = 0.0
@@ -151,18 +172,12 @@ shader_parameter/shake_intensity = 10.0
 shader_parameter/flash_speed = 30.0
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xuqvo"]
-load_path = "res://.godot/imported/grime_dirt_22.png-f911b12111b1bd3946f4ef64956339d9.ctex"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1u8w0"]
 shader = SubResource("Shader_1u8w0")
 shader_parameter/hit_effect = 0.0
 shader_parameter/shake_intensity = 10.0
 shader_parameter/flash_speed = 30.0
 shader_parameter/flash_color = Color(1, 1, 1, 1)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0odxb"]
-load_path = "res://.godot/imported/grime_dirt_11.png-7ffa855039ceebdb8ca1c0b7a850546e.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dg77c"]
 atlas = ExtResource("11_efxa6")
@@ -394,6 +409,174 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_0dhbp"]
+resource_name = "spawn_coin_drop"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%battle_patterns")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn_coin_drop"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_jx0wj"]
+resource_name = "spawn_droplet_circle"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%battle_patterns")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn_droplet_circle"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_kkkcx"]
+resource_name = "spawn_dust_bunny"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%battle_patterns")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn_dust_bunny"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_34ol3"]
+resource_name = "spawn_gryme_wall"
+loop_mode = 1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%battle_patterns")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn_gryme_wall"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_c2n8d"]
+resource_name = "spawn_jetstream"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%battle_patterns")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn_jetstream"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_5dllo"]
+resource_name = "spawn_ooze_target_center_player"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%battle_patterns")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"spawn_ooze_target_center_player"
+}, {
+"args": [],
+"method": &"spawn_ooze_target_center_player"
+}, {
+"args": [],
+"method": &"spawn_ooze_target_center_player"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_wy5fy"]
+resource_name = "spawn_penny_bounce"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%battle_patterns")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn_penny_bounce"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_gx4rg"]
+resource_name = "spawn_wave_minigame"
+length = 5.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%battle_patterns")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn_wave_minigame"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5dllo"]
+_data = {
+&"spawn_coin_drop": SubResource("Animation_0dhbp"),
+&"spawn_droplet_circle": SubResource("Animation_jx0wj"),
+&"spawn_dust_bunny": SubResource("Animation_kkkcx"),
+&"spawn_gryme_wall": SubResource("Animation_34ol3"),
+&"spawn_jetstream": SubResource("Animation_c2n8d"),
+&"spawn_ooze_target_center_player": SubResource("Animation_5dllo"),
+&"spawn_penny_bounce": SubResource("Animation_wy5fy"),
+&"spawn_wave_minigame": SubResource("Animation_gx4rg")
+}
+
 [sub_resource type="Animation" id="Animation_xuqvo"]
 length = 0.001
 tracks/0/type = "value"
@@ -403,6 +586,18 @@ tracks/0/path = NodePath("ui_battle:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(158, 200)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("battle_patterns:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -438,6 +633,18 @@ tracks/1/keys = {
 "method": &"ui_anim_enemy_enter"
 }]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("battle_patterns:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(158, 200), Vector2(158, 31)]
+}
 
 [sub_resource type="Animation" id="Animation_a6jrf"]
 resource_name = "battle_player"
@@ -463,6 +670,18 @@ tracks/1/path = NodePath("ui_battle:position")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(158, 31), Vector2(158, 200)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("battle_patterns:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
@@ -843,6 +1062,44 @@ animations = [{
 "speed": 16.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_f1p13"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("59_0dhbp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_jx0wj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_kkkcx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_34ol3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_c2n8d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_wy5fy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_gx4rg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_5dllo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_phcyf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_birbe")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_htxhm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jq2sk"]
@@ -851,19 +1108,623 @@ shader_parameter/a = 26
 shader_parameter/b = 8
 shader_parameter/time_mod = 12.0
 
+[sub_resource type="Animation" id="Animation_hrvbo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(115, 144)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BattleBubbleMed2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(208, 147)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BattleBubbleMed:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(101, 147)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("RichTextLabel:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("RichTextLabel2:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, 3)]
+}
+
+[sub_resource type="Animation" id="Animation_uypp3"]
+resource_name = "begin"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.3666667, 1.5666667, 1.7666668, 1.9666666, 2.1666665, 2.3666666, 2.5666666, 2.7666667, 2.9666667, 3.1666667, 3.3333333, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(115, 144), Vector2(115, -21)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BattleBubbleMed2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(208, 147), Vector2(208, -21)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BattleBubbleMed:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(101, 147), Vector2(101, -21)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("RichTextLabel:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -201)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("RichTextLabel2:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(3, 3), Vector2(0, -201)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_blkrb"]
+_data = {
+&"RESET": SubResource("Animation_hrvbo"),
+&"begin": SubResource("Animation_uypp3")
+}
+
 [node name="main" type="Node2D" unique_id=14358364]
 script = ExtResource("1_ig7tw")
+max_player_height = -14.0
+mouse_speed_decay = 13.44
 
 [node name="debug" type="CanvasLayer" parent="." unique_id=366246311]
+visible = false
 
 [node name="debug_edit" type="LineEdit" parent="debug" unique_id=940149932]
 unique_name_in_owner = true
-offset_left = 188.0
+offset_left = 45.0
 offset_top = 3.0
-offset_right = 274.0
+offset_right = 131.0
 offset_bottom = 34.0
 
+[node name="settings" type="CanvasLayer" parent="." unique_id=1056900263]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
+
+[node name="Control" type="Control" parent="settings" unique_id=478315254]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 180.0
+
+[node name="PauseBg" type="TextureRect" parent="settings/Control" unique_id=160152077]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -82.5
+offset_top = -75.0
+offset_right = 82.5
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_hrvbo")
+
+[node name="title_paused" type="Label" parent="settings/Control/PauseBg" unique_id=295927515]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -27.0
+offset_top = 15.0
+offset_right = 27.0
+offset_bottom = 38.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("31_seu75")
+theme_override_font_sizes/font_size = 35
+text = "PAUSED"
+
+[node name="label_resume" type="TextureRect" parent="settings/Control/PauseBg" unique_id=793329782]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.5
+offset_top = -16.0
+offset_right = 23.5
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_4w656")
+
+[node name="label_audio" type="TextureRect" parent="settings/Control/PauseBg" unique_id=391825733]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.0
+offset_top = 3.0
+offset_right = 17.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_e71vb")
+
+[node name="label_fullscreen" type="TextureRect" parent="settings/Control/PauseBg" unique_id=1588945337]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.5
+offset_top = 24.0
+offset_right = 37.5
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_rnkwl")
+
+[node name="label_exit" type="TextureRect" parent="settings/Control/PauseBg" unique_id=1625034718]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.5
+offset_top = 45.0
+offset_right = 12.5
+offset_bottom = 54.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_vke2r")
+
+[node name="label_resume_bubble0" type="TextureRect" parent="settings/Control/PauseBg" unique_id=1583612591]
+modulate = Color(0.9098039, 0.7411765, 0.02745098, 1)
+layout_mode = 0
+offset_left = 42.5
+offset_top = 58.0
+offset_right = 52.5
+offset_bottom = 68.0
+texture = ExtResource("33_4k2k6")
+
+[node name="label_resume_bubble1" type="TextureRect" parent="settings/Control/PauseBg" unique_id=1641741396]
+modulate = Color(0.9098039, 0.7411765, 0.02745098, 1)
+layout_mode = 0
+offset_left = 110.5
+offset_top = 58.0
+offset_right = 120.5
+offset_bottom = 68.0
+texture = ExtResource("33_4k2k6")
+
+[node name="label_audio_bubble0" type="TextureRect" parent="settings/Control/PauseBg" unique_id=1621885801]
+modulate = Color(0.9098039, 0.7411765, 0.02745098, 1)
+layout_mode = 0
+offset_left = 49.5
+offset_top = 77.0
+offset_right = 59.5
+offset_bottom = 87.0
+texture = ExtResource("33_4k2k6")
+
+[node name="label_audio_bubble1" type="TextureRect" parent="settings/Control/PauseBg" unique_id=2122131061]
+modulate = Color(0.9098039, 0.7411765, 0.02745098, 1)
+layout_mode = 0
+offset_left = 104.5
+offset_top = 77.0
+offset_right = 114.5
+offset_bottom = 87.0
+texture = ExtResource("33_4k2k6")
+
+[node name="label_fullscreen_bubble0" type="TextureRect" parent="settings/Control/PauseBg" unique_id=2134475065]
+modulate = Color(0.9098039, 0.7411765, 0.02745098, 1)
+layout_mode = 0
+offset_left = 28.5
+offset_top = 98.0
+offset_right = 38.5
+offset_bottom = 108.0
+texture = ExtResource("33_4k2k6")
+
+[node name="label_fullscreen_bubble1" type="TextureRect" parent="settings/Control/PauseBg" unique_id=755880080]
+modulate = Color(0.9098039, 0.7411765, 0.02745098, 1)
+layout_mode = 0
+offset_left = 124.5
+offset_top = 98.0
+offset_right = 134.5
+offset_bottom = 108.0
+texture = ExtResource("33_4k2k6")
+
+[node name="label_exit_bubble0" type="TextureRect" parent="settings/Control/PauseBg" unique_id=556296357]
+modulate = Color(0.9098039, 0.7411765, 0.02745098, 1)
+layout_mode = 0
+offset_left = 53.5
+offset_top = 119.0
+offset_right = 63.5
+offset_bottom = 129.0
+texture = ExtResource("33_4k2k6")
+
+[node name="label_exit_bubble1" type="TextureRect" parent="settings/Control/PauseBg" unique_id=1064584601]
+modulate = Color(0.9098039, 0.7411765, 0.02745098, 1)
+layout_mode = 0
+offset_left = 98.5
+offset_top = 119.0
+offset_right = 108.5
+offset_bottom = 129.0
+texture = ExtResource("33_4k2k6")
+
+[node name="AudioBg" type="TextureRect" parent="settings/Control" unique_id=663291548]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -82.5
+offset_top = -75.0
+offset_right = 82.5
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_hrvbo")
+
+[node name="label_audio" type="Label" parent="settings/Control/AudioBg" unique_id=1680856127]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -27.0
+offset_top = 15.0
+offset_right = 27.0
+offset_bottom = 38.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("31_seu75")
+theme_override_font_sizes/font_size = 35
+text = "AUDIO"
+
+[node name="label_back" type="TextureRect" parent="settings/Control/AudioBg" unique_id=2012890092]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = 45.0
+offset_right = 15.0
+offset_bottom = 54.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_uit24")
+
+[node name="label_sfx" type="TextureRect" parent="settings/Control/AudioBg" unique_id=1735937401]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -61.0
+offset_top = 16.0
+offset_right = -38.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_gx4rg")
+
+[node name="label_music" type="TextureRect" parent="settings/Control/AudioBg" unique_id=407568360]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -67.0
+offset_top = -15.0
+offset_right = -31.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_5dllo")
+
+[node name="label_back_bubble0" type="TextureRect" parent="settings/Control/AudioBg" unique_id=1443860259]
+modulate = Color(0.9098039, 0.7411765, 0.02745098, 1)
+layout_mode = 0
+offset_left = 49.5
+offset_top = 119.0
+offset_right = 59.5
+offset_bottom = 129.0
+texture = ExtResource("33_4k2k6")
+
+[node name="label_back_bubble1" type="TextureRect" parent="settings/Control/AudioBg" unique_id=1495251591]
+modulate = Color(0.9098039, 0.7411765, 0.02745098, 1)
+layout_mode = 0
+offset_left = 102.5
+offset_top = 119.0
+offset_right = 112.5
+offset_bottom = 129.0
+texture = ExtResource("33_4k2k6")
+
+[node name="music_bar" type="TextureRect" parent="settings/Control/AudioBg" unique_id=194974645]
+layout_mode = 0
+offset_left = 55.5
+offset_top = 53.0
+offset_right = 150.5
+offset_bottom = 76.0
+texture = ExtResource("10_ruth0")
+
+[node name="m1" type="TextureRect" parent="settings/Control/AudioBg/music_bar" unique_id=527376970]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 11.0
+offset_bottom = 20.0
+texture = ExtResource("11_rm4vd")
+
+[node name="m2" type="TextureRect" parent="settings/Control/AudioBg/music_bar" unique_id=1599753825]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 3.0
+offset_right = 20.0
+offset_bottom = 20.0
+texture = ExtResource("12_pjyto")
+
+[node name="m3" type="TextureRect" parent="settings/Control/AudioBg/music_bar" unique_id=430621501]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 3.0
+offset_right = 29.0
+offset_bottom = 20.0
+texture = ExtResource("12_pjyto")
+
+[node name="m4" type="TextureRect" parent="settings/Control/AudioBg/music_bar" unique_id=1959809849]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 3.0
+offset_right = 38.0
+offset_bottom = 20.0
+texture = ExtResource("12_pjyto")
+
+[node name="m5" type="TextureRect" parent="settings/Control/AudioBg/music_bar" unique_id=1100864884]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 3.0
+offset_right = 47.0
+offset_bottom = 20.0
+texture = ExtResource("12_pjyto")
+
+[node name="m6" type="TextureRect" parent="settings/Control/AudioBg/music_bar" unique_id=918916753]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 3.0
+offset_right = 56.0
+offset_bottom = 20.0
+texture = ExtResource("12_pjyto")
+
+[node name="m7" type="TextureRect" parent="settings/Control/AudioBg/music_bar" unique_id=145534961]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 3.0
+offset_right = 65.0
+offset_bottom = 20.0
+texture = ExtResource("12_pjyto")
+
+[node name="m8" type="TextureRect" parent="settings/Control/AudioBg/music_bar" unique_id=1288584586]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 3.0
+offset_right = 74.0
+offset_bottom = 20.0
+texture = ExtResource("12_pjyto")
+
+[node name="m9" type="TextureRect" parent="settings/Control/AudioBg/music_bar" unique_id=725494502]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 3.0
+offset_right = 83.0
+offset_bottom = 20.0
+texture = ExtResource("12_pjyto")
+
+[node name="m10" type="TextureRect" parent="settings/Control/AudioBg/music_bar" unique_id=539060495]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 3.0
+offset_right = 92.0
+offset_bottom = 20.0
+texture = ExtResource("11_rm4vd")
+flip_h = true
+
+[node name="sfx_bar" type="TextureRect" parent="settings/Control/AudioBg" unique_id=1972685080]
+layout_mode = 0
+offset_left = 55.5
+offset_top = 83.0
+offset_right = 150.5
+offset_bottom = 106.0
+texture = ExtResource("10_ruth0")
+
+[node name="s1" type="TextureRect" parent="settings/Control/AudioBg/sfx_bar" unique_id=1974458460]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 11.0
+offset_bottom = 20.0
+texture = ExtResource("11_rm4vd")
+
+[node name="s2" type="TextureRect" parent="settings/Control/AudioBg/sfx_bar" unique_id=430591001]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 3.0
+offset_right = 20.0
+offset_bottom = 20.0
+texture = ExtResource("12_pjyto")
+
+[node name="s3" type="TextureRect" parent="settings/Control/AudioBg/sfx_bar" unique_id=387680788]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 3.0
+offset_right = 29.0
+offset_bottom = 20.0
+texture = ExtResource("12_pjyto")
+
+[node name="s4" type="TextureRect" parent="settings/Control/AudioBg/sfx_bar" unique_id=1696386826]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 3.0
+offset_right = 38.0
+offset_bottom = 20.0
+texture = ExtResource("12_pjyto")
+
+[node name="s5" type="TextureRect" parent="settings/Control/AudioBg/sfx_bar" unique_id=1259114707]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 3.0
+offset_right = 47.0
+offset_bottom = 20.0
+texture = ExtResource("12_pjyto")
+
+[node name="s6" type="TextureRect" parent="settings/Control/AudioBg/sfx_bar" unique_id=1119978479]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 3.0
+offset_right = 56.0
+offset_bottom = 20.0
+texture = ExtResource("12_pjyto")
+
+[node name="s7" type="TextureRect" parent="settings/Control/AudioBg/sfx_bar" unique_id=1594611075]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 3.0
+offset_right = 65.0
+offset_bottom = 20.0
+texture = ExtResource("12_pjyto")
+
+[node name="s8" type="TextureRect" parent="settings/Control/AudioBg/sfx_bar" unique_id=1790663276]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 3.0
+offset_right = 74.0
+offset_bottom = 20.0
+texture = ExtResource("12_pjyto")
+
+[node name="s9" type="TextureRect" parent="settings/Control/AudioBg/sfx_bar" unique_id=1965707828]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 3.0
+offset_right = 83.0
+offset_bottom = 20.0
+texture = ExtResource("12_pjyto")
+
+[node name="s10" type="TextureRect" parent="settings/Control/AudioBg/sfx_bar" unique_id=2029337804]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 3.0
+offset_right = 92.0
+offset_bottom = 20.0
+texture = ExtResource("11_rm4vd")
+flip_h = true
+
 [node name="scene_carwash" type="Node2D" parent="." unique_id=821586071]
+unique_name_in_owner = true
 
 [node name="background_carwash" type="Node2D" parent="scene_carwash" unique_id=1208680804]
 unique_name_in_owner = true
@@ -873,7 +1734,7 @@ texture = ExtResource("23_0odxb")
 centered = false
 
 [node name="carwash_right" type="Sprite2D" parent="scene_carwash/background_carwash" unique_id=1056256635]
-texture = ExtResource("24_lswn8")
+texture = ExtResource("16_5dllo")
 centered = false
 
 [node name="carwash_back" type="Sprite2D" parent="scene_carwash/background_carwash" unique_id=1839733410]
@@ -881,7 +1742,7 @@ texture = ExtResource("22_1u8w0")
 centered = false
 
 [node name="carwash_left" type="Sprite2D" parent="scene_carwash/background_carwash" unique_id=747611830]
-texture = ExtResource("24_lswn8")
+texture = ExtResource("18_phcyf")
 centered = false
 
 [node name="car0" type="CharacterBody2D" parent="scene_carwash" unique_id=502861986]
@@ -894,12 +1755,11 @@ texture = ExtResource("3_dg77c")
 centered = false
 
 [node name="Marker2D" type="Marker2D" parent="scene_carwash/car0/car_front" unique_id=952182588]
-position = Vector2(161, 80)
+position = Vector2(228, 80)
 
 [node name="car_right" type="Sprite2D" parent="scene_carwash/car0" unique_id=1151394709]
-texture = ExtResource("3_efxa6")
+texture = ExtResource("21_phcyf")
 centered = false
-flip_h = true
 
 [node name="Marker2D" type="Marker2D" parent="scene_carwash/car0/car_right" unique_id=25308516]
 position = Vector2(170, 78)
@@ -919,11 +1779,11 @@ centered = false
 position = Vector2(173, 79)
 
 [node name="grime0" type="CharacterBody2D" parent="scene_carwash/car0/car_left" unique_id=2078836969]
-position = Vector2(33, 131)
+position = Vector2(106, 83)
 script = ExtResource("2_0xm2m")
 sprite_path = NodePath("EnemyGrimeDirt2")
 grime_type = 1
-enemy_type = 3
+enemy_type = 2
 metadata/_custom_type_script = "uid://b8yjd70m22eby"
 
 [node name="EnemyGrimeDirt2" type="Sprite2D" parent="scene_carwash/car0/car_left/grime0" unique_id=236155343]
@@ -932,11 +1792,11 @@ texture = ExtResource("9_ok6jj")
 metadata/_edit_lock_ = true
 
 [node name="grime1" type="CharacterBody2D" parent="scene_carwash/car0/car_left" unique_id=194552567]
-position = Vector2(131, 112)
+position = Vector2(137, 84)
 script = ExtResource("2_0xm2m")
 sprite_path = NodePath("EnemyGrimeDirt9")
 grime_type = 1
-enemy_type = 2
+enemy_type = 3
 metadata/_custom_type_script = "uid://b8yjd70m22eby"
 
 [node name="EnemyGrimeDirt9" type="Sprite2D" parent="scene_carwash/car0/car_left/grime1" unique_id=490420360]
@@ -945,11 +1805,11 @@ texture = ExtResource("10_facbu")
 metadata/_edit_lock_ = true
 
 [node name="grime2" type="CharacterBody2D" parent="scene_carwash/car0/car_left" unique_id=407865134]
-position = Vector2(278, 114)
+position = Vector2(169, 83)
 script = ExtResource("2_0xm2m")
 sprite_path = NodePath("EnemyGrimeDirt5")
 grime_type = 1
-enemy_type = 7
+enemy_type = 1
 metadata/_custom_type_script = "uid://b8yjd70m22eby"
 
 [node name="EnemyGrimeDirt5" type="Sprite2D" parent="scene_carwash/car0/car_left/grime2" unique_id=1798102055]
@@ -958,58 +1818,68 @@ texture = ExtResource("11_b1qrp")
 metadata/_edit_lock_ = true
 
 [node name="grime3" type="CharacterBody2D" parent="scene_carwash/car0/car_left" unique_id=1521323262]
-position = Vector2(68, 101)
+position = Vector2(198, 81)
 script = ExtResource("2_0xm2m")
 sprite_path = NodePath("GrimeDirt20")
+grime_type = 1
+enemy_type = 5
 metadata/_custom_type_script = "uid://b8yjd70m22eby"
 
 [node name="GrimeDirt20" type="Sprite2D" parent="scene_carwash/car0/car_left/grime3" unique_id=1199319982]
 material = SubResource("ShaderMaterial_ryguw")
-texture = SubResource("CompressedTexture2D_d13ii")
+texture = ExtResource("23_c2n8d")
 metadata/_edit_lock_ = true
 
 [node name="grime4" type="CharacterBody2D" parent="scene_carwash/car0/car_left" unique_id=1691162846]
-position = Vector2(161, 111)
+position = Vector2(102, 116)
 script = ExtResource("2_0xm2m")
 sprite_path = NodePath("GrimeDirt0")
+grime_type = 1
+enemy_type = 6
 metadata/_custom_type_script = "uid://b8yjd70m22eby"
 
 [node name="GrimeDirt0" type="Sprite2D" parent="scene_carwash/car0/car_left/grime4" unique_id=1276350713]
 material = SubResource("ShaderMaterial_074og")
-texture = SubResource("CompressedTexture2D_cegan")
+texture = ExtResource("24_wy5fy")
 metadata/_edit_lock_ = true
 
 [node name="grime5" type="CharacterBody2D" parent="scene_carwash/car0/car_left" unique_id=576740245]
-position = Vector2(282, 133)
+position = Vector2(135, 116)
 script = ExtResource("2_0xm2m")
 sprite_path = NodePath("GrimeDirt21")
+grime_type = 1
+enemy_type = 4
 metadata/_custom_type_script = "uid://b8yjd70m22eby"
 
 [node name="GrimeDirt21" type="Sprite2D" parent="scene_carwash/car0/car_left/grime5" unique_id=1548959757]
 material = SubResource("ShaderMaterial_82xsv")
-texture = SubResource("CompressedTexture2D_getpj")
+texture = ExtResource("11_b1qrp")
 metadata/_edit_lock_ = true
 
 [node name="grime6" type="CharacterBody2D" parent="scene_carwash/car0/car_left" unique_id=1572155943]
-position = Vector2(125, 132)
+position = Vector2(165, 113)
 script = ExtResource("2_0xm2m")
 sprite_path = NodePath("GrimeDirt22")
+grime_type = 1
+enemy_type = 8
 metadata/_custom_type_script = "uid://b8yjd70m22eby"
 
 [node name="GrimeDirt22" type="Sprite2D" parent="scene_carwash/car0/car_left/grime6" unique_id=470707479]
 material = SubResource("ShaderMaterial_a6jrf")
-texture = SubResource("CompressedTexture2D_xuqvo")
+texture = ExtResource("25_gx4rg")
 metadata/_edit_lock_ = true
 
 [node name="grime7" type="CharacterBody2D" parent="scene_carwash/car0/car_left" unique_id=802674170]
-position = Vector2(253, 99)
+position = Vector2(204, 114)
 script = ExtResource("2_0xm2m")
 sprite_path = NodePath("GrimeDirt11")
+grime_type = 1
+enemy_type = 7
 metadata/_custom_type_script = "uid://b8yjd70m22eby"
 
 [node name="GrimeDirt11" type="Sprite2D" parent="scene_carwash/car0/car_left/grime7" unique_id=1702349889]
 material = SubResource("ShaderMaterial_1u8w0")
-texture = SubResource("CompressedTexture2D_0odxb")
+texture = ExtResource("26_5dllo")
 metadata/_edit_lock_ = true
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="scene_carwash/car0/car_left" unique_id=1078471711]
@@ -1064,7 +1934,7 @@ shape = SubResource("RectangleShape2D_1u8w0")
 [node name="ui_right" type="CharacterBody2D" parent="scene_carwash" unique_id=2136211968 node_paths=PackedStringArray("area_clickable")]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(295, 91)
+position = Vector2(295, 93)
 input_pickable = true
 script = ExtResource("2_0xm2m")
 area_clickable = [NodePath("Area2D")]
@@ -1080,6 +1950,7 @@ flip_h = true
 shape = SubResource("RectangleShape2D_0odxb")
 
 [node name="scene_battle" type="Node2D" parent="." unique_id=1952120662]
+unique_name_in_owner = true
 visible = false
 
 [node name="battlebackground" type="Control" parent="scene_battle" unique_id=1055773115]
@@ -1315,19 +2186,14 @@ animation = &"Tailz"
 unique_name_in_owner = true
 position = Vector2(77, 62)
 
-[node name="ui_battle" type="NinePatchRect" parent="scene_battle" unique_id=1706828421]
+[node name="battle_patterns" parent="scene_battle" unique_id=1011600129 instance=ExtResource("45_0dhbp")]
 unique_name_in_owner = true
 offset_left = 158.0
 offset_top = 200.0
 offset_right = 298.0
-offset_bottom = 339.99994
-texture = ExtResource("25_a6jrf")
-patch_margin_left = 5
-patch_margin_top = 5
-patch_margin_right = 5
-patch_margin_bottom = 5
+offset_bottom = 339.99988
 
-[node name="battle_cursor" type="TextureRect" parent="scene_battle/ui_battle" unique_id=1774323359]
+[node name="battle_cursor" type="TextureRect" parent="scene_battle/battle_patterns" unique_id=1774323359]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -1337,6 +2203,23 @@ offset_right = 73.0
 offset_bottom = 50.0
 texture = ExtResource("26_xuqvo")
 stretch_mode = 2
+
+[node name="battle_runner" type="AnimationPlayer" parent="scene_battle" unique_id=734297896]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_5dllo")
+
+[node name="ui_battle" type="NinePatchRect" parent="scene_battle" unique_id=1706828421]
+unique_name_in_owner = true
+visible = false
+offset_left = 158.0
+offset_top = 200.0
+offset_right = 298.0
+offset_bottom = 339.99982
+texture = ExtResource("25_a6jrf")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
 
 [node name="ui_anim" type="AnimationPlayer" parent="scene_battle" unique_id=1127700609]
 unique_name_in_owner = true
@@ -1387,6 +2270,7 @@ droplet_texture = ExtResource("14_w48qg")
 
 [node name="player_hose" type="CharacterBody2D" parent="." unique_id=1925250550]
 unique_name_in_owner = true
+visible = false
 position = Vector2(98, 31)
 script = ExtResource("2_0xm2m")
 metadata/_custom_type_script = "uid://b8yjd70m22eby"
@@ -1399,6 +2283,7 @@ offset = Vector2(46, 110)
 position = Vector2(0, 28)
 
 [node name="water_drop" type="CharacterBody2D" parent="." unique_id=1711030542]
+visible = false
 script = ExtResource("2_0xm2m")
 metadata/_custom_type_script = "uid://b8yjd70m22eby"
 
@@ -1452,7 +2337,32 @@ unique_name_in_owner = true
 [node name="Sprite2D" type="Sprite2D" parent="projectiles" unique_id=1442931205]
 texture = ExtResource("30_kq58d")
 
-[node name="Control" type="Control" parent="." unique_id=2040637009]
+[node name="timer" type="TextureRect" parent="." unique_id=1505728626]
+unique_name_in_owner = true
+offset_left = 201.0
+offset_top = -20.0
+offset_right = 277.0
+offset_bottom = 45.0
+texture = ExtResource("58_rm4vd")
+
+[node name="numbers1" type="AnimatedSprite2D" parent="timer" unique_id=2113333054]
+position = Vector2(18, 41)
+sprite_frames = SubResource("SpriteFrames_f1p13")
+
+[node name="numbers2" type="AnimatedSprite2D" parent="timer" unique_id=977210211]
+position = Vector2(30, 41)
+sprite_frames = SubResource("SpriteFrames_f1p13")
+
+[node name="numbers3" type="AnimatedSprite2D" parent="timer" unique_id=1972979878]
+position = Vector2(46, 41)
+sprite_frames = SubResource("SpriteFrames_f1p13")
+
+[node name="numbers4" type="AnimatedSprite2D" parent="timer" unique_id=160906733]
+position = Vector2(58, 41)
+sprite_frames = SubResource("SpriteFrames_f1p13")
+
+[node name="scene_title" type="Control" parent="." unique_id=2040637009]
+unique_name_in_owner = true
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -1463,7 +2373,7 @@ offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1552356653]
+[node name="ColorRect" type="ColorRect" parent="scene_title" unique_id=1552356653]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1472,7 +2382,16 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="Control" unique_id=1149318990]
+[node name="TitleOverlay" type="TextureRect" parent="scene_title" unique_id=782922109]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("48_uypp3")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="scene_title" unique_id=1149318990]
 modulate = Color(1, 0.30980393, 1, 1)
 material = SubResource("ShaderMaterial_htxhm")
 layout_mode = 1
@@ -1492,7 +2411,7 @@ CALAMITY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control" unique_id=683145025]
+[node name="RichTextLabel" type="RichTextLabel" parent="scene_title" unique_id=683145025]
 material = SubResource("ShaderMaterial_htxhm")
 layout_mode = 1
 anchors_preset = 15
@@ -1507,11 +2426,11 @@ CALAMITY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BackBufferCopy" type="BackBufferCopy" parent="Control" unique_id=269103232]
+[node name="BackBufferCopy" type="BackBufferCopy" parent="scene_title" unique_id=269103232]
 position = Vector2(161, 86)
 copy_mode = 2
 
-[node name="ColorRect2" type="ColorRect" parent="Control" unique_id=136595149]
+[node name="ColorRect2" type="ColorRect" parent="scene_title" unique_id=136595149]
 material = SubResource("ShaderMaterial_jq2sk")
 layout_mode = 1
 anchors_preset = 15
@@ -1524,36 +2443,34 @@ offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BattleBubbleMed" type="TextureRect" parent="Control" unique_id=996536134]
+[node name="BattleBubbleMed" type="TextureRect" parent="scene_title" unique_id=996536134]
 layout_mode = 0
-offset_left = 85.0
-offset_top = 149.0
-offset_right = 95.0
-offset_bottom = 159.0
+offset_left = 101.0
+offset_top = 147.0
+offset_right = 111.0
+offset_bottom = 157.00027
 texture = ExtResource("33_4k2k6")
 
-[node name="BattleBubbleMed2" type="TextureRect" parent="Control" unique_id=1618754375]
+[node name="BattleBubbleMed2" type="TextureRect" parent="scene_title" unique_id=1618754375]
 layout_mode = 0
-offset_left = 223.0
-offset_top = 149.0
-offset_right = 233.0
-offset_bottom = 159.0
+offset_left = 208.0
+offset_top = 147.0
+offset_right = 218.0
+offset_bottom = 157.00027
 texture = ExtResource("33_4k2k6")
 
-[node name="Label" type="Label" parent="Control" unique_id=1168375183]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -23.5
-offset_top = -36.0
-offset_right = 23.5
-offset_bottom = -13.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="Label" type="Label" parent="scene_title" unique_id=1168375183]
+layout_mode = 0
+offset_left = 115.0
+offset_top = 144.0
+offset_right = 205.0
+offset_bottom = 160.00073
 theme_override_fonts/font = ExtResource("34_0rl1p")
+theme_override_font_sizes/font_size = 12
 text = "CLICK TO START"
+
+[node name="title_screen_anim" type="AnimationPlayer" parent="scene_title" unique_id=392905274]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_blkrb")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=763625652]

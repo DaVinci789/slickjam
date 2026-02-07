@@ -1,0 +1,385 @@
+[gd_scene format=3 uid="uid://vib4b00hr1u"]
+
+[ext_resource type="Texture2D" uid="uid://dk05lsb21o8jl" path="res://image/battle_combat_box.png" id="1_ulwru"]
+[ext_resource type="Script" uid="uid://dfspe0o35u568" path="res://enemy_patterns.gd" id="2_epgkh"]
+[ext_resource type="Texture2D" uid="uid://2sykvcjljchv" path="res://image/projectile_ooze_right.png" id="3_j6yt7"]
+[ext_resource type="Texture2D" uid="uid://dahdm12b83keh" path="res://image/projectile_dust_0.png" id="3_u2h3f"]
+[ext_resource type="Texture2D" uid="uid://c8jh18xaadrui" path="res://image/projectile_dust_1.png" id="4_ekuul"]
+[ext_resource type="Texture2D" uid="uid://c61d3mmy76ju" path="res://image/projectile_dust_3.png" id="5_0qduo"]
+[ext_resource type="Texture2D" uid="uid://bmxijcbns7eqq" path="res://image/projectile_dust_.png" id="6_uup5i"]
+[ext_resource type="Texture2D" uid="uid://ck8h3mdxks2s" path="res://image/projectile_dustbunny.png" id="7_c3wrn"]
+[ext_resource type="Texture2D" uid="uid://w73kx0ofgkah" path="res://image/projectile_gryme_longest.png" id="8_or42b"]
+[ext_resource type="Texture2D" uid="uid://d4aqsqfx3kvlu" path="res://image/projectile_gryme_med.png" id="9_lxdhx"]
+[ext_resource type="Texture2D" uid="uid://bybi7uyls0rx5" path="res://image/projectile_gryme_shortest.png" id="10_kfplk"]
+[ext_resource type="Texture2D" uid="uid://iifsda4w2le0" path="res://image/projectile_shortgryme.png" id="11_i2as8"]
+[ext_resource type="Texture2D" uid="uid://otrngpxcoson" path="res://image/projectile_jetstream_long.png" id="12_vpkeb"]
+[ext_resource type="Texture2D" uid="uid://dhbb243nlm584" path="res://image/projectile_jetstream.png" id="13_vtvpf"]
+[ext_resource type="Texture2D" uid="uid://315m727g7mra" path="res://image/projectile_stream_short.png" id="14_qwj1a"]
+[ext_resource type="Texture2D" uid="uid://bokpemxvtxqfo" path="res://image/projectile_droplet_big.png" id="15_ok5hf"]
+[ext_resource type="Texture2D" uid="uid://w1qfyrboclqj" path="res://image/projectile_droplet_small.png" id="16_y6avb"]
+[ext_resource type="Texture2D" uid="uid://ca24ej46asb8m" path="res://image/projectile_droplet_smallest.png" id="17_44t1n"]
+[ext_resource type="Texture2D" uid="uid://syoyja71iabv" path="res://image/projectile_coin_small.png" id="21_6k6lf"]
+[ext_resource type="Texture2D" uid="uid://c7w1xu4ctmouh" path="res://image/projectile_coin_smallest.png" id="22_itolw"]
+[ext_resource type="Texture2D" uid="uid://djn2rbaa0cc3" path="res://image/projectile_coin_huge_side.png" id="23_wff0d"]
+[ext_resource type="Texture2D" uid="uid://drlk1lkm54mvf" path="res://image/projectile_coin_biggest.png" id="24_islad"]
+[ext_resource type="Texture2D" uid="uid://cnfpe6kebtdfu" path="res://image/projectile_coin_big.png" id="25_du6bj"]
+
+[node name="patterns" type="NinePatchRect" unique_id=1011600129]
+clip_contents = true
+offset_left = 88.0
+offset_top = 24.0
+offset_right = 228.0
+offset_bottom = 163.99994
+texture = ExtResource("1_ulwru")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+script = ExtResource("2_epgkh")
+gryme_good_chance = 0.5
+gryme_good_max_size = 3
+bunny_good_chance = 0.25
+ooze_good_chance = 0.25
+ooze_good_duration = 0.25
+ooze_initial_speed = 150.0
+ooze_decay = 1.0
+penny_good_chance = 0.25
+droplet_good_chance = 0.25
+jet_good_chance = 0.5
+wave_stream_speed = 72.0
+wave_spawn_interval = 0.1
+
+[node name="durt" type="Control" parent="." unique_id=1158926056]
+visible = false
+anchors_preset = 0
+
+[node name="ProjectileDust0" type="TextureRect" parent="durt" unique_id=1906606452]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 20.0
+offset_top = 27.0
+offset_right = 20.0
+offset_bottom = 27.0
+texture = ExtResource("3_u2h3f")
+
+[node name="ProjectileDust1" type="TextureRect" parent="durt" unique_id=864548391]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 45.0
+offset_top = 30.0
+offset_right = 45.0
+offset_bottom = 30.0
+texture = ExtResource("4_ekuul")
+
+[node name="ProjectileDust3" type="TextureRect" parent="durt" unique_id=595215740]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 41.0
+offset_top = 19.0
+offset_right = 41.0
+offset_bottom = 19.0
+texture = ExtResource("5_0qduo")
+
+[node name="ProjectileDust2" type="TextureRect" parent="durt" unique_id=863586185]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 27.0
+offset_top = 7.0
+offset_right = 27.0
+offset_bottom = 7.0
+texture = ExtResource("6_uup5i")
+
+[node name="ProjectileDustbunny" type="TextureRect" parent="durt" unique_id=453151074]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 21.0
+offset_top = 41.0
+offset_right = 21.0
+offset_bottom = 41.0
+texture = ExtResource("7_c3wrn")
+
+[node name="bunny_spawn_left" type="ColorRect" parent="durt" unique_id=1146407796]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -1.0
+offset_top = 22.0
+offset_right = 3.0
+offset_bottom = 87.0
+color = Color(1, 0, 0, 1)
+
+[node name="bunny_spawn_right" type="ColorRect" parent="durt" unique_id=1531169487]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 136.0
+offset_top = 22.0
+offset_right = 140.0
+offset_bottom = 87.0
+color = Color(0, 1, 1, 1)
+
+[node name="gryme" type="Control" parent="." unique_id=804056388]
+visible = false
+anchors_preset = 0
+
+[node name="ProjectileGrymeLongest" type="TextureRect" parent="gryme" unique_id=512220503]
+layout_mode = 0
+offset_top = -18.0
+offset_right = 59.0
+offset_bottom = -13.0
+texture = ExtResource("8_or42b")
+
+[node name="ProjectileGrymeMed" type="TextureRect" parent="gryme" unique_id=236631179]
+layout_mode = 0
+offset_left = -5.0
+offset_top = -6.0
+offset_right = 35.0
+offset_bottom = -1.0
+texture = ExtResource("9_lxdhx")
+
+[node name="ProjectileGrymeShortest" type="TextureRect" parent="gryme" unique_id=1292575248]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 26.0
+offset_right = 47.0
+offset_bottom = 31.0
+texture = ExtResource("10_kfplk")
+
+[node name="ProjectileGrymeShort" type="TextureRect" parent="gryme" unique_id=1421807773]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -17.0
+offset_top = -15.0
+offset_right = 3.0
+offset_bottom = -10.0
+texture = ExtResource("11_i2as8")
+
+[node name="gryme_spawn_left" type="ColorRect" parent="gryme" unique_id=575658219]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_right = 6.0
+offset_bottom = 140.0
+color = Color(1, 0, 0, 1)
+
+[node name="gryme_spawn_right" type="ColorRect" parent="gryme" unique_id=1989959536]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 132.0
+offset_top = -1.0
+offset_right = 140.0
+offset_bottom = 139.0
+color = Color(0, 1, 1, 1)
+
+[node name="battlebottle" type="Control" parent="." unique_id=2048356181]
+visible = false
+anchors_preset = 0
+
+[node name="ProjectileJetstreamLong" type="TextureRect" parent="battlebottle" unique_id=395670096]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 28.0
+offset_top = 84.0
+offset_right = 28.0
+offset_bottom = 84.0
+texture = ExtResource("12_vpkeb")
+
+[node name="ProjectileJetstreamMedium" type="TextureRect" parent="battlebottle" unique_id=1019284622]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 40.0
+offset_top = 84.0
+offset_right = 44.0
+offset_bottom = 121.0
+texture = ExtResource("13_vtvpf")
+
+[node name="ProjectileJetstreamShort" type="TextureRect" parent="battlebottle" unique_id=2072744169]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 52.0
+offset_top = 85.0
+offset_right = 52.0
+offset_bottom = 85.0
+texture = ExtResource("14_qwj1a")
+
+[node name="ProjectileDropletBig" type="TextureRect" parent="battlebottle" unique_id=1073829793]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 38.0
+offset_right = 23.0
+offset_bottom = 38.0
+rotation = 0.5758244
+texture = ExtResource("15_ok5hf")
+
+[node name="ProjectileDropletSmall" type="TextureRect" parent="battlebottle" unique_id=337342245]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 81.0
+offset_right = 84.0
+offset_bottom = 81.0
+texture = ExtResource("16_y6avb")
+
+[node name="ProjectileDropletSmallest" type="TextureRect" parent="battlebottle" unique_id=1100851904]
+layout_mode = 0
+offset_left = 130.0
+offset_top = 94.0
+offset_right = 130.0
+offset_bottom = 94.0
+texture = ExtResource("17_44t1n")
+
+[node name="ooze" type="Control" parent="." unique_id=1641541643]
+visible = false
+anchors_preset = 0
+
+[node name="ProjectileOoze" type="TextureRect" parent="ooze" unique_id=405652689]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 64.0
+offset_top = 68.0
+offset_right = 64.0
+offset_bottom = 68.0
+texture = ExtResource("3_j6yt7")
+
+[node name="penny" type="Control" parent="." unique_id=1771109990]
+visible = false
+anchors_preset = 0
+
+[node name="ProjectileCoinSmall" type="TextureRect" parent="penny" unique_id=337757527]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 54.0
+offset_top = 71.0
+offset_right = 54.0
+offset_bottom = 71.0
+texture = ExtResource("21_6k6lf")
+
+[node name="ProjectileCoinSmallest" type="TextureRect" parent="penny" unique_id=1602163636]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 110.0
+offset_top = 24.0
+offset_right = 110.0
+offset_bottom = 24.0
+texture = ExtResource("22_itolw")
+
+[node name="penny_spawn_left" type="ColorRect" parent="penny" unique_id=118314157]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 25.0
+offset_right = 3.0
+offset_bottom = 88.0
+color = Color(1, 0, 0, 1)
+
+[node name="penny_spawn_right" type="ColorRect" parent="penny" unique_id=1635627697]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 137.0
+offset_top = 25.0
+offset_right = 140.0
+offset_bottom = 87.0
+color = Color(0, 1, 1, 1)
+
+[node name="heads" type="Control" parent="." unique_id=491535619]
+visible = false
+anchors_preset = 0
+offset_left = 9.0
+offset_top = 40.0
+offset_right = 9.0
+offset_bottom = 40.0
+
+[node name="coin_huge_start" type="ColorRect" parent="heads" unique_id=699901794]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -6.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+color = Color(1, 0.16000003, 0.16000003, 1)
+
+[node name="ProjectileCoinHugeSide" type="TextureRect" parent="heads" unique_id=623592032]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 29.0
+offset_top = -59.0
+offset_right = 131.0
+offset_bottom = -39.0
+texture = ExtResource("23_wff0d")
+
+[node name="ProjectileCoinBiggest" type="TextureRect" parent="heads" unique_id=2037026966]
+layout_mode = 0
+offset_left = 57.0
+offset_right = 57.0
+texture = ExtResource("24_islad")
+
+[node name="tailz" type="Control" parent="." unique_id=1218444653]
+visible = false
+anchors_preset = 0
+
+[node name="ProjectileCoinBig" type="TextureRect" parent="tailz" unique_id=893393365]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 39.0
+offset_top = 21.0
+offset_right = 54.0
+offset_bottom = 35.0
+texture = ExtResource("25_du6bj")
+
+[node name="ProjectileCoinTailzSmall" type="TextureRect" parent="tailz" unique_id=622522536]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 59.0
+offset_top = 80.0
+offset_right = 70.0
+offset_bottom = 90.0
+texture = ExtResource("21_6k6lf")
+
+[node name="receiptpete" type="Control" parent="." unique_id=318897826]
+visible = false
+anchors_preset = 0
+
+[node name="ProjectileDropletBig" type="TextureRect" parent="receiptpete" unique_id=105334997]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 20.0
+offset_top = 19.0
+offset_right = 20.0
+offset_bottom = 19.0
+texture = ExtResource("15_ok5hf")
+
+[node name="ProjectileDropletSmall" type="TextureRect" parent="receiptpete" unique_id=1145380129]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 22.0
+offset_top = 53.0
+offset_right = 22.0
+offset_bottom = 53.0
+texture = ExtResource("16_y6avb")
+
+[node name="ProjectileDropletSmallest" type="TextureRect" parent="receiptpete" unique_id=442117252]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 61.0
+offset_top = 47.0
+offset_right = 61.0
+offset_bottom = 47.0
+texture = ExtResource("17_44t1n")
+
+[node name="droplet_spawn" type="ColorRect" parent="receiptpete" unique_id=846761991]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 18.0
+offset_right = 124.0
+offset_bottom = 120.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1352170362]
+clip_contents = false
+layout_mode = 0
+offset_left = -173.0
+offset_top = -4.0
+offset_right = -98.0
+offset_bottom = 137.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=1022988179]
+unique_name_in_owner = true
+layout_mode = 2
