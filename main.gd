@@ -1,9 +1,19 @@
 extends Node2D
 
 ##### Resource Constants #####
-#const battle_bubble_med_tex := preload("res://battle_bubble_med.tres")
 const droplet_frames := preload("res://frames_droplet.tres")
+const dirt_frames := preload("res://frames_dirt.tres")
+const flash_shader := preload("res://flash.gdshader")
+const car0_scene := preload("res://car_0.tscn")
+const car1_scene := preload("res://car_1.tscn")
+const car2_scene := preload("res://car_2.tscn")
+const vfx_plus_tex := preload("res://image/vfx_plus.png")
+const vfx_minus_tex := preload("res://image/vfx_minus.png")
+
 var enemy_data: ConfigFile = ConfigFile.new()
+@onready var car0 := car0_scene.instantiate()
+@onready var car1 := car1_scene.instantiate()
+@onready var car2 := car2_scene.instantiate()
 
 ##### Enums #####
 enum BattlePhase {
@@ -20,6 +30,7 @@ enum Scene {
     Title,
     Wash,
     Battle,
+    GameEnd,
 }
 
 enum CommandType {
@@ -141,11 +152,13 @@ class Droplet:
     var droplet_sprite: AnimatedSprite2D
     var damage_deals := 1.0
 
-    func _init(droplets_parent: Node2D, stream: WaterStream, frames: SpriteFrames) -> void:
+    func _init(droplets_parent: Node2D, stream: WaterStream, frames: SpriteFrames, god_active := false) -> void:
         droplet_sprite = AnimatedSprite2D.new()
         stream_source = stream
         droplet_sprite.sprite_frames = frames
         droplets_parent.add_child(droplet_sprite)
+        if god_active:
+            damage_deals = 1000.0
 
 class EnemyConfigData:
     var transition_color := Color.BLUE_VIOLET
@@ -161,43 +174,224 @@ func get_sprite_rect(sprite: Variant) -> Rect2:
             sprite.animation,
             sprite.frame
         )
-        result = Rect2(Vector2.ZERO, tex.get_size())
+        var size: Vector2 = tex.get_size()
+        result = Rect2(-size * 0.5, size)
 
     return result
+
+class BattleSession:
+    var phase: BattlePhase = BattlePhase.TransitionIn
+    var turn_timer: float = 0.0
+    var clock_delta: float = 0.0
+    var path_progress: float = 0.0
+    var invuln_timer: float = 0.0
+    var enemy_move_tween: Tween
+    var timer_tween: Tween
+    var clock_delta_tween: Tween
+
+    func kill_tweens() -> void:
+        for tw: Tween in [enemy_move_tween, timer_tween, clock_delta_tween]:
+            if tw and tw.is_running():
+                tw.kill()
 
 ##### Instance Variables #####
 var commands: Array[Command] = []
 var settings := Settings.new()
-var scene_current: Scene = Scene.Title
-var battle_phase: BattlePhase = BattlePhase.None
-var battle_turn_timer: float = 0.0
+var scene_current: Scene = Scene.Wash
+var scene_die := Scene.Wash
+@export_range(1, 3, 1) var day_current := 1
+var car_current: Entity
+var battle: BattleSession
 var enemy_config_data: Dictionary[String, EnemyConfigData] = {}
 
 var locations: Array[String] = ["front", "side_left", "back", "side_right",]
 var location_index: int = 0
-@export var path_progress: float = 0.0
 @export var max_player_height: float = 50.0
 @export var mouse_speed_decay: float = 5.0
 
 var thing_battling: Entity
-var _enemy_move_tween: Tween
-var _timer_tween: Tween
+var _death_pending: bool = false
 @export var timer_hide_distance: float = 30.0
 @export var timer_hide_duration: float = 0.3
 @export var game_clock_start: float = 300.0
 var game_clock: float = 0.0
+var game_clock_starting_time := [300.0, 300.0, 300.0]
+var game_clock_histories := {
+    "Durt": 0.0,
+    "Gryme": 0.0,
+    "Battlebottle": 0.0,
+    "Ooze": 0.0,
+    "Penny": 0.0,
+    "Heads": 0.0,
+    "Tailz": 0.0,
+    "Receiptpete": 0.0,
+}
+var username := ""
 var pink_offset: Vector2 = Vector2.ZERO
 var yellow_offset: Vector2 = Vector2.ZERO
 var mouse_speed: float = 0.0
 var _prev_mouse_pos: Vector2 = Vector2.ZERO
 
-#var projectiles_coord_raw: Array[Vector2] = []
 var drops: Array[Droplet] = []
 var grime: Array[Node2D] = []
 
 # Hit effect tracking
 var hit_effect_timers: Dictionary[Entity, float] = {}  # Entity -> time remaining
 var hit_sounds: Dictionary[Entity, Audio.PlayingSound] = {}
+
+var game_clock_timeout_handled := false
+var _day_transitioning := false
+var god_mode := false
+
+func spawn_cars() -> void:
+    hit_effect_timers.clear()
+    hit_sounds.clear()
+    if car0:
+        %cars.remove_child(car0)
+        car0.queue_free()
+    if car1:
+        %cars.remove_child(car1)
+        car1.queue_free()
+    if car2:
+        %cars.remove_child(car2)
+        car2.queue_free()
+    car0 = car0_scene.instantiate()
+    car1 = car1_scene.instantiate()
+    car2 = car2_scene.instantiate()
+    car0.add_to_group("car")
+    car1.add_to_group("car")
+    car2.add_to_group("car")
+    %cars.add_child(car0)
+    %cars.add_child(car1)
+    %cars.add_child(car2)
+    car_current = car0
+    _spawn_dirt(car0, 10.0, Vector2(21, 27), Vector2(1, 7), Vector2(9, 20), Vector2(1, 7))
+    _spawn_dirt(car1, 10.0, Vector2(59, 78), Vector2(28, 58), Vector2(79, 107), Vector2(28, 58))
+    _spawn_dirt(car2, 10.0, Vector2(1, 7), Vector2(21, 27), Vector2(28, 58), Vector2(79, 107))
+
+func _spawn_dirt(car: Entity, min_distance: float,
+        front_frame_range: Vector2, right_frame_range: Vector2,
+        back_frame_range: Vector2, left_frame_range: Vector2) -> void:
+    var face_frame_ranges: Dictionary[String, Vector2] = {
+        "car_front": front_frame_range,
+        "car_right": right_frame_range,
+        "car_back": back_frame_range,
+        "car_left": left_frame_range,
+    }
+    var enemy_frame_map: Dictionary[Entity.EnemyType, int] = {}
+    var enemy_frame_count: int = dirt_frames.get_frame_count("Enemy") - 1
+    var enemy_type_count: int = Entity.EnemyType.size() - 1 # exclude None
+    for polygon: Polygon2D in car.polygons:
+        var face_name: String = polygon.name.replace("_polygon", "")
+        var face_sprite: Node = car.find_child(face_name)
+        if not face_sprite:
+            push_warning("No face sprite found for polygon %s" % polygon.name)
+            continue
+        # Remove pre-existing Entity children from this face
+        var existing_entities: Array[Node] = []
+        for child: Node in face_sprite.get_children():
+            if child is Entity:
+                existing_entities.append(child)
+        for child: Node in existing_entities:
+            face_sprite.remove_child(child)
+            child.queue_free()
+        var frame_range: Vector2 = face_frame_ranges.get(face_name, Vector2(0, 0))
+        var frame_min: int = int(frame_range.x)
+        var frame_max: int = int(frame_range.y)
+        var spawn_list: Array[Dictionary] = []
+        for j: int in range(4):
+            spawn_list.append({"grime_type": Entity.GrimeType.None, "enemy_type": Entity.EnemyType.None, "animation": "None", "frame": randi_range(frame_min, frame_max)})
+        for j: int in range(4):
+            var etype: Entity.EnemyType = (randi_range(1, enemy_type_count) as Entity.EnemyType)
+            if not enemy_frame_map.has(etype):
+                enemy_frame_map[etype] = randi_range(0, enemy_frame_count)
+            spawn_list.append({"grime_type": Entity.GrimeType.Enemy, "enemy_type": etype, "animation": "Enemy", "frame": enemy_frame_map[etype]})
+        var placed_rects: Array[Rect2] = []
+        for spawn: Dictionary in spawn_list:
+            var entity := Entity.new()
+            entity.grime_type = spawn["grime_type"] as Entity.GrimeType
+            entity.enemy_type = spawn["enemy_type"] as Entity.EnemyType
+            var sprite := AnimatedSprite2D.new()
+            var mat := ShaderMaterial.new()
+            mat.shader = flash_shader
+            mat.set_shader_parameter("hit_effect", 0.0)
+            mat.set_shader_parameter("shake_intensity", 10.0)
+            mat.set_shader_parameter("flash_speed", 30.0)
+            mat.set_shader_parameter("flash_color", Color.WHITE)
+            sprite.sprite_frames = dirt_frames
+            sprite.animation = spawn["animation"] as String
+            sprite.frame = spawn["frame"] as int
+            sprite.material = mat
+            entity.sprite_path = NodePath("sprite")
+            sprite.name = "sprite"
+            entity.add_child(sprite)
+            face_sprite.add_child(entity)
+            var tex: Texture2D = sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)
+            var sprite_size: Vector2 = tex.get_size()
+            var half_size: Vector2 = sprite_size * 0.5
+            # Try random placement first
+            var pos: Vector2 = Util.get_random_global_point_in_polygon2d_reduced_by_sprite_rect(polygon, sprite)
+            var found := false
+            for attempt: int in range(50):
+                var candidate_rect := Rect2(pos - half_size, sprite_size).grow(min_distance)
+                var overlaps := false
+                for existing: Rect2 in placed_rects:
+                    if candidate_rect.intersects(existing):
+                        overlaps = true
+                        break
+                if not overlaps:
+                    found = true
+                    break
+                pos = Util.get_random_global_point_in_polygon2d_reduced_by_sprite_rect(polygon, sprite)
+            # Grid search fallback if random failed
+            if not found:
+                var shrunk_polys: Array[PackedVector2Array] = Util.get_shrunk_polygon(polygon, sprite)
+                if not shrunk_polys.is_empty():
+                    var best_pos: Vector2 = pos
+                    var best_clearance: float = -INF
+                    var grid_step: float = 4.0
+                    var bounds := Rect2(shrunk_polys[0][0], Vector2.ZERO)
+                    for poly: PackedVector2Array in shrunk_polys:
+                        for pt: Vector2 in poly:
+                            bounds = bounds.expand(pt)
+                    var gy: float = bounds.position.y
+                    while gy <= bounds.end.y:
+                        var gx: float = bounds.position.x
+                        while gx <= bounds.end.x:
+                            var candidate := Vector2(gx, gy)
+                            var inside := false
+                            for poly: PackedVector2Array in shrunk_polys:
+                                if Geometry2D.is_point_in_polygon(candidate, poly):
+                                    inside = true
+                                    break
+                            if inside:
+                                var worst_clearance: float = INF
+                                for existing: Rect2 in placed_rects:
+                                    var padded := existing.grow(min_distance)
+                                    var candidate_rect := Rect2(candidate - half_size, sprite_size)
+                                    if candidate_rect.intersects(padded):
+                                        var overlap_x: float = minf(candidate_rect.end.x, padded.end.x) - maxf(candidate_rect.position.x, padded.position.x)
+                                        var overlap_y: float = minf(candidate_rect.end.y, padded.end.y) - maxf(candidate_rect.position.y, padded.position.y)
+                                        worst_clearance = minf(worst_clearance, -minf(overlap_x, overlap_y))
+                                    else:
+                                        var dx: float = maxf(padded.position.x - candidate_rect.end.x, candidate_rect.position.x - padded.end.x)
+                                        var dy: float = maxf(padded.position.y - candidate_rect.end.y, candidate_rect.position.y - padded.end.y)
+                                        worst_clearance = minf(worst_clearance, maxf(dx, dy))
+                                if worst_clearance > best_clearance:
+                                    best_clearance = worst_clearance
+                                    best_pos = candidate
+                            gx += grid_step
+                        gy += grid_step
+                    if best_clearance >= 0.0:
+                        pos = best_pos
+                        found = true
+            if not found:
+                # No non-overlapping position exists — don't spawn this entity
+                face_sprite.remove_child(entity)
+                entity.queue_free()
+                continue
+            entity.global_position = pos
+            placed_rects.append(Rect2(pos - half_size, sprite_size))
 
 func _update_timer_display() -> void:
     var clamped: int = maxi(int(ceil(game_clock)), 0)
@@ -208,13 +402,73 @@ func _update_timer_display() -> void:
     %timer/numbers3.frame = seconds / 10
     %timer/numbers4.frame = seconds % 10
 
+func _is_car_clean(car: Entity) -> bool:
+    for face: Node in car.get_children():
+        if face is not Sprite2D:
+            continue
+        for child: Node in face.get_children():
+            if child is Entity and child.visible and child.hp > 0.0:
+                return false
+    return true
+
+func _advance_day() -> void:
+    if _day_transitioning:
+        return
+    _day_transitioning = true
+    %transition_battle.visible = true
+    %transition_battle.animation = "horizontal"
+    %transition_battle.frame = 17
+    var tween := get_tree().create_tween()
+    tween.tween_method(
+        func(value: Color) -> void:
+            %transition_battle.material.set_shader_parameter("transition_color", value)
+    , Color.TRANSPARENT, Color.BLACK, 1.0)
+    tween.tween_callback(
+        func() -> void:
+            if day_current >= 3:
+                scene_current = Scene.GameEnd
+                _day_transitioning = false
+                return
+            day_current += 1
+            location_index = 0)
+    tween.tween_method(
+        func(value: Color) -> void:
+            %transition_battle.material.set_shader_parameter("transition_color", value)
+    , Color.BLACK, Color.TRANSPARENT, 1.0)
+    tween.tween_callback(
+        func() -> void:
+            %transition_battle.visible = false
+            _day_transitioning = false)
+
+func _animate_clock_delta(delta_value: float) -> void:
+    if delta_value == 0.0:
+        return
+    var delta_color: Color = Color.RED if delta_value < 0.0 else Color.GREEN
+    for child: Node in %timer.get_children():
+        child.modulate = delta_color
+    var start_clock: float = game_clock
+    var target_clock: float = maxf(game_clock + delta_value, 0.0)
+    var duration: float = 0.5
+    var tween: Tween = get_tree().create_tween()
+    tween.tween_method(
+        func(value: float) -> void:
+            game_clock = value
+            _update_timer_display()
+    , start_clock, target_clock, duration)
+    tween.tween_callback(
+        func() -> void:
+            for child: Node in %timer.get_children():
+                child.modulate = Color.WHITE
+    )
+
 func _ready() -> void:
-    var username := ""
     if OS.has_environment("USERNAME"):
         username = OS.get_environment("USERNAME")
     elif OS.has_environment("USER"):
         username = OS.get_environment("USER")
     else:
+        username = "Employee #63510"
+    if OS.has_feature("web"):
         username = "Employee #63510"
     print(username)
     var data_result: Error = enemy_data.load("res://enemy_data.cfg")
@@ -295,28 +549,31 @@ func _ready() -> void:
         command.args = [text]
         commands.append(command)
         pass)
-
+    
+    spawn_cars()
+    if OS.has_feature("release"):
+        scene_current = Scene.Title
     # Initialize grime for starting location
-    grime.clear()
-    for child in %car0.get_child(location_index).get_children():
-        if child is Entity:
-            grime.append(child)
+    #grime.clear()
+    #for child in car_current.get_child(location_index).get_children():
+        #if child is Entity:
+            #grime.append(child)
 
 ##### UI Animation Functions #####
 func ui_anim_enemy_enter() -> void:
-    _enemy_move_tween = get_tree().create_tween()
-    _enemy_move_tween\
+    battle.enemy_move_tween = get_tree().create_tween()
+    battle.enemy_move_tween\
         .tween_property(%battle_enemy, "global_position", %enemy_place_while_battle.global_position, 0.5)\
         .set_trans(Tween.TRANS_QUAD)
 
 func ui_anim_enemy_exit() -> void:
-    _enemy_move_tween = get_tree().create_tween()
+    battle.enemy_move_tween = get_tree().create_tween()
     @warning_ignore("integer_division")
-    _enemy_move_tween.tween_property(%battle_enemy, "global_position", Vector2(320/2, 180/2), 0.5).set_trans(Tween.TRANS_QUAD)
+    battle.enemy_move_tween.tween_property(%battle_enemy, "global_position", Vector2(320/2, 180/2), 0.5).set_trans(Tween.TRANS_QUAD)
 
 ##### Battle Phase Transitions #####
 func _battle_transition_in_anim_finished() -> void:
-    if battle_phase != BattlePhase.TransitionIn:
+    if not battle or battle.phase != BattlePhase.TransitionIn:
         return
     var tween: Tween = get_tree().create_tween()
     tween.tween_method(
@@ -337,43 +594,71 @@ func _battle_transition_in_anim_finished() -> void:
     , 1.0, 0.0, 0.5)
     tween.tween_callback(
         func() -> void:
-            if battle_phase != BattlePhase.TransitionIn:
+            if not battle or battle.phase != BattlePhase.TransitionIn:
                 return
             %transition_battle.visible = false
+            _death_pending = false
             _battle_start_enemy_enter())
 
 func _battle_start_enemy_enter() -> void:
     if %battle_enemy.hp <= 0.0:
         return
-    battle_phase = BattlePhase.EnemyEnter
+    battle.phase = BattlePhase.EnemyEnter
     %ui_anim.play("battle_enemy") # calls ui_anim_enemy_enter()
-    %ui_anim.animation_finished.connect(_battle_enemy_enter_finished, CONNECT_ONE_SHOT)
+    if not %ui_anim.animation_finished.is_connected(_battle_enemy_enter_finished):
+        %ui_anim.animation_finished.connect(_battle_enemy_enter_finished, CONNECT_ONE_SHOT)
 
 func _battle_enemy_enter_finished(_anim_name: StringName) -> void:
-    if battle_phase != BattlePhase.EnemyEnter:
+    if not battle or battle.phase != BattlePhase.EnemyEnter:
         return
-    battle_phase = BattlePhase.EnemyTurn
-    battle_turn_timer = 5.0
-    %battle_patterns.expected_time_for_minigame = battle_turn_timer
+    battle.phase = BattlePhase.EnemyTurn
+    battle.turn_timer = 5.0
+    %battle_patterns.expected_time_for_minigame = battle.turn_timer
     var battle_rect: Rect2 = %battle_patterns.get_global_rect()
     Input.warp_mouse(Util.game_to_window(self, Vector2(battle_rect.position + battle_rect.size * 0.5)))
     %battle_cursor.visible = true
     %battle_runner.play(enemy_config_data[Entity.EnemyType.keys()[thing_battling.enemy_type]].attack_patterns.pick_random())
 
+func _reset_battle_state() -> void:
+    if battle:
+        battle.kill_tweens()
+    battle = null
+    _death_pending = false
+    hit_effect_timers.clear()
+    hit_sounds.clear()
+    %battle_cursor.visible = false
+    %battle_runner.stop()
+    %ui_anim.stop()
+    %battle_patterns.position = Vector2(158, 200)
+    %battle_enemy.global_position = Vector2(320.0 / 2.0, 180.0 / 2.0)
+    %battle_enemy.sprite.material.set_shader_parameter("hit_effect", 0.0)
+
+func _spawn_hit_vfx(pos: Vector2, is_good: bool) -> void:
+    var sprite := Sprite2D.new()
+    sprite.texture = vfx_plus_tex if is_good else vfx_minus_tex
+    sprite.modulate = Color(0.2, 1.0, 0.2) if is_good else Color(1.0, 0.2, 0.2)
+    sprite.global_position = pos
+    add_child(sprite)
+    var tw: Tween = get_tree().create_tween()
+    tw.set_parallel(true)
+    tw.tween_property(sprite, "global_position:y", pos.y - 15.0, 0.6).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+    tw.tween_property(sprite, "modulate:a", 0.0, 0.6).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+    tw.chain().tween_callback(sprite.queue_free)
+
 func _battle_start_player_enter() -> void:
-    battle_phase = BattlePhase.PlayerEnter
+    battle.phase = BattlePhase.PlayerEnter
     %battle_runner.stop()
     %ui_anim.play("battle_player") # calls ui_anim_enemy_exit()
     %ui_anim.animation_finished.connect(_battle_player_enter_finished, CONNECT_ONE_SHOT)
 
 func _battle_player_enter_finished(_anim_name: StringName) -> void:
-    if battle_phase != BattlePhase.PlayerEnter:
+    if not battle or battle.phase != BattlePhase.PlayerEnter:
         return
-    if _enemy_move_tween and _enemy_move_tween.is_running():
-        _enemy_move_tween.kill()
-    battle_phase = BattlePhase.PlayerTurn
-    battle_turn_timer = 3.0
-    path_progress = 0.0
+    if battle.enemy_move_tween and battle.enemy_move_tween.is_running():
+        battle.enemy_move_tween.kill()
+    battle.phase = BattlePhase.PlayerTurn
+    battle.turn_timer = 3.0
+    battle.path_progress = 0.0
     var curve: Curve2D = %enemy_path.curve
     %battle_enemy.global_position = curve.sample_baked(0.0)
 
@@ -385,14 +670,15 @@ func _process(delta: float) -> void:
         get_tree().paused = true
     if (not %ui_left.mouse_hover and not %ui_right.mouse_hover) or Input.is_action_just_released("input_action"):
         check_hose = true
-    #if scene_current == Scene.Wash:
+    if scene_current != Scene.Wash and scene_current != Scene.Battle:
+        check_hose = false
     if %ui_left.mouse_hover and Input.is_action_just_pressed("input_action"):
         commands.append(Command.new(CommandType.Move_Left))
         check_hose = false
     if %ui_right.mouse_hover and Input.is_action_just_pressed("input_action"):
         commands.append(Command.new(CommandType.Move_Right))
         check_hose = false
-    if scene_current == Scene.Battle and battle_phase != BattlePhase.PlayerTurn:
+    if scene_current == Scene.Battle and (not battle or battle.phase != BattlePhase.PlayerTurn):
         check_hose = false
     if check_hose and Input.is_action_pressed("input_action"):
         commands.append(Command.new(CommandType.Droplet_New))
@@ -404,9 +690,21 @@ func _process(delta: float) -> void:
         if Input.is_action_just_pressed("input_action"):
             %title_screen_anim.play("begin")
             %title_screen_anim.animation_finished.connect(
-                func(_a: Variant) -> void:
-                    scene_current = Scene.Wash
+                func(anim_name: String) -> void:
+                    if anim_name != "RESET":
+                        _reset_battle_state()
+                        day_current = 1
+                        game_clock = game_clock_starting_time[day_current - 1]
+                        game_clock_timeout_handled = false
+                        spawn_cars()
+                        scene_current = Scene.Wash
                     pass)
+    if scene_current == Scene.GameEnd:
+        if Input.is_action_just_pressed("input_action"):
+            %title_screen_anim.play("RESET")
+            scene_current = Scene.Title
+            Audio.stop_all_music()
+            Audio.create_music(Audio.MusicType.Wash)
     
     var current_mouse_pos: Vector2 = get_global_mouse_position()
     var instant_speed: float = current_mouse_pos.distance_to(_prev_mouse_pos) / delta
@@ -442,10 +740,11 @@ func _process(delta: float) -> void:
     for entity: Entity in hit_sounds.keys():
         var sound: Audio.PlayingSound = hit_sounds[entity]
         # Check if both nodes are gone/invalid
-        var node_valid: bool = sound.node and not sound.node.is_queued_for_deletion()
-        var node2d_valid: bool = sound.node2d and not sound.node2d.is_queued_for_deletion()
-        if not node_valid and not node2d_valid:
-            sounds_to_remove.append(entity)
+        if sound:
+            var node_valid: bool = sound.node and not sound.node.is_queued_for_deletion()
+            var node2d_valid: bool = sound.node2d and not sound.node2d.is_queued_for_deletion()
+            if not node_valid and not node2d_valid:
+                sounds_to_remove.append(entity)
 
     for entity: Entity in sounds_to_remove:
         hit_sounds.erase(entity)
@@ -463,23 +762,15 @@ func _physics_process(delta: float) -> void:
                     location_index = len(locations) - 1
                 else:
                     location_index -= 1
-                grime.clear()
-                for child in %car0.get_child(location_index).get_children():
-                    if child is Entity:
-                        grime.append(child)
             CommandType.Move_Right:
                 if len(locations) - location_index - 1 > 0:
                     location_index += 1
                 else:
                     location_index = 0
-                grime.clear()
-                for child in %car0.get_child(location_index).get_children():
-                    if child is Entity:
-                        grime.append(child)
             ##### Droplet Commands #####
             CommandType.Droplet_New:
                 var stream: WaterStream = %water_stream.duplicate()
-                var droplet: Droplet = Droplet.new(%droplets, stream, droplet_frames)
+                var droplet: Droplet = Droplet.new(%droplets, stream, droplet_frames, god_mode)
                 droplet.droplet_sprite.global_position = %player_hose/hose_emit.global_position
                 droplet.droplet_sprite.animation = "drop"
                 droplet.droplet_sprite.reset_physics_interpolation()
@@ -493,6 +784,8 @@ func _physics_process(delta: float) -> void:
 
                 # Unified collision check - works for both wash and battle
                 for the_grime: Entity in grime:
+                    if _death_pending:
+                        break
                     if the_grime.hp > 0.0 and get_sprite_rect(the_grime.sprite).has_point(
                         the_grime.sprite.to_local(droplet.droplet_sprite.global_position)):
                         var death_command: Command
@@ -502,6 +795,7 @@ func _physics_process(delta: float) -> void:
                             death_command = Command.new(CommandType.Battle_End, [the_grime])
 
                         the_grime.hp -= droplet.damage_deals
+                        print(the_grime.hp)
                         the_grime.sprite.material.set_shader_parameter("hit_effect", 0.5)
 
                         # Only create/restart sound if entity wasn't already being hit
@@ -518,6 +812,7 @@ func _physics_process(delta: float) -> void:
                         # else: entity was already flashing, keep existing sound playing
 
                         if the_grime.hp <= 0.0:
+                            _death_pending = true
                             commands.append(death_command)
 
             ##### Grime and Battle Commands #####
@@ -528,6 +823,7 @@ func _physics_process(delta: float) -> void:
                     commands.append(Command.new(CommandType.Battle_Start, [the_grime]))
                     thing_battling = the_grime
                 elif the_grime.grime_type == Entity.GrimeType.None:
+                    _death_pending = false
                     Audio.create_2d_sfx_at_location(the_grime.global_position, Audio.SoundEffectType.Cleaned_Dirt) # all good
                     the_grime.visible = false
                     var particler: CPUParticles2D = %CPUParticles2D.duplicate()
@@ -536,13 +832,11 @@ func _physics_process(delta: float) -> void:
                     add_child(particler)
                     particler.emitting = true
             CommandType.Battle_Start:
-                battle_phase = BattlePhase.TransitionIn
-                if _timer_tween and _timer_tween.is_running():
-                    _timer_tween.kill()
-                _timer_tween = get_tree().create_tween()
-                _timer_tween.tween_property(%timer, "position:y", -20.0 - timer_hide_distance, timer_hide_duration)
+                battle = BattleSession.new()
+                battle.timer_tween = get_tree().create_tween()
+                battle.timer_tween.tween_property(%timer, "position:y", -20.0 - timer_hide_distance, timer_hide_duration)
                 var what_fighting: Entity = command.args[0]
-                %battle_enemy.hp = what_fighting.base_hp
+                %battle_enemy.hp = 3.5 * what_fighting.base_hp
 
                 var enemy_key: String = Entity.EnemyType.keys()[what_fighting.enemy_type]
                 %battle_enemy/sprite.animation = enemy_key
@@ -560,16 +854,12 @@ func _physics_process(delta: float) -> void:
                 %transition_battle.play(["circle", "horizontal", "split"].pick_random())
                 %transition_battle.animation_finished.connect(_battle_transition_in_anim_finished, CONNECT_ONE_SHOT)
             CommandType.Battle_End:
-                battle_phase = BattlePhase.TransitionOut
-                #projectiles_coord_raw.clear()
-                #%battle_emitter_timer.stop()
-                #for connection: Dictionary in %battle_emitter_timer.timeout.get_connections():
-                    #%battle_emitter_timer.timeout.disconnect(connection.callable)
-                %battle_cursor.visible = false
-                %ui_anim.stop()
-                %battle_patterns.position = Vector2(158, 200)
-                if _enemy_move_tween and _enemy_move_tween.is_running():
-                    _enemy_move_tween.kill()
+                battle.phase = BattlePhase.TransitionOut
+                #%battle_cursor.visible = false
+                #%ui_anim.stop()
+                #%battle_patterns.position = Vector2(158, 200)
+                #if _enemy_move_tween and _enemy_move_tween.is_running():
+                    #_enemy_move_tween.kill()
                 %transition_battle.visible = true
                 var tween: Tween = get_tree().create_tween()
                 tween.tween_method(
@@ -585,25 +875,24 @@ func _physics_process(delta: float) -> void:
                         callback_command.args = ["go wash"]
                         commands.append(callback_command)
                         # Restore grime array to current car location
-                        grime.clear()
-                        for child: Node in %car0.get_child(location_index).get_children():
-                            if child is Entity:
-                                grime.append(child))
+                        #grime.clear()
+                        #for child: Node in car_current.get_child(location_index).get_children():
+                            #if child is Entity:
+                                #grime.append(child)
+                                )
                 tween.tween_method(
                     func(value: float) -> void:
                         %transition_battle.material.set_shader_parameter("transition_color", Color(0.0,0.0,0.0,value))
                 , 1.0, 0.0, 0.5)
+                var captured_clock_delta: float = battle.clock_delta
                 tween.tween_callback(
                     func() -> void:
-                        if battle_phase != BattlePhase.TransitionOut:
-                            return
                         thing_battling.grime_type = Entity.GrimeType.None
                         commands.append(Command.new(CommandType.Grime_Dead, [thing_battling]))
-                        battle_phase = BattlePhase.None
-                        if _timer_tween and _timer_tween.is_running():
-                            _timer_tween.kill()
-                        _timer_tween = get_tree().create_tween()
-                        _timer_tween.tween_property(%timer, "position:y", -20.0, timer_hide_duration)
+                        _reset_battle_state()
+                        var timer_tween: Tween = get_tree().create_tween()
+                        timer_tween.tween_property(%timer, "position:y", -20.0, timer_hide_duration)
+                        timer_tween.tween_callback(_animate_clock_delta.bind(captured_clock_delta))
                         pass)
             ##### Debug Commands #####
             CommandType.Debug_Submit:
@@ -616,11 +905,38 @@ func _physics_process(delta: float) -> void:
                         breakpoint
                     ["bus", ..]:
                         Audio.reload_audio_buses()
+                    ["die", ..]:
+                        game_clock = 0.0
+                    ["god", ..]:
+                        god_mode = !god_mode
+                    ["c", ..]:
+                        spawn_cars()
+                    ["kill", ..]:
+                        for face: Node in car_current.get_children():
+                            if face is not Sprite2D:
+                                continue
+                            for child: Node in face.get_children():
+                                if child is Entity and child.visible and child.hp > 0.0:
+                                    child.hp = 0.0
+                                    child.visible = false
+                    ["killbutone", ..]:
+                        var found_one := false
+                        for face: Node in car_current.get_children():
+                            if face is not Sprite2D:
+                                continue
+                            for child: Node in face.get_children():
+                                if child is Entity and child.visible and child.hp > 0.0:
+                                    if not found_one:
+                                        found_one = true
+                                        continue
+                                    child.hp = 0.0
+                                    child.visible = false
                     ["go", "title"]:
                         scene_current = Scene.Title
                     ["go", "wash"]:
                         Audio.stop_all_music()
                         Audio.create_music(Audio.MusicType.Wash)
+                        #_reset_battle_state()
                         scene_current = Scene.Wash
                     ["go", "battle"]:
                         Audio.stop_all_music()
@@ -636,15 +952,27 @@ func _physics_process(delta: float) -> void:
                 %debug_edit.text = ""
         command = commands.pop_back()
 
-    ##### Projectile Updates #####
-    for child in %projectiles.get_children():
-        %projectiles.remove_child(child)
-        child.queue_free()
+    match day_current:
+        1:
+            car_current.visible = false
+            car_current = car0
+            car_current.visible = true
+        2:
+            car_current.visible = false
+            car_current = car1
+            car_current.visible = true
+        3:
+            car_current.visible = false
+            car_current = car2
+            car_current.visible = true
+        _:
+            assert(false)
 
 ##### Scene and Rendering Updates #####
     %scene_battle.visible = false
     %scene_carwash.visible = false
     %scene_title.visible = false
+    %scene_gameend.visible = false
     %recticle.visible = false
     if game_clock > 0.0:
         game_clock -= delta
@@ -658,69 +986,95 @@ func _physics_process(delta: float) -> void:
             %droplets.visible = true
 
             %scene_carwash.visible = true
+            grime.clear()
+            for child in car_current.get_child(location_index).get_children():
+                if child is Entity:
+                    grime.append(child)
+            if not _day_transitioning and not battle and _is_car_clean(car_current):
+                _advance_day()
         Scene.Battle:
             $scene_battle.visible  = true
-            match battle_phase:
-                BattlePhase.PlayerTurn:
-                    %player_hose.visible = true
-                    %recticle.visible = true
-                    %droplets.visible = true
-                    battle_turn_timer -= delta
-                    path_progress += 0.007
-                    if path_progress >= 1.0:
-                        path_progress = 0.0
-                    print(path_progress)
-                    var curve: Curve2D = %enemy_path.curve
-                    %battle_enemy.global_position = curve.sample_baked(path_progress * curve.get_baked_length())
-                    if battle_turn_timer <= 0.0:
-                        _battle_start_enemy_enter()
-                BattlePhase.EnemyTurn:
-                    %player_hose.visible = false
-                    %droplets.visible = false
-                    %battle_cursor.global_position = get_global_mouse_position()
-                    var cursor_rect: Rect2 = %battle_cursor.get_global_rect()
-                    var battle_box_rect: Rect2 = %battle_patterns.get_global_rect()
-                    var result: Rect2 = Util.clamp_rect(cursor_rect, battle_box_rect)
-                    %battle_cursor.global_position = result.position
+            if battle:
+                match battle.phase:
+                    BattlePhase.PlayerTurn:
+                        %player_hose.visible = true
+                        %recticle.visible = true
+                        %droplets.visible = true
+                        battle.turn_timer -= delta
+                        battle.path_progress += 0.007
+                        if battle.path_progress >= 1.0:
+                            battle.path_progress = 0.0
+                        var curve: Curve2D = %enemy_path.curve
+                        %battle_enemy.global_position = curve.sample_baked(battle.path_progress * curve.get_baked_length())
+                        if battle.turn_timer <= 0.0:
+                            _battle_start_enemy_enter()
+                    BattlePhase.EnemyTurn:
+                        Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+                        %player_hose.visible = false
+                        %droplets.visible = false
+                        %battle_cursor.global_position = get_global_mouse_position()
+                        %battle_cursor.global_position.x -= 2
+                        var cursor_rect: Rect2 = %battle_cursor.get_global_rect()
+                        var battle_box_rect: Rect2 = %battle_patterns.get_global_rect()
+                        var result: Rect2 = Util.clamp_rect(cursor_rect, battle_box_rect)
+                        %battle_cursor.global_position = result.position
 
-                    #for i: int in range(len(projectiles_coord_raw)):
-                    #    var sprite: Sprite2D = Sprite2D.new()
-                    #    sprite.texture = battle_bubble_med_tex
-                    #    var coord: Vector2 = projectiles_coord_raw[i]
-                    #    var speed: float = 0.5
-                    #    if i % 4 == 0:
-                    #        var ir: Vector2 = Vector2.DOWN.rotated(%emitter0/RayCast2D.rotation)
-                    #        coord += ir * speed
-                    #    elif i % 4 == 1:
-                    #        var ir: Vector2 = Vector2.DOWN.rotated(%emitter1/RayCast2D.rotation)
-                    #        coord += ir * speed
-                    #    elif i % 4 == 2:
-                    #        var ir: Vector2 = Vector2.DOWN.rotated(%emitter2/RayCast2D.rotation)
-                    #        coord += ir * speed
-                    #    elif i % 4 == 3:
-                    #        var ir: Vector2 = Vector2.DOWN.rotated(%emitter3/RayCast2D.rotation)
-                    #        coord += ir * speed
-                    #    sprite.global_position = coord
-                    #    projectiles_coord_raw[i] = coord
-                    #    %projectiles.add_child(sprite)
+                        if battle.invuln_timer > 0.0:
+                            battle.invuln_timer -= delta
+                            %battle_cursor.modulate.a = 0.3 if fmod(battle.invuln_timer, 0.15) < 0.075 else 0.7
+                        else:
+                            %battle_cursor.modulate.a = 1.0
+                            match %battle_patterns.point_collide_projectile(get_global_mouse_position()):
+                                EnemyPatterns.HitType.Bad:
+                                    battle.clock_delta -= 5.0
+                                    battle.invuln_timer = 0.5
+                                    if game_clock_histories[Util.name_from_enemy_enum(thing_battling.enemy_type)] > battle.clock_delta:
+                                        game_clock_histories[Util.name_from_enemy_enum(thing_battling.enemy_type)] = battle.clock_delta
+                                    _spawn_hit_vfx(%battle_patterns.last_bad_hit_position, false)
+                                EnemyPatterns.HitType.Good:
+                                    battle.clock_delta += 5.0
+                                    var particler: CPUParticles2D = %particles_good.duplicate()
+                                    particler.global_position = %battle_patterns.last_good_hit_position
+                                    particler.finished.connect(func() -> void: particler.queue_free())
+                                    add_child(particler)
+                                    particler.emitting = true
+                                    _spawn_hit_vfx(%battle_patterns.last_good_hit_position, true)
 
-                    battle_turn_timer -= delta
-                    if battle_turn_timer <= 0.0:
-                        _battle_start_player_enter()
-                _:
-                    # During transitions/enter phases, don't update battle-specific visuals
-                    %player_hose.visible = false
-                    %droplets.visible = false
-
+                        battle.turn_timer -= delta
+                        if battle.turn_timer <= 0.0:
+                            _battle_start_player_enter()
+                            Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+                    _:
+                        # During transitions/enter phases, don't update battle-specific visuals
+                        %player_hose.visible = false
+                        %droplets.visible = false
+        Scene.GameEnd:
+            %scene_gameend.visible = true
+            %ending_playername.text = username
+            var death_cause := "None"
+            var min_key := "None"
+            var min_value := 0.0
+            for key: String in game_clock_histories.keys():
+                if game_clock_histories[key] < min_value:
+                    min_value = game_clock_histories[key]
+                    min_key = key
+            death_cause = min_key
+            if scene_die == Scene.Battle:
+                death_cause = Entity.EnemyType.keys()[thing_battling.enemy_type]
+            for child: Control in find_children("EndingBad*"):
+                child.visible = false
+            find_child("EndingBad%s" % death_cause).visible = true
+            %EndingWinBlank.visible = not game_clock <= 0.0
     ##### Car and Background Updates #####
     var car_sprite_index: int = 0
-    for car_sprite: Sprite2D in %car0.get_children():
-        if car_sprite_index == location_index:
-            car_sprite.visible = true
-            %background_carwash.get_child(car_sprite_index).visible = true
-        else:
-            car_sprite.visible = false
-            %background_carwash.get_child(car_sprite_index).visible = false
+    for car_sprite: Node2D in car_current.get_children():
+        if car_sprite is Sprite2D:
+            if car_sprite_index == location_index:
+                car_sprite.visible = true
+                %background_carwash.get_child(car_sprite_index).visible = true
+            else:
+                car_sprite.visible = false
+                %background_carwash.get_child(car_sprite_index).visible = false
         car_sprite_index += 1
 
     %background_pink.material.set_shader_parameter("tex_offset", pink_offset)
@@ -760,6 +1114,29 @@ func _physics_process(delta: float) -> void:
     ##### Reticle Positioning #####
     %recticle.global_position = %water_stream.global_position + %water_stream.get_end_position()
     
+    if scene_current == Scene.Wash or scene_current == Scene.Battle:
+        if game_clock <= 0.0 and not game_clock_timeout_handled:
+            %transition_battle.visible = true
+            %transition_battle.animation = "horizontal"
+            %transition_battle.frame = 17
+            Audio.stop_all_music()
+            var tween := get_tree().create_tween()
+            tween.tween_method(
+                func(value: Color) -> void:
+                    %transition_battle.material.set_shader_parameter("transition_color", value)
+            , Color.TRANSPARENT, Color.BLACK, 2)
+            tween.tween_callback(
+                func() -> void:
+                    scene_die = scene_current
+                    _reset_battle_state()
+                    scene_current = Scene.GameEnd
+                    pass)
+            tween.tween_method(
+                func(value: Color) -> void:
+                    %transition_battle.material.set_shader_parameter("transition_color", value)
+                    Audio.stop_all_music()
+            , Color.BLACK, Color.TRANSPARENT, 0.5)
+            game_clock_timeout_handled = true
     #print(mouse_speed)
 
 func _draw() -> void:

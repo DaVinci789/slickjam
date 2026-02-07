@@ -14,7 +14,7 @@ enum EnemyType {
     Heads,
     Ooze,
     Penny,
-    Recieptpete,
+    Receiptpete,
     Tailz
 }
 
@@ -23,6 +23,7 @@ enum EnemyType {
 @export var area_clickable: Array[Area2D]
 @export_node_path("Sprite2D", "AnimatedSprite2D") var sprite_path: NodePath
 @onready var sprite: Variant = get_node(sprite_path) if not sprite_path.is_empty() else null
+@export var polygons: Array[Polygon2D] = []
 @export_group("Enemy")
 @export_range(0.0, 30.0, 1.0) var base_hp := 20.0
 @export var grime_type := GrimeType.None
@@ -38,3 +39,5 @@ var scene_tree_timer: SceneTreeTimer = null
 func _ready() -> void:
     if grime_type == GrimeType.Enemy:
         assert(enemy_type != EnemyType.None)
+    if sprite and sprite.material:
+            sprite.material = sprite.material.duplicate()

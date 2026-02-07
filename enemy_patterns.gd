@@ -1,3 +1,4 @@
+class_name EnemyPatterns
 extends NinePatchRect
 
 const SIDE_LENGTH := 140.0
@@ -77,6 +78,7 @@ const SIDE_LENGTH := 140.0
 @export var wave_count: int = 25 ## how many waves of streams to spawn
 @export var wave_overshoot: float = 20.0 ## extra distance past edge before despawn
 var expected_time_for_minigame := 5.0
+
 enum HitType {
     None,
     Bad,
@@ -117,6 +119,10 @@ func get_random_point_in_rect(color_rect: ColorRect) -> Vector2:
     return Vector2(randf_range(rect.position.x, rect.end.x), randf_range(rect.position.y, rect.end.y))
 
 ## 0 = no hit, 1 = bad hit, 2 = good hit
+## When a good projectile is hit, it is hidden and its global_position is stored in last_good_hit_position.
+var last_good_hit_position: Vector2 = Vector2.ZERO
+var last_bad_hit_position: Vector2 = Vector2.ZERO
+
 func point_collide_projectile(point: Vector2) -> HitType:
     var result: HitType = HitType.None
     for node: Control in get_tree().get_nodes_in_group("projectile_enemy"):
@@ -124,8 +130,13 @@ func point_collide_projectile(point: Vector2) -> HitType:
             continue
         var local_point: Vector2 = node.get_global_transform().affine_inverse() * point
         if Rect2(Vector2.ZERO, node.size).has_point(local_point):
-            return HitType.Good if node.get_meta("good", false)\
-                                else HitType.Bad
+            if node.get_meta("good", false):
+                last_good_hit_position = node.global_position + node.size * 0.5
+                node.visible = false
+                return HitType.Good
+            else:
+                last_bad_hit_position = node.global_position + node.size * 0.5
+                return HitType.Bad
     return result
 
 func spawn_coin_drop() -> void:

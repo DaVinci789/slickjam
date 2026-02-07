@@ -4,28 +4,21 @@
 [ext_resource type="Script" uid="uid://b8yjd70m22eby" path="res://entity.gd" id="2_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://di113mxwjea43" path="res://image/arm_nohose.png" id="2_dg77c"]
 [ext_resource type="Texture2D" uid="uid://ty4m6o4h65jm" path="res://image/pause_bg.png" id="2_hrvbo"]
-[ext_resource type="Texture2D" uid="uid://p6j7hq4jmtse" path="res://image/car1_front.png" id="3_dg77c"]
-[ext_resource type="Texture2D" uid="uid://bxk3ikcuqmj15" path="res://image/car1_left.png" id="3_efxa6"]
 [ext_resource type="Texture2D" uid="uid://dx0wtdbqyqcrq" path="res://image/pause_label_resume.png" id="4_4w656"]
 [ext_resource type="Texture2D" uid="uid://bdxc2w7vitasb" path="res://image/background_purpledots.png" id="4_getpj"]
 [ext_resource type="Texture2D" uid="uid://chsxixkc83i4m" path="res://image/pause_label_audio.png" id="5_e71vb"]
-[ext_resource type="Texture2D" uid="uid://xvewa53ftudd" path="res://image/car1_back.png" id="5_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://bq634wuv4puwb" path="res://image/pause_label_fullscreen.png" id="6_rnkwl"]
 [ext_resource type="Texture2D" uid="uid://bp63q80oeubs5" path="res://image/background_red_yellow_checkers.png" id="7_ryguw"]
 [ext_resource type="Texture2D" uid="uid://bortajccocswt" path="res://image/pause_label_exit.png" id="7_vke2r"]
 [ext_resource type="Shader" uid="uid://b3oxh1w78wt5q" path="res://battle_background_axis.gdshader" id="7_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://dbcmhskhxnm5u" path="res://image/background_space.png" id="8_d13ii"]
-[ext_resource type="Texture2D" uid="uid://b73jnfr0vbqja" path="res://image/grime_enemy_dirt_2.png" id="9_ok6jj"]
 [ext_resource type="Texture2D" uid="uid://28tnr7cwa4t1" path="res://image/pause_label_back.png" id="9_uit24"]
 [ext_resource type="Shader" uid="uid://bt04e0mygf7ol" path="res://battle_background_planar.gdshader" id="9_vivmo"]
 [ext_resource type="Texture2D" uid="uid://npat2krrkr1" path="res://image/background_yellow.png" id="9_w48qg"]
-[ext_resource type="Texture2D" uid="uid://dvfkpfvd3jr3w" path="res://image/grime_enemy_dirt_9.png" id="10_facbu"]
 [ext_resource type="Texture2D" uid="uid://dilqrvebn8cpe" path="res://image/pause_label_sfx.png" id="10_gx4rg"]
 [ext_resource type="Texture2D" uid="uid://c0tv1py37g36" path="res://image/pause_sound_bar.png" id="10_ruth0"]
 [ext_resource type="Texture2D" uid="uid://b6ewuv0ojdlmd" path="res://image/background_pink.png" id="10_vivmo"]
 [ext_resource type="Texture2D" uid="uid://cogmtc8h4dkw4" path="res://image/pause_label_music.png" id="11_5dllo"]
-[ext_resource type="Texture2D" uid="uid://bx4nem8yigbjv" path="res://image/grime_enemy_dirt_5.png" id="11_b1qrp"]
-[ext_resource type="Texture2D" uid="uid://bo5lnjnftbmkt" path="res://fuzzy.png" id="11_efxa6"]
 [ext_resource type="Texture2D" uid="uid://csoi3krabfgsy" path="res://image/pause_sound_bar_color.png" id="11_rm4vd"]
 [ext_resource type="Texture2D" uid="uid://dynmtt7jp5w28" path="res://image/recticle.png" id="11_xuqvo"]
 [ext_resource type="Texture2D" uid="uid://dufericenlkf" path="res://image/pause_sound_bar_inner.png" id="12_pjyto"]
@@ -38,18 +31,13 @@
 [ext_resource type="Texture2D" uid="uid://bld5a6y3gw2eb" path="res://image/background_carwash_left.png" id="18_phcyf"]
 [ext_resource type="Texture2D" uid="uid://riabpwpq6pby" path="res://image/background_bubbles.png" id="19_4lmeg"]
 [ext_resource type="Shader" uid="uid://dppq1xdjs8tht" path="res://flash.gdshader" id="21_0rl1p"]
-[ext_resource type="Texture2D" uid="uid://cpiheayuqg2sb" path="res://image/car1_right.png" id="21_phcyf"]
 [ext_resource type="Texture2D" uid="uid://nrpsjhe3rdlb" path="res://image/background_carwash_back.png" id="22_1u8w0"]
 [ext_resource type="Texture2D" uid="uid://lgvbaegwde6a" path="res://image/background_checker.png" id="23_0cp0l"]
 [ext_resource type="Texture2D" uid="uid://ba6n63p0as7vj" path="res://image/background_carwash_front.png" id="23_0odxb"]
-[ext_resource type="Texture2D" uid="uid://d08ijgm6mebx6" path="res://image/grime_enemy_dirt_3.png" id="23_c2n8d"]
 [ext_resource type="Texture2D" uid="uid://cvclnixh81oht" path="res://image/enemy_receiptpete.png" id="23_ok6jj"]
 [ext_resource type="SpriteFrames" uid="uid://eow0lqtcy3m4" path="res://frames_droplet.tres" id="24_0odxb"]
 [ext_resource type="Texture2D" uid="uid://cothl1p70r255" path="res://image/background_rainbowcircles.png" id="24_d2t1y"]
-[ext_resource type="Texture2D" uid="uid://eek7o3ecnj08" path="res://image/grime_enemy_dirt_4.png" id="24_wy5fy"]
 [ext_resource type="Texture2D" uid="uid://dk05lsb21o8jl" path="res://image/battle_combat_box.png" id="25_a6jrf"]
-[ext_resource type="Texture2D" uid="uid://d1ii1xportf5s" path="res://image/grime_enemy_dirt_6.png" id="25_gx4rg"]
-[ext_resource type="Texture2D" uid="uid://bp41tpnbtpl76" path="res://image/grime_enemy_dirt_7.png" id="26_5dllo"]
 [ext_resource type="Texture2D" uid="uid://c6wwe2k5rmfai" path="res://image/battle_cursor.png" id="26_xuqvo"]
 [ext_resource type="Texture2D" uid="uid://7fedirinx5b5" path="res://image/enemy_tailz.png" id="27_h8e4i"]
 [ext_resource type="Texture2D" uid="uid://dy8i60i162laf" path="res://image/enemy_battlebottle.png" id="27_wnkbs"]
@@ -57,7 +45,6 @@
 [ext_resource type="Texture2D" uid="uid://c4nrwk381k350" path="res://image/enemy_gryme.png" id="29_0cbny"]
 [ext_resource type="Texture2D" uid="uid://cqfeunkwdcecv" path="res://image/ui_arrow.png" id="29_qsp4k"]
 [ext_resource type="Texture2D" uid="uid://dyo3ny1mq6ov" path="res://image/enemy_heads.png" id="30_hrvbo"]
-[ext_resource type="Texture2D" uid="uid://bhfge4modnkma" path="res://battle_bubble_med.tres" id="30_kq58d"]
 [ext_resource type="FontFile" uid="uid://bcaucot1vbi7m" path="res://Game Paused DEMO.otf" id="31_seu75"]
 [ext_resource type="Texture2D" uid="uid://km2fu14lhchs" path="res://image/enemy_ooze.png" id="31_uypp3"]
 [ext_resource type="Texture2D" uid="uid://xssawyqw70uu" path="res://image/enemy_penny.png" id="32_blkrb"]
@@ -79,127 +66,22 @@
 [ext_resource type="Texture2D" uid="uid://b73tdn0t4rm2s" path="res://image/timer_7.png" id="66_5dllo"]
 [ext_resource type="Texture2D" uid="uid://d4gr72u2uknbe" path="res://image/timer_8.png" id="67_phcyf"]
 [ext_resource type="Texture2D" uid="uid://clas710ie03se" path="res://image/timer_9.png" id="68_birbe"]
+[ext_resource type="Texture2D" uid="uid://d0r6bt77ob0da" path="res://image/ending_bad_Battlebottle.png" id="76_yysqy"]
+[ext_resource type="Texture2D" uid="uid://cm80ht025ibcw" path="res://image/ending_bad_Durt.png" id="77_n5t1e"]
+[ext_resource type="Texture2D" uid="uid://b8vnpvtye28rq" path="res://image/ending_bad_Gryme.png" id="78_h6isl"]
+[ext_resource type="Texture2D" uid="uid://b2jt3qwrixucp" path="res://image/ending_bad_Heads.png" id="79_53bls"]
+[ext_resource type="Texture2D" uid="uid://dk3ejn4xij17t" path="res://image/ending_bad_None.png" id="80_lwnsi"]
+[ext_resource type="Texture2D" uid="uid://bbhaii4ewldlt" path="res://image/ending_bad_Ooze.png" id="81_41lik"]
+[ext_resource type="Texture2D" uid="uid://12bfa7b74sll" path="res://image/ending_bad_Penny.png" id="82_jbvwl"]
+[ext_resource type="Texture2D" uid="uid://55a36jve7nkp" path="res://image/ending_bad_Receiptpete.png" id="83_sn1fb"]
+[ext_resource type="Texture2D" uid="uid://7nkkrw176i7x" path="res://image/ending_bad_Tailz.png" id="84_yvsr8"]
+[ext_resource type="Texture2D" uid="uid://koe6uq17ogjj" path="res://image/ending_credits.png" id="85_vieuh"]
+[ext_resource type="Texture2D" uid="uid://b0kbf5ehqo5ng" path="res://image/ending_win_blank.png" id="87_l0gw7"]
+[ext_resource type="FontFile" uid="uid://bl35t04q4cndw" path="res://image/Cursive.ttf" id="88_n5t1e"]
 
-[sub_resource type="Shader" id="Shader_1u8w0"]
-code = "shader_type canvas_item;
-
-uniform float hit_effect : hint_range(0,1) = 0.0;
-uniform float shake_intensity = 10.0;
-uniform float flash_speed = 30.0;
-uniform vec4 flash_color : source_color = vec4(1.0, 0.0, 0.0, 1.0);
-
-uniform sampler2D flash_curve; // CurveTexture
-
-float rand(vec2 co) {
-    return fract(sin(dot(co, vec2(12.9898,78.233))) * 43758.5453);
-}
-
-void vertex() {
-    if (hit_effect > 0.0) {
-        float time = TIME * 30.0;
-        vec2 random_offset = vec2(
-            rand(vec2(time, 0.0)) * 2.0 - 1.0,
-            rand(vec2(time, 10.0)) * 2.0 - 1.0
-        );
-        VERTEX += random_offset * shake_intensity * hit_effect;
-    }
-}
-
-void fragment() {
-    if (hit_effect > 0.0) {
-        vec4 base_color = texture(TEXTURE, UV) * COLOR;
-        
-        float t = fract(TIME * flash_speed);
-        float curve_value = texture(flash_curve, vec2(t, 0.5)).r;
-        curve_value *= base_color.a * hit_effect;
-
-        vec4 flashed = mix(base_color, flash_color * base_color.a, curve_value);
-        flashed.a = base_color.a;
-
-        COLOR = flashed;
-    } else {
-        COLOR = texture(TEXTURE, UV);
-    }
-}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d13ii"]
-shader = SubResource("Shader_1u8w0")
-shader_parameter/hit_effect = 0.0
-shader_parameter/shake_intensity = 10.0
-shader_parameter/flash_speed = 30.0
-shader_parameter/flash_color = Color(1, 1, 1, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0odxb"]
-shader = SubResource("Shader_1u8w0")
-shader_parameter/hit_effect = 0.0
-shader_parameter/shake_intensity = 10.0
-shader_parameter/flash_speed = 30.0
-shader_parameter/flash_color = Color(1, 1, 1, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lswn8"]
-shader = SubResource("Shader_1u8w0")
-shader_parameter/hit_effect = 0.0
-shader_parameter/shake_intensity = 10.0
-shader_parameter/flash_speed = 30.0
-shader_parameter/flash_color = Color(1, 1, 1, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ryguw"]
-shader = SubResource("Shader_1u8w0")
-shader_parameter/hit_effect = 0.0
-shader_parameter/shake_intensity = 10.0
-shader_parameter/flash_speed = 30.0
-shader_parameter/flash_color = Color(1, 1, 1, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_074og"]
-shader = SubResource("Shader_1u8w0")
-shader_parameter/hit_effect = 0.0
-shader_parameter/shake_intensity = 10.0
-shader_parameter/flash_speed = 30.0
-shader_parameter/flash_color = Color(1, 1, 1, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_82xsv"]
-shader = SubResource("Shader_1u8w0")
-shader_parameter/hit_effect = 0.0
-shader_parameter/shake_intensity = 10.0
-shader_parameter/flash_speed = 30.0
-shader_parameter/flash_color = Color(1, 1, 1, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_a6jrf"]
-shader = SubResource("Shader_1u8w0")
-shader_parameter/hit_effect = 0.0
-shader_parameter/shake_intensity = 10.0
-shader_parameter/flash_speed = 30.0
-shader_parameter/flash_color = Color(1, 1, 1, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1u8w0"]
-shader = SubResource("Shader_1u8w0")
-shader_parameter/hit_effect = 0.0
-shader_parameter/shake_intensity = 10.0
-shader_parameter/flash_speed = 30.0
-shader_parameter/flash_color = Color(1, 1, 1, 1)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dg77c"]
-atlas = ExtResource("11_efxa6")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ycdy4"]
-atlas = ExtResource("11_efxa6")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_w48qg"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dg77c")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ycdy4")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[sub_resource type="Gradient" id="Gradient_5dllo"]
+offsets = PackedFloat32Array(0.6363636, 1)
+colors = PackedColorArray(0, 0.7411765, 0.101960786, 1, 0, 0.7411765, 0.101960786, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1u8w0"]
 size = Vector2(30, 145)
@@ -397,7 +279,7 @@ animations = [{
 "texture": ExtResource("23_ok6jj")
 }],
 "loop": true,
-"name": &"Recieptpete",
+"name": &"Receiptpete",
 "speed": 5.0
 }, {
 "frames": [{
@@ -697,9 +579,47 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0rl1p"]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_f1p13"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("59_0dhbp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_jx0wj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_kkkcx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_34ol3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_c2n8d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_wy5fy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_gx4rg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_5dllo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_phcyf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_birbe")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ok6jj"]
 shader = ExtResource("14_4k2k6")
-shader_parameter/transition_color = Color(0.57914037, 0.21806556, 0, 0.52156866)
+shader_parameter/transition_color = Color(0.44250143, 9.3854965e-07, 2.1658838e-07, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4w656"]
 atlas = ExtResource("38_0cbny")
@@ -1062,44 +982,6 @@ animations = [{
 "speed": 16.0
 }]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_f1p13"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("59_0dhbp")
-}, {
-"duration": 1.0,
-"texture": ExtResource("60_jx0wj")
-}, {
-"duration": 1.0,
-"texture": ExtResource("61_kkkcx")
-}, {
-"duration": 1.0,
-"texture": ExtResource("62_34ol3")
-}, {
-"duration": 1.0,
-"texture": ExtResource("63_c2n8d")
-}, {
-"duration": 1.0,
-"texture": ExtResource("64_wy5fy")
-}, {
-"duration": 1.0,
-"texture": ExtResource("65_gx4rg")
-}, {
-"duration": 1.0,
-"texture": ExtResource("66_5dllo")
-}, {
-"duration": 1.0,
-"texture": ExtResource("67_phcyf")
-}, {
-"duration": 1.0,
-"texture": ExtResource("68_birbe")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_htxhm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jq2sk"]
@@ -1271,7 +1153,6 @@ max_player_height = -14.0
 mouse_speed_decay = 13.44
 
 [node name="debug" type="CanvasLayer" parent="." unique_id=366246311]
-visible = false
 
 [node name="debug_edit" type="LineEdit" parent="debug" unique_id=940149932]
 unique_name_in_owner = true
@@ -1723,6 +1604,41 @@ offset_bottom = 20.0
 texture = ExtResource("11_rm4vd")
 flip_h = true
 
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1078471711]
+unique_name_in_owner = true
+position = Vector2(67, 98)
+emitting = false
+amount = 515
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+emission_shape = 1
+emission_sphere_radius = 6.91
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, 400)
+initial_velocity_min = 100.0
+initial_velocity_max = 300.0
+linear_accel_min = 20.0
+linear_accel_max = 50.0
+color = Color(0.8117647, 0.48235294, 0.101960786, 1)
+
+[node name="particles_good" type="CPUParticles2D" parent="." unique_id=854172574]
+unique_name_in_owner = true
+position = Vector2(-40, 105)
+emitting = false
+amount = 30
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+emission_shape = 1
+emission_sphere_radius = 6.91
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 40.0
+color = Color(0, 0.7411765, 0.101960786, 1)
+color_ramp = SubResource("Gradient_5dllo")
+
 [node name="scene_carwash" type="Node2D" parent="." unique_id=821586071]
 unique_name_in_owner = true
 
@@ -1745,173 +1661,8 @@ centered = false
 texture = ExtResource("18_phcyf")
 centered = false
 
-[node name="car0" type="CharacterBody2D" parent="scene_carwash" unique_id=502861986]
+[node name="cars" type="Node2D" parent="scene_carwash" unique_id=1057609413]
 unique_name_in_owner = true
-script = ExtResource("2_0xm2m")
-metadata/_custom_type_script = "uid://b8yjd70m22eby"
-
-[node name="car_front" type="Sprite2D" parent="scene_carwash/car0" unique_id=1376043320]
-texture = ExtResource("3_dg77c")
-centered = false
-
-[node name="Marker2D" type="Marker2D" parent="scene_carwash/car0/car_front" unique_id=952182588]
-position = Vector2(228, 80)
-
-[node name="car_right" type="Sprite2D" parent="scene_carwash/car0" unique_id=1151394709]
-texture = ExtResource("21_phcyf")
-centered = false
-
-[node name="Marker2D" type="Marker2D" parent="scene_carwash/car0/car_right" unique_id=25308516]
-position = Vector2(170, 78)
-
-[node name="car_back" type="Sprite2D" parent="scene_carwash/car0" unique_id=754638086]
-texture = ExtResource("5_ycdy4")
-centered = false
-
-[node name="Marker2D" type="Marker2D" parent="scene_carwash/car0/car_back" unique_id=1100713482]
-position = Vector2(157, 77)
-
-[node name="car_left" type="Sprite2D" parent="scene_carwash/car0" unique_id=198745480]
-texture = ExtResource("3_efxa6")
-centered = false
-
-[node name="Marker2D" type="Marker2D" parent="scene_carwash/car0/car_left" unique_id=24051328]
-position = Vector2(173, 79)
-
-[node name="grime0" type="CharacterBody2D" parent="scene_carwash/car0/car_left" unique_id=2078836969]
-position = Vector2(106, 83)
-script = ExtResource("2_0xm2m")
-sprite_path = NodePath("EnemyGrimeDirt2")
-grime_type = 1
-enemy_type = 2
-metadata/_custom_type_script = "uid://b8yjd70m22eby"
-
-[node name="EnemyGrimeDirt2" type="Sprite2D" parent="scene_carwash/car0/car_left/grime0" unique_id=236155343]
-material = SubResource("ShaderMaterial_d13ii")
-texture = ExtResource("9_ok6jj")
-metadata/_edit_lock_ = true
-
-[node name="grime1" type="CharacterBody2D" parent="scene_carwash/car0/car_left" unique_id=194552567]
-position = Vector2(137, 84)
-script = ExtResource("2_0xm2m")
-sprite_path = NodePath("EnemyGrimeDirt9")
-grime_type = 1
-enemy_type = 3
-metadata/_custom_type_script = "uid://b8yjd70m22eby"
-
-[node name="EnemyGrimeDirt9" type="Sprite2D" parent="scene_carwash/car0/car_left/grime1" unique_id=490420360]
-material = SubResource("ShaderMaterial_0odxb")
-texture = ExtResource("10_facbu")
-metadata/_edit_lock_ = true
-
-[node name="grime2" type="CharacterBody2D" parent="scene_carwash/car0/car_left" unique_id=407865134]
-position = Vector2(169, 83)
-script = ExtResource("2_0xm2m")
-sprite_path = NodePath("EnemyGrimeDirt5")
-grime_type = 1
-enemy_type = 1
-metadata/_custom_type_script = "uid://b8yjd70m22eby"
-
-[node name="EnemyGrimeDirt5" type="Sprite2D" parent="scene_carwash/car0/car_left/grime2" unique_id=1798102055]
-material = SubResource("ShaderMaterial_lswn8")
-texture = ExtResource("11_b1qrp")
-metadata/_edit_lock_ = true
-
-[node name="grime3" type="CharacterBody2D" parent="scene_carwash/car0/car_left" unique_id=1521323262]
-position = Vector2(198, 81)
-script = ExtResource("2_0xm2m")
-sprite_path = NodePath("GrimeDirt20")
-grime_type = 1
-enemy_type = 5
-metadata/_custom_type_script = "uid://b8yjd70m22eby"
-
-[node name="GrimeDirt20" type="Sprite2D" parent="scene_carwash/car0/car_left/grime3" unique_id=1199319982]
-material = SubResource("ShaderMaterial_ryguw")
-texture = ExtResource("23_c2n8d")
-metadata/_edit_lock_ = true
-
-[node name="grime4" type="CharacterBody2D" parent="scene_carwash/car0/car_left" unique_id=1691162846]
-position = Vector2(102, 116)
-script = ExtResource("2_0xm2m")
-sprite_path = NodePath("GrimeDirt0")
-grime_type = 1
-enemy_type = 6
-metadata/_custom_type_script = "uid://b8yjd70m22eby"
-
-[node name="GrimeDirt0" type="Sprite2D" parent="scene_carwash/car0/car_left/grime4" unique_id=1276350713]
-material = SubResource("ShaderMaterial_074og")
-texture = ExtResource("24_wy5fy")
-metadata/_edit_lock_ = true
-
-[node name="grime5" type="CharacterBody2D" parent="scene_carwash/car0/car_left" unique_id=576740245]
-position = Vector2(135, 116)
-script = ExtResource("2_0xm2m")
-sprite_path = NodePath("GrimeDirt21")
-grime_type = 1
-enemy_type = 4
-metadata/_custom_type_script = "uid://b8yjd70m22eby"
-
-[node name="GrimeDirt21" type="Sprite2D" parent="scene_carwash/car0/car_left/grime5" unique_id=1548959757]
-material = SubResource("ShaderMaterial_82xsv")
-texture = ExtResource("11_b1qrp")
-metadata/_edit_lock_ = true
-
-[node name="grime6" type="CharacterBody2D" parent="scene_carwash/car0/car_left" unique_id=1572155943]
-position = Vector2(165, 113)
-script = ExtResource("2_0xm2m")
-sprite_path = NodePath("GrimeDirt22")
-grime_type = 1
-enemy_type = 8
-metadata/_custom_type_script = "uid://b8yjd70m22eby"
-
-[node name="GrimeDirt22" type="Sprite2D" parent="scene_carwash/car0/car_left/grime6" unique_id=470707479]
-material = SubResource("ShaderMaterial_a6jrf")
-texture = ExtResource("25_gx4rg")
-metadata/_edit_lock_ = true
-
-[node name="grime7" type="CharacterBody2D" parent="scene_carwash/car0/car_left" unique_id=802674170]
-position = Vector2(204, 114)
-script = ExtResource("2_0xm2m")
-sprite_path = NodePath("GrimeDirt11")
-grime_type = 1
-enemy_type = 7
-metadata/_custom_type_script = "uid://b8yjd70m22eby"
-
-[node name="GrimeDirt11" type="Sprite2D" parent="scene_carwash/car0/car_left/grime7" unique_id=1702349889]
-material = SubResource("ShaderMaterial_1u8w0")
-texture = ExtResource("26_5dllo")
-metadata/_edit_lock_ = true
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="scene_carwash/car0/car_left" unique_id=1078471711]
-unique_name_in_owner = true
-position = Vector2(67, 98)
-emitting = false
-amount = 515
-lifetime = 3.0
-one_shot = true
-explosiveness = 1.0
-emission_shape = 1
-emission_sphere_radius = 6.91
-direction = Vector2(0, -1)
-spread = 180.0
-gravity = Vector2(0, 400)
-initial_velocity_min = 100.0
-initial_velocity_max = 300.0
-linear_accel_min = 20.0
-linear_accel_max = 50.0
-color = Color(0.8117647, 0.48235294, 0.101960786, 1)
-
-[node name="fuzzy" type="CharacterBody2D" parent="scene_carwash" unique_id=1806714988]
-unique_name_in_owner = true
-visible = false
-position = Vector2(223, 57)
-script = ExtResource("2_0xm2m")
-metadata/_custom_type_script = "uid://b8yjd70m22eby"
-
-[node name="sprite" type="AnimatedSprite2D" parent="scene_carwash/fuzzy" unique_id=824526788]
-sprite_frames = SubResource("SpriteFrames_w48qg")
-autoplay = "default"
-frame_progress = 0.4168879
 
 [node name="ui_left" type="CharacterBody2D" parent="scene_carwash" unique_id=1780826448 node_paths=PackedStringArray("area_clickable")]
 unique_name_in_owner = true
@@ -1951,7 +1702,6 @@ shape = SubResource("RectangleShape2D_0odxb")
 
 [node name="scene_battle" type="Node2D" parent="." unique_id=1952120662]
 unique_name_in_owner = true
-visible = false
 
 [node name="battlebackground" type="Control" parent="scene_battle" unique_id=1055773115]
 unique_name_in_owner = true
@@ -2180,7 +1930,7 @@ metadata/_custom_type_script = "uid://b8yjd70m22eby"
 [node name="sprite" type="AnimatedSprite2D" parent="scene_battle/battle_enemy" unique_id=366141064]
 material = SubResource("ShaderMaterial_facbu")
 sprite_frames = SubResource("SpriteFrames_come4")
-animation = &"Tailz"
+animation = &"Receiptpete"
 
 [node name="enemy_place_while_battle" type="Marker2D" parent="scene_battle" unique_id=1414813986]
 unique_name_in_owner = true
@@ -2195,12 +1945,12 @@ offset_bottom = 339.99988
 
 [node name="battle_cursor" type="TextureRect" parent="scene_battle/battle_patterns" unique_id=1774323359]
 unique_name_in_owner = true
-visible = false
 layout_mode = 0
-offset_left = 55.0
-offset_top = 24.0
-offset_right = 73.0
-offset_bottom = 50.0
+offset_left = 61.0
+offset_top = 45.0
+offset_right = 79.0
+offset_bottom = 71.0
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("26_xuqvo")
 stretch_mode = 2
 
@@ -2237,15 +1987,6 @@ texture = ExtResource("11_xuqvo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="recticle/recticle_area" unique_id=644200195]
 shape = SubResource("RectangleShape2D_0rl1p")
-
-[node name="transition_battle" type="AnimatedSprite2D" parent="." unique_id=654539131]
-unique_name_in_owner = true
-visible = false
-material = SubResource("ShaderMaterial_ok6jj")
-sprite_frames = SubResource("SpriteFrames_4w656")
-animation = &"split"
-centered = false
-metadata/_edit_lock_ = true
 
 [node name="droplets" type="Node2D" parent="." unique_id=375487935]
 unique_name_in_owner = true
@@ -2331,12 +2072,6 @@ metadata/_custom_type_script = "uid://b8yjd70m22eby"
 rotation = 3.9269907
 target_position = Vector2(0, 23)
 
-[node name="projectiles" type="Node2D" parent="." unique_id=2049331763]
-unique_name_in_owner = true
-
-[node name="Sprite2D" type="Sprite2D" parent="projectiles" unique_id=1442931205]
-texture = ExtResource("30_kq58d")
-
 [node name="timer" type="TextureRect" parent="." unique_id=1505728626]
 unique_name_in_owner = true
 offset_left = 201.0
@@ -2354,12 +2089,118 @@ position = Vector2(30, 41)
 sprite_frames = SubResource("SpriteFrames_f1p13")
 
 [node name="numbers3" type="AnimatedSprite2D" parent="timer" unique_id=1972979878]
-position = Vector2(46, 41)
+position = Vector2(45, 41)
 sprite_frames = SubResource("SpriteFrames_f1p13")
 
 [node name="numbers4" type="AnimatedSprite2D" parent="timer" unique_id=160906733]
 position = Vector2(58, 41)
 sprite_frames = SubResource("SpriteFrames_f1p13")
+
+[node name="scene_gameend" type="Control" parent="." unique_id=570005025]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="EndingBadBattlebottle" type="TextureRect" parent="scene_gameend" unique_id=1158018866]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("76_yysqy")
+
+[node name="EndingBadDurt" type="TextureRect" parent="scene_gameend" unique_id=703259025]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("77_n5t1e")
+
+[node name="EndingBadGryme" type="TextureRect" parent="scene_gameend" unique_id=1879593638]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("78_h6isl")
+
+[node name="EndingBadHeads" type="TextureRect" parent="scene_gameend" unique_id=1557131042]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("79_53bls")
+
+[node name="EndingBadNone" type="TextureRect" parent="scene_gameend" unique_id=1810354145]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("80_lwnsi")
+
+[node name="EndingBadOoze" type="TextureRect" parent="scene_gameend" unique_id=353426947]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("81_41lik")
+
+[node name="EndingBadPenny" type="TextureRect" parent="scene_gameend" unique_id=1537045634]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("82_jbvwl")
+
+[node name="EndingBadReceiptpete" type="TextureRect" parent="scene_gameend" unique_id=1697132887]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("83_sn1fb")
+
+[node name="EndingBadTailz" type="TextureRect" parent="scene_gameend" unique_id=1152972186]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("84_yvsr8")
+
+[node name="EndingCredits" type="TextureRect" parent="scene_gameend" unique_id=390546838]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("85_vieuh")
+
+[node name="EndingWinBlank" type="TextureRect" parent="scene_gameend" unique_id=965504452]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("87_l0gw7")
+
+[node name="ending_playername" type="RichTextLabel" parent="scene_gameend/EndingWinBlank" unique_id=787934005]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 56.0
+offset_top = 90.0
+offset_right = 266.0
+offset_bottom = 130.0
+theme_override_colors/default_color = Color(0.9098039, 0.6784314, 0.011764706, 1)
+theme_override_fonts/normal_font = ExtResource("88_n5t1e")
+text = "would it get some"
+horizontal_alignment = 1
+
+[node name="transition_battle" type="AnimatedSprite2D" parent="." unique_id=654539131]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_ok6jj")
+sprite_frames = SubResource("SpriteFrames_4w656")
+animation = &"horizontal"
+centered = false
+metadata/_edit_lock_ = true
 
 [node name="scene_title" type="Control" parent="." unique_id=2040637009]
 unique_name_in_owner = true

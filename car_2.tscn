@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://beyehmuqgrin"]
+
+[ext_resource type="Script" uid="uid://b8yjd70m22eby" path="res://entity.gd" id="1_t5adu"]
+[ext_resource type="Texture2D" uid="uid://c878ng05h5ox" path="res://image/car3_front.png" id="2_l3a2r"]
+[ext_resource type="Texture2D" uid="uid://btcy33oowdrb3" path="res://image/car3_right.png" id="3_vmbv7"]
+[ext_resource type="Texture2D" uid="uid://cvave18ldvpuk" path="res://image/car3_back.png" id="4_u3vgi"]
+[ext_resource type="Texture2D" uid="uid://b31al7fkea64c" path="res://image/car3_left.png" id="5_6l6s0"]
+
+[node name="car2" type="CharacterBody2D" unique_id=480109521 node_paths=PackedStringArray("polygons")]
+visible = false
+script = ExtResource("1_t5adu")
+polygons = [NodePath("car_front_polygon"), NodePath("car_right_polygon"), NodePath("car_back_polygon"), NodePath("car_left_polygon")]
+metadata/_custom_type_script = "uid://b8yjd70m22eby"
+
+[node name="car_front" type="Sprite2D" parent="." unique_id=39425831]
+visible = false
+texture = ExtResource("2_l3a2r")
+centered = false
+
+[node name="Marker2D" type="Marker2D" parent="car_front" unique_id=774466139]
+position = Vector2(228, 80)
+
+[node name="car_right" type="Sprite2D" parent="." unique_id=1451259748]
+visible = false
+texture = ExtResource("3_vmbv7")
+centered = false
+
+[node name="Marker2D" type="Marker2D" parent="car_right" unique_id=703162000]
+position = Vector2(170, 78)
+
+[node name="car_back" type="Sprite2D" parent="." unique_id=599467124]
+visible = false
+texture = ExtResource("4_u3vgi")
+centered = false
+
+[node name="Marker2D" type="Marker2D" parent="car_back" unique_id=252204968]
+position = Vector2(157, 77)
+
+[node name="car_left" type="Sprite2D" parent="." unique_id=1854183428]
+visible = false
+texture = ExtResource("5_6l6s0")
+centered = false
+
+[node name="Marker2D" type="Marker2D" parent="car_left" unique_id=3914924]
+position = Vector2(173, 79)
+
+[node name="car_front_polygon" type="Polygon2D" parent="." unique_id=1575346142]
+visible = false
+color = Color(1, 0, 1, 0.21568628)
+polygon = PackedVector2Array(160, 20, 101, 20, 93, 26, 86, 50, 71, 50, 69, 55, 70, 61, 79, 62, 82, 65, 81, 75, 71, 85, 69, 93, 69, 107, 72, 115, 71, 128, 75, 139, 76, 166, 78, 173, 102, 174, 106, 165, 107, 158, 116, 154, 145, 157, 145, 165, 174, 165, 175, 158, 207, 155, 213, 158, 215, 171, 218, 174, 241, 174, 244, 167, 244, 138, 249, 129, 250, 117, 252, 107, 251, 89, 240, 74, 238, 63, 249, 61, 251, 54, 248, 50, 239, 50, 235, 50, 233, 49, 226, 28, 220, 20)
+
+[node name="car_right_polygon" type="Polygon2D" parent="." unique_id=1666987259]
+visible = false
+color = Color(1, 0, 1, 0.21568628)
+polygon = PackedVector2Array(201, 19, 35, 19, 28, 25, 16, 66, 10, 69, 10, 106, 6, 113, 6, 132, 18, 144, 24, 143, 35, 165, 50, 174, 70, 175, 89, 160, 96, 136, 110, 138, 126, 144, 217, 144, 225, 144, 232, 164, 252, 176, 272, 174, 290, 158, 294, 141, 313, 134, 316, 120, 313, 110, 311, 95, 282, 76, 252, 66, 251, 59, 229, 53, 227, 55)
+
+[node name="car_back_polygon" type="Polygon2D" parent="." unique_id=1636508910]
+visible = false
+color = Color(1, 0, 1, 0.21568628)
+polygon = PackedVector2Array(229, 19, 90, 20, 79, 36, 76, 68, 76, 112, 72, 119, 72, 131, 76, 139, 76, 168, 78, 175, 102, 175, 104, 166, 107, 149, 154, 152, 153, 156, 165, 157, 166, 151, 217, 150, 218, 174, 241, 175, 244, 169, 244, 138, 248, 129, 248, 118, 245, 109, 244, 64, 240, 33)
+
+[node name="car_left_polygon" type="Polygon2D" parent="." unique_id=1784356529]
+visible = false
+color = Color(1, 0, 1, 0.21568628)
+polygon = PackedVector2Array(286, 19, 118, 19, 94, 57, 90, 54, 69, 61, 68, 67, 34, 77, 21, 87, 8, 96, 9, 110, 5, 116, 6, 135, 27, 143, 31, 159, 52, 174, 64, 176, 81, 170, 97, 145, 108, 144, 108, 157, 209, 158, 211, 143, 224, 143, 232, 163, 247, 171, 270, 174, 291, 159, 294, 144, 301, 143, 314, 131, 315, 111, 311, 108, 310, 69, 302, 62, 298, 38)

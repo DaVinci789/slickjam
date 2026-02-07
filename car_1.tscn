@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://0ol4e1iapnht"]
+
+[ext_resource type="Script" uid="uid://b8yjd70m22eby" path="res://entity.gd" id="1_obvrk"]
+[ext_resource type="Texture2D" uid="uid://btclgvgy7k0h1" path="res://image/car2_front.png" id="2_n4hqv"]
+[ext_resource type="Texture2D" uid="uid://d1of0lbdwugt3" path="res://image/car2_right.png" id="3_fdyip"]
+[ext_resource type="Texture2D" uid="uid://coiim58vdfhqp" path="res://image/car2_back.png" id="4_p6laa"]
+[ext_resource type="Texture2D" uid="uid://3klscx2b4a5i" path="res://image/car2_left.png" id="5_ljow5"]
+
+[node name="car1" type="CharacterBody2D" unique_id=416280014 node_paths=PackedStringArray("polygons")]
+script = ExtResource("1_obvrk")
+polygons = [NodePath("car_front_polygon"), NodePath("car_right_polygon"), NodePath("car_back_polygon"), NodePath("car_left_polygon")]
+metadata/_custom_type_script = "uid://b8yjd70m22eby"
+
+[node name="car_front" type="Sprite2D" parent="." unique_id=153682330]
+visible = false
+texture = ExtResource("2_n4hqv")
+centered = false
+
+[node name="Marker2D" type="Marker2D" parent="car_front" unique_id=1099279906]
+position = Vector2(228, 80)
+
+[node name="car_right" type="Sprite2D" parent="." unique_id=229487985]
+visible = false
+texture = ExtResource("3_fdyip")
+centered = false
+
+[node name="Marker2D" type="Marker2D" parent="car_right" unique_id=352065851]
+position = Vector2(170, 78)
+
+[node name="car_back" type="Sprite2D" parent="." unique_id=446251149]
+visible = false
+texture = ExtResource("4_p6laa")
+centered = false
+
+[node name="Marker2D" type="Marker2D" parent="car_back" unique_id=756596148]
+position = Vector2(157, 77)
+
+[node name="car_left" type="Sprite2D" parent="." unique_id=710238469]
+visible = false
+texture = ExtResource("5_ljow5")
+centered = false
+
+[node name="Marker2D" type="Marker2D" parent="car_left" unique_id=1204751727]
+position = Vector2(173, 79)
+
+[node name="car_front_polygon" type="Polygon2D" parent="." unique_id=1231031769]
+visible = false
+color = Color(1, 0, 1, 0.21568628)
+polygon = PackedVector2Array(207, 38, 159, 36, 111, 38, 108, 42, 108, 42, 100, 77, 97, 78, 97, 64, 94, 62, 88, 63, 86, 66, 86, 79, 75, 81, 70, 90, 67, 96, 66, 113, 69, 126, 63, 130, 65, 139, 70, 147, 80, 147, 80, 168, 82, 174, 105, 174, 111, 165, 111, 147, 144, 147, 146, 149, 173, 149, 176, 147, 210, 147, 210, 166, 214, 174, 236, 174, 240, 168, 240, 147, 249, 147, 258, 132, 257, 130, 251, 126, 254, 115, 253, 106, 254, 97, 246, 82, 234, 79, 234, 64, 230, 63, 226, 63, 223, 65, 223, 78, 220, 78, 214, 44)
+
+[node name="car_right_polygon" type="Polygon2D" parent="." unique_id=1851136669]
+visible = false
+color = Color(1, 0, 1, 0.21568628)
+polygon = PackedVector2Array(208, 34, 177, 31, 139, 36, 132, 81, 15, 83, 9, 102, 10, 127, 12, 134, 9, 134, 14, 147, 22, 143, 34, 148, 54, 149, 64, 165, 82, 173, 100, 166, 111, 144, 225, 144, 229, 159, 243, 171, 261, 172, 274, 161, 281, 143, 308, 143, 309, 134, 304, 130, 307, 121, 309, 121, 312, 108, 310, 99, 303, 98, 307, 93, 306, 90, 294, 81, 230, 80)
+
+[node name="car_back_polygon" type="Polygon2D" parent="." unique_id=1862283995]
+visible = false
+color = Color(1, 0, 1, 0.21568628)
+polygon = PackedVector2Array(205, 37, 160, 36, 112, 38, 106, 44, 101, 78, 72, 82, 66, 102, 64, 106, 67, 109, 68, 127, 63, 132, 69, 145, 73, 147, 79, 147, 80, 168, 82, 174, 105, 174, 110, 164, 110, 147, 145, 147, 146, 149, 174, 149, 175, 147, 195, 147, 196, 151, 210, 151, 210, 164, 215, 174, 236, 174, 240, 168, 240, 150, 245, 150, 249, 147, 258, 133, 257, 129, 251, 126, 254, 109, 256, 105, 253, 101, 250, 83, 235, 79, 235, 65, 232, 63, 224, 63, 223, 65, 223, 78, 221, 79, 214, 44)
+
+[node name="car_left_polygon" type="Polygon2D" parent="." unique_id=1606650529]
+visible = false
+color = Color(1, 0, 1, 0.21568628)
+polygon = PackedVector2Array(181, 37, 147, 31, 112, 33, 89, 81, 26, 81, 14, 91, 15, 96, 12, 100, 8, 102, 14, 125, 15, 131, 12, 134, 11, 143, 39, 143, 44, 162, 62, 171, 78, 171, 94, 152, 96, 143, 210, 143, 215, 160, 227, 171, 244, 172, 262, 159, 266, 148, 286, 148, 297, 143, 308, 147, 314, 144, 314, 136, 308, 133, 312, 124, 312, 101, 305, 83, 189, 83)

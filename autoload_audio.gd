@@ -7,11 +7,23 @@ enum SoundEffectType {
     Cleaned_Dirt,
     Wash_Monster,
     Wash_Dirt,
+    Cry_Durt,
+    Cry_Gryme,
+    Cry_Battlebottle,
+    Cry_Ooze,
+    Cry_Penny,
+    Cry_Heads,
+    Cry_Tailz,
+    Cry_Receiptpete,
+    Stinger_Victory,
+    Stinger_Day_End,
+    Stinger_Game_Over,
 }
 
 enum MusicType {
     Wash,
-    Battle,   
+    Battle,
+    Battle1,
 }
 
 class PlayingSound:
