@@ -7,6 +7,16 @@ enum SoundEffectType {
     Cleaned_Dirt,
     Wash_Monster,
     Wash_Dirt,
+    UI_Pause_Open,
+    UI_Pause_Close,
+    UI_Pause_Volume_Change,
+    UI_Title_Screen,
+    Battle_Transition,
+    Battle_Hit_0,
+    Battle_Hit_1,
+    Battle_Take_Damage_0,
+    Battle_Take_Damage_1,
+    Battle_Power_Up,
     Cry_Durt,
     Cry_Gryme,
     Cry_Battlebottle,
@@ -22,6 +32,7 @@ enum SoundEffectType {
 
 enum MusicType {
     Wash,
+    Wash0,
     Battle,
     Battle1,
 }

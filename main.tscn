@@ -51,6 +51,8 @@
 [ext_resource type="Shader" uid="uid://y0km58c6v77b" path="res://test.gdshader" id="32_htxhm"]
 [ext_resource type="Texture2D" uid="uid://cs7gsp6w2vehn" path="res://image/battle_bubble_med.png" id="33_4k2k6"]
 [ext_resource type="FontFile" uid="uid://b24tqcg2epwie" path="res://PICK3 FONT 12pxor18px.ttf" id="34_0rl1p"]
+[ext_resource type="Texture2D" uid="uid://htg4o8bnjotd" path="res://image/background_NEWMEXICO.png" id="34_ppx11"]
+[ext_resource type="Texture2D" uid="uid://b2qk8d53sc3ey" path="res://image/background_blue_squares.png" id="35_1yv1y"]
 [ext_resource type="Texture2D" uid="uid://cme6n2a6xvm1m" path="res://image/transition_circle.png" id="38_0cbny"]
 [ext_resource type="Texture2D" uid="uid://bbv81nbpbxsy4" path="res://image/transition_split.png" id="40_hrvbo"]
 [ext_resource type="PackedScene" uid="uid://vib4b00hr1u" path="res://enemy_patterns.tscn" id="45_0dhbp"]
@@ -89,62 +91,12 @@ size = Vector2(30, 145)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0odxb"]
 size = Vector2(30, 146)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yaehf"]
-shader = ExtResource("7_ycdy4")
-shader_parameter/tex_size = Vector2i(320, 180)
-shader_parameter/tex_offset = Vector2(0, 0)
-shader_parameter/blend_mode = 1
-shader_parameter/opacity = 1.0
-shader_parameter/palette_enabled = false
-shader_parameter/palette_index = 0.0
-shader_parameter/scrolling_position = Vector2i(0, 0)
-shader_parameter/static_position = Vector2i(0, 0)
-shader_parameter/axis_mode = Vector2i(0, 0)
-shader_parameter/axis_frequency = Vector2i(0, 53)
-shader_parameter/axis_amplitude = Vector2i(0, 27)
-shader_parameter/axis_shift = Vector2(0, 0)
-shader_parameter/auto_animate = true
-shader_parameter/animation_speed = Vector2(50, 50)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xuqvo"]
-shader = ExtResource("7_ycdy4")
-shader_parameter/tex_size = Vector2i(320, 180)
-shader_parameter/tex_offset = Vector2(0, -1.11)
-shader_parameter/blend_mode = 1
-shader_parameter/opacity = 0.745
-shader_parameter/palette_enabled = false
-shader_parameter/palette_index = 0.0
-shader_parameter/scrolling_position = Vector2i(9, 22)
-shader_parameter/static_position = Vector2i(0, 0)
-shader_parameter/axis_mode = Vector2i(0, 0)
-shader_parameter/axis_frequency = Vector2i(-14, 9)
-shader_parameter/axis_amplitude = Vector2i(0, 21)
-shader_parameter/axis_shift = Vector2(0, -32)
-shader_parameter/auto_animate = true
-shader_parameter/animation_speed = Vector2(10, 5)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qsp4k"]
-shader = ExtResource("7_ycdy4")
-shader_parameter/tex_size = Vector2i(320, 180)
-shader_parameter/tex_offset = Vector2(0, 0)
-shader_parameter/blend_mode = 1
-shader_parameter/opacity = 1.0
-shader_parameter/palette_enabled = false
-shader_parameter/palette_index = 0.0
-shader_parameter/scrolling_position = Vector2i(-5, 0)
-shader_parameter/static_position = Vector2i(0, 0)
-shader_parameter/axis_mode = Vector2i(0, 0)
-shader_parameter/axis_frequency = Vector2i(-16, 11)
-shader_parameter/axis_amplitude = Vector2i(0, 12)
-shader_parameter/axis_shift = Vector2(12, 10)
-shader_parameter/auto_animate = true
-shader_parameter/animation_speed = Vector2(10, 5)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cegan"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h6isl"]
 shader = ExtResource("9_vivmo")
 shader_parameter/tex_size = Vector2i(320, 180)
 shader_parameter/planar_mode = 0
-shader_parameter/planar_amplitude = 0.38
+shader_parameter/planar_amplitude = -0.155
+shader_parameter/use_screen = false
 shader_parameter/use_pixelation = true
 shader_parameter/use_smooth_sampling = false
 shader_parameter/auto_animate = false
@@ -152,40 +104,165 @@ shader_parameter/animation_speed = 0.5
 shader_parameter/animation_min = 0.3
 shader_parameter/animation_max = 0.7
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_h8e4i"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_53bls"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 1
+shader_parameter/opacity = 1.0
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(14, -101)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(52, 0)
+shader_parameter/axis_amplitude = Vector2i(-50, 0)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(27, 29)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_birbe"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_tailz/SubViewport3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lwnsi"]
+shader = ExtResource("9_vivmo")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = -0.145
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_41lik"]
+load_path = "res://.godot/imported/background_pink_stripes.png-68576a52987c522fdb55892d0962effa.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jbvwl"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 1
+shader_parameter/opacity = 0.44
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(0, 0)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(15, -1)
+shader_parameter/axis_amplitude = Vector2i(-17, 15)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(50, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_f1p13"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_tailz/SubViewport_layer2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sn1fb"]
+shader = ExtResource("9_vivmo")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = -0.165
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yvsr8"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 2
+shader_parameter/opacity = 0.8
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-18, -49)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(51, 52)
+shader_parameter/axis_amplitude = Vector2i(-61, -22)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(-15, -15)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_4obbf"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_heads/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vieuh"]
 shader = ExtResource("9_vivmo")
 shader_parameter/tex_size = Vector2i(320, 180)
 shader_parameter/planar_mode = 0
 shader_parameter/planar_amplitude = -0.085
-shader_parameter/use_pixelation = true
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = false
 shader_parameter/use_smooth_sampling = false
 shader_parameter/auto_animate = false
 shader_parameter/animation_speed = 0.5
 shader_parameter/animation_min = 0.3
 shader_parameter/animation_max = 0.7
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7mycd"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yjja3"]
 shader = ExtResource("7_ycdy4")
 shader_parameter/tex_size = Vector2i(320, 180)
 shader_parameter/tex_offset = Vector2(0, 0)
 shader_parameter/blend_mode = 4
-shader_parameter/opacity = 0.16
+shader_parameter/opacity = -0.005
 shader_parameter/palette_enabled = false
 shader_parameter/palette_index = 0.0
-shader_parameter/scrolling_position = Vector2i(0, 0)
+shader_parameter/scrolling_position = Vector2i(-8, 20)
 shader_parameter/static_position = Vector2i(0, 0)
 shader_parameter/axis_mode = Vector2i(0, 0)
-shader_parameter/axis_frequency = Vector2i(50, 21)
-shader_parameter/axis_amplitude = Vector2i(-27, 36)
+shader_parameter/axis_frequency = Vector2i(77, 47)
+shader_parameter/axis_amplitude = Vector2i(-50, 32)
 shader_parameter/axis_shift = Vector2(0, 0)
-shader_parameter/auto_animate = true
-shader_parameter/animation_speed = Vector2(10, 5)
+shader_parameter/scrolling_shift = Vector2(-13, 8)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kq58d"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_ppx11"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_heads/SubViewport2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l0gw7"]
 shader = ExtResource("9_vivmo")
 shader_parameter/tex_size = Vector2i(320, 180)
 shader_parameter/planar_mode = 0
-shader_parameter/planar_amplitude = 0.42
+shader_parameter/planar_amplitude = 0.055
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = false
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_inymm"]
+load_path = "res://.godot/imported/background_NEWMEXICO.png-f7767e11bbd347e4d6ff07bf704281e5.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jcxqu"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 3
+shader_parameter/opacity = 1.0
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(18, 0)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(117, 1)
+shader_parameter/axis_amplitude = Vector2i(-208, 0)
+shader_parameter/axis_shift = Vector2(0, 123)
+shader_parameter/scrolling_shift = Vector2(-4, 71)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_1yv1y"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_receiptpete/SubViewport2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0arob"]
+shader = ExtResource("9_vivmo")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
 shader_parameter/use_pixelation = true
 shader_parameter/use_smooth_sampling = false
 shader_parameter/auto_animate = false
@@ -193,22 +270,356 @@ shader_parameter/animation_speed = 0.5
 shader_parameter/animation_min = 0.3
 shader_parameter/animation_max = 0.7
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_seu75"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dij0e"]
+load_path = "res://.godot/imported/background_checker.png-6fa96a1fcef1adb07e35a78c286cee1f.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k1udn"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 1
+shader_parameter/opacity = 0.535
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-9, -22)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(40, 116)
+shader_parameter/axis_amplitude = Vector2i(27, -63)
+shader_parameter/axis_shift = Vector2(38, 31)
+shader_parameter/scrolling_shift = Vector2(0, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_5yh34"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_receiptpete/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_birbe"]
+shader = ExtResource("9_vivmo")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = -0.125
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_f1p13"]
+load_path = "res://.godot/imported/background_pink_circles.png-d42d892ecbea782d69a526bae59dbad3.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4obbf"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 1
+shader_parameter/opacity = 0.64
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(42, 29)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(36, 22)
+shader_parameter/axis_amplitude = Vector2i(22, 21)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(0, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ovcoh"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_penny/SubViewport3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ppx11"]
+shader = ExtResource("9_vivmo")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.295
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1yv1y"]
+load_path = "res://.godot/imported/background_orangebg.png-c89c0cf857e35f578e806fc0fe32ee1b.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5yh34"]
 shader = ExtResource("7_ycdy4")
 shader_parameter/tex_size = Vector2i(320, 180)
 shader_parameter/tex_offset = Vector2(0, 0)
 shader_parameter/blend_mode = 4
+shader_parameter/opacity = 0.9
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(3, 22)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(3, 6)
+shader_parameter/axis_amplitude = Vector2i(42, 0)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(0, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_pjuso"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_penny/SubViewport_layer2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f1p13"]
+shader = ExtResource("9_vivmo")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ovcoh"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 1
+shader_parameter/opacity = 1.0
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-11, -31)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(26, 9)
+shader_parameter/axis_amplitude = Vector2i(11, 13)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(-5, -9)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_23xmf"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_gryme/SubViewport2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_swlj1"]
+shader = ExtResource("9_vivmo")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yysqy"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 2
+shader_parameter/opacity = 1.0
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-10, -21)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(0, -10)
+shader_parameter/axis_amplitude = Vector2i(7, 2)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(0, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_n5t1e"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_gryme/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_41lik"]
+shader = ExtResource("9_vivmo")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_inymm"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 1
+shader_parameter/opacity = 1.0
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-6, -10)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(-27, 54)
+shader_parameter/axis_amplitude = Vector2i(-23, 33)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(12, -9)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_jcxqu"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_battlebottle/SubViewport2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dij0e"]
+shader = ExtResource("9_vivmo")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wat4s"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 3
+shader_parameter/opacity = 0.53
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-2, -26)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(-13, 3)
+shader_parameter/axis_amplitude = Vector2i(20, 4)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(0, -32)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ywjan"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_battlebottle/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m74q3"]
+shader = ExtResource("9_vivmo")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tko6h"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 3
+shader_parameter/opacity = 1.0
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-9, -6)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(7, 6)
+shader_parameter/axis_amplitude = Vector2i(8, 8)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(22, 27)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_am8a1"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_durt/SubViewport3")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_8dc3g"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_durt/SubViewport2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_htgcl"]
+shader = ExtResource("9_vivmo")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_smeu8"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 2
 shader_parameter/opacity = 0.985
 shader_parameter/palette_enabled = false
 shader_parameter/palette_index = 0.0
-shader_parameter/scrolling_position = Vector2i(0, 0)
+shader_parameter/scrolling_position = Vector2i(-14, -39)
 shader_parameter/static_position = Vector2i(0, 0)
 shader_parameter/axis_mode = Vector2i(0, 0)
 shader_parameter/axis_frequency = Vector2i(35, 64)
 shader_parameter/axis_amplitude = Vector2i(2, -5)
 shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(0, 3)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_f3y11"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_durt/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cpm2s"]
+shader = ExtResource("9_vivmo")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
 shader_parameter/auto_animate = false
-shader_parameter/animation_speed = Vector2(14, 5)
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u81y6"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 2
+shader_parameter/opacity = 0.415
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(3, -20)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(0, 53)
+shader_parameter/axis_amplitude = Vector2i(8, 27)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(0, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_rt5wr"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_ooze/SubViewport2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mnw77"]
+shader = ExtResource("9_vivmo")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vjgyh"]
+shader = ExtResource("7_ycdy4")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 3
+shader_parameter/opacity = 0.665
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-17, -74)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(50, 21)
+shader_parameter/axis_amplitude = Vector2i(-27, 36)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(0, 3)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_d5iia"]
+viewport_path = NodePath("scene_battle/battlebackground/shader_ooze/SubViewport")
 
 [sub_resource type="Curve2D" id="Curve2D_4k2k6"]
 bake_interval = 10.0
@@ -293,7 +704,7 @@ animations = [{
 
 [sub_resource type="Animation" id="Animation_0dhbp"]
 resource_name = "spawn_coin_drop"
-length = 1.6
+length = 0.9
 loop_mode = 1
 tracks/0/type = "method"
 tracks/0/imported = false
@@ -1151,8 +1562,10 @@ _data = {
 script = ExtResource("1_ig7tw")
 max_player_height = -14.0
 mouse_speed_decay = 13.44
+timer_shake_intensity = 30.0
 
 [node name="debug" type="CanvasLayer" parent="." unique_id=366246311]
+visible = false
 
 [node name="debug_edit" type="LineEdit" parent="debug" unique_id=940149932]
 unique_name_in_owner = true
@@ -1715,201 +2128,610 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="ColorRect" type="ColorRect" parent="scene_battle/battlebackground" unique_id=1390299369]
+[node name="shader_tailz" type="Control" parent="scene_battle/battlebackground" unique_id=42214371]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 1)
 
-[node name="background_pink" type="TextureRect" parent="scene_battle/battlebackground" unique_id=760805290]
-unique_name_in_owner = true
-visible = false
-material = SubResource("ShaderMaterial_yaehf")
-layout_mode = 0
-offset_right = 320.0
-offset_bottom = 180.0
-mouse_filter = 2
-texture = ExtResource("10_vivmo")
+[node name="SubViewport3" type="SubViewport" parent="scene_battle/battlebackground/shader_tailz" unique_id=117297714]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="planar2" type="TextureRect" parent="scene_battle/battlebackground/shader_tailz/SubViewport3" unique_id=404123742]
+material = SubResource("ShaderMaterial_h6isl")
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("34_ppx11")
 stretch_mode = 1
 
-[node name="background_purple_dots" type="TextureRect" parent="scene_battle/battlebackground" unique_id=659600134]
-visible = false
-material = SubResource("ShaderMaterial_xuqvo")
-layout_mode = 0
-offset_right = 320.0
-offset_bottom = 180.0
-mouse_filter = 2
-texture = ExtResource("4_getpj")
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_tailz" unique_id=1977436909]
+copy_mode = 2
 
-[node name="background_checker" type="TextureRect" parent="scene_battle/battlebackground" unique_id=418197425]
-material = SubResource("ShaderMaterial_qsp4k")
-layout_mode = 0
-offset_right = 320.0
-offset_bottom = 180.0
-mouse_filter = 2
+[node name="axis2" type="TextureRect" parent="scene_battle/battlebackground/shader_tailz" unique_id=175509811]
+material = SubResource("ShaderMaterial_53bls")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_birbe")
+stretch_mode = 1
+
+[node name="SubViewport_layer2" type="SubViewport" parent="scene_battle/battlebackground/shader_tailz" unique_id=1049851572]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="planar1" type="TextureRect" parent="scene_battle/battlebackground/shader_tailz/SubViewport_layer2" unique_id=185772662]
+material = SubResource("ShaderMaterial_lwnsi")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CompressedTexture2D_41lik")
+stretch_mode = 1
+
+[node name="BackBufferCopy3" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_tailz" unique_id=102694941]
+copy_mode = 2
+
+[node name="axis1" type="TextureRect" parent="scene_battle/battlebackground/shader_tailz" unique_id=1308408103]
+material = SubResource("ShaderMaterial_jbvwl")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_f1p13")
+stretch_mode = 1
+
+[node name="shader_heads" type="Control" parent="scene_battle/battlebackground" unique_id=467558496]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="scene_battle/battlebackground/shader_heads" unique_id=1692879111]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="scene_battle/battlebackground/shader_heads" unique_id=921303611]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_heads/SubViewport" unique_id=1978986235]
+material = SubResource("ShaderMaterial_sn1fb")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("35_1yv1y")
+stretch_mode = 1
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_heads" unique_id=1429027536]
+copy_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_heads" unique_id=485288820]
+material = SubResource("ShaderMaterial_yvsr8")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_4obbf")
+stretch_mode = 1
+
+[node name="SubViewport2" type="SubViewport" parent="scene_battle/battlebackground/shader_heads" unique_id=657980870]
+transparent_bg = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_heads/SubViewport2" unique_id=1541064640]
+material = SubResource("ShaderMaterial_vieuh")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("24_d2t1y")
+stretch_mode = 1
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_heads" unique_id=1143894629]
+copy_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="scene_battle/battlebackground/shader_heads" unique_id=2146597308]
+material = SubResource("ShaderMaterial_yjja3")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_ppx11")
+stretch_mode = 1
+
+[node name="shader_receiptpete" type="Control" parent="scene_battle/battlebackground" unique_id=1579543048]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport2" type="SubViewport" parent="scene_battle/battlebackground/shader_receiptpete" unique_id=434848509]
+transparent_bg = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_receiptpete/SubViewport2" unique_id=1290589311]
+material = SubResource("ShaderMaterial_l0gw7")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CompressedTexture2D_inymm")
+stretch_mode = 1
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_receiptpete" unique_id=740332340]
+copy_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="scene_battle/battlebackground/shader_receiptpete" unique_id=1510142893]
+material = SubResource("ShaderMaterial_jcxqu")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_1yv1y")
+stretch_mode = 1
+
+[node name="SubViewport" type="SubViewport" parent="scene_battle/battlebackground/shader_receiptpete" unique_id=645108190]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_receiptpete/SubViewport" unique_id=2103410354]
+material = SubResource("ShaderMaterial_0arob")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CompressedTexture2D_dij0e")
+stretch_mode = 1
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_receiptpete" unique_id=415204618]
+copy_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_receiptpete" unique_id=2042132389]
+material = SubResource("ShaderMaterial_k1udn")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_5yh34")
+stretch_mode = 1
+
+[node name="shader_penny" type="Control" parent="scene_battle/battlebackground" unique_id=1817917881]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport3" type="SubViewport" parent="scene_battle/battlebackground/shader_penny" unique_id=131195083]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="planar2" type="TextureRect" parent="scene_battle/battlebackground/shader_penny/SubViewport3" unique_id=793781076]
+material = SubResource("ShaderMaterial_birbe")
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("CompressedTexture2D_f1p13")
+stretch_mode = 1
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_penny" unique_id=1043687384]
+copy_mode = 2
+
+[node name="axis2" type="TextureRect" parent="scene_battle/battlebackground/shader_penny" unique_id=346926783]
+material = SubResource("ShaderMaterial_4obbf")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_ovcoh")
+stretch_mode = 1
+
+[node name="SubViewport_layer2" type="SubViewport" parent="scene_battle/battlebackground/shader_penny" unique_id=1525824974]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="planar1" type="TextureRect" parent="scene_battle/battlebackground/shader_penny/SubViewport_layer2" unique_id=969464761]
+material = SubResource("ShaderMaterial_ppx11")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CompressedTexture2D_1yv1y")
+stretch_mode = 1
+
+[node name="BackBufferCopy3" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_penny" unique_id=694899867]
+copy_mode = 2
+
+[node name="axis1" type="TextureRect" parent="scene_battle/battlebackground/shader_penny" unique_id=1761350604]
+material = SubResource("ShaderMaterial_5yh34")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_pjuso")
+stretch_mode = 1
+
+[node name="shader_gryme" type="Control" parent="scene_battle/battlebackground" unique_id=369556026]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport2" type="SubViewport" parent="scene_battle/battlebackground/shader_gryme" unique_id=1185462701]
+transparent_bg = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_gryme/SubViewport2" unique_id=1113995197]
+material = SubResource("ShaderMaterial_f1p13")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("24_d2t1y")
+stretch_mode = 1
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_gryme" unique_id=1850589362]
+copy_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="scene_battle/battlebackground/shader_gryme" unique_id=1786641629]
+material = SubResource("ShaderMaterial_ovcoh")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_23xmf")
+stretch_mode = 1
+
+[node name="SubViewport" type="SubViewport" parent="scene_battle/battlebackground/shader_gryme" unique_id=560860368]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_gryme/SubViewport" unique_id=7420032]
+material = SubResource("ShaderMaterial_swlj1")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("19_4lmeg")
+stretch_mode = 1
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_gryme" unique_id=627290227]
+copy_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_gryme" unique_id=1690041263]
+material = SubResource("ShaderMaterial_yysqy")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_n5t1e")
+stretch_mode = 1
+
+[node name="shader_battlebottle" type="Control" parent="scene_battle/battlebackground" unique_id=811969720]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport2" type="SubViewport" parent="scene_battle/battlebackground/shader_battlebottle" unique_id=1368914521]
+transparent_bg = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_battlebottle/SubViewport2" unique_id=2033053014]
+material = SubResource("ShaderMaterial_41lik")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("23_0cp0l")
 stretch_mode = 1
 
-[node name="layer3" type="BackBufferCopy" parent="scene_battle/battlebackground" unique_id=1992222455]
-position = Vector2(160, 89.5)
-scale = Vector2(1.6000001, 0.905)
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_battlebottle" unique_id=1314546088]
 copy_mode = 2
 
-[node name="planar_pink" type="ColorRect" parent="scene_battle/battlebackground" unique_id=1836141940]
-visible = false
-material = SubResource("ShaderMaterial_cegan")
+[node name="TextureRect2" type="TextureRect" parent="scene_battle/battlebackground/shader_battlebottle" unique_id=1402160001]
+material = SubResource("ShaderMaterial_inymm")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-
-[node name="planar_purple_dots" type="ColorRect" parent="scene_battle/battlebackground" unique_id=1493725585]
-visible = false
-layout_mode = 0
-offset_left = 160.0
-offset_top = 90.0
-offset_right = 200.0
-offset_bottom = 130.0
-mouse_filter = 2
-
-[node name="planar_checker" type="ColorRect" parent="scene_battle/battlebackground" unique_id=715016287]
-material = SubResource("ShaderMaterial_h8e4i")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="layer3a" type="BackBufferCopy" parent="scene_battle/battlebackground" unique_id=681629969]
-position = Vector2(160, 89.5)
-scale = Vector2(1.6000001, 0.905)
-copy_mode = 2
-
-[node name="background_yellow" type="TextureRect" parent="scene_battle/battlebackground" unique_id=2077121295]
-unique_name_in_owner = true
-visible = false
-material = SubResource("ShaderMaterial_7mycd")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("9_w48qg")
+texture = SubResource("ViewportTexture_jcxqu")
 stretch_mode = 1
 
-[node name="background_red_yellow_checkers" type="TextureRect" parent="scene_battle/battlebackground" unique_id=608001463]
-visible = false
-material = SubResource("ShaderMaterial_qsp4k")
-layout_mode = 0
-offset_right = 320.0
-offset_bottom = 180.0
-mouse_filter = 2
-texture = ExtResource("7_ryguw")
+[node name="SubViewport" type="SubViewport" parent="scene_battle/battlebackground/shader_battlebottle" unique_id=1537472608]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
 
-[node name="background_toothpaste" type="TextureRect" parent="scene_battle/battlebackground" unique_id=1507235878]
-visible = false
-material = SubResource("ShaderMaterial_xuqvo")
-layout_mode = 0
-offset_right = 320.0
-offset_bottom = 180.0
-mouse_filter = 2
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_battlebottle/SubViewport" unique_id=1099204969]
+material = SubResource("ShaderMaterial_dij0e")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("18_h8e4i")
+stretch_mode = 1
 
-[node name="background_rainbowcircles" type="TextureRect" parent="scene_battle/battlebackground" unique_id=734816895]
-visible = false
-material = SubResource("ShaderMaterial_qsp4k")
-layout_mode = 0
-offset_right = 320.0
-offset_bottom = 180.0
-mouse_filter = 2
-texture = ExtResource("24_d2t1y")
-
-[node name="layer2" type="BackBufferCopy" parent="scene_battle/battlebackground" unique_id=1032217077]
-position = Vector2(160, 90)
-scale = Vector2(1.6, 0.90000004)
+[node name="BackBufferCopy" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_battlebottle" unique_id=772059857]
 copy_mode = 2
 
-[node name="planar_yellow" type="ColorRect" parent="scene_battle/battlebackground" unique_id=912644636]
-visible = false
-material = SubResource("ShaderMaterial_cegan")
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_battlebottle" unique_id=1829049332]
+material = SubResource("ShaderMaterial_wat4s")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+texture = SubResource("ViewportTexture_ywjan")
+stretch_mode = 1
 
-[node name="planar_red_yellow_checker" type="ColorRect" parent="scene_battle/battlebackground" unique_id=224824824]
+[node name="shader_durt" type="Control" parent="scene_battle/battlebackground" unique_id=1519270569]
 visible = false
-material = SubResource("ShaderMaterial_kq58d")
-layout_mode = 0
-offset_left = 160.0
-offset_top = 90.0
-offset_right = 200.0
-offset_bottom = 130.0
-mouse_filter = 2
-
-[node name="planar_toothpaste" type="ColorRect" parent="scene_battle/battlebackground" unique_id=1431696940]
-visible = false
-material = SubResource("ShaderMaterial_kq58d")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 
-[node name="layer2a" type="BackBufferCopy" parent="scene_battle/battlebackground" unique_id=538459131]
-position = Vector2(160, 90)
-scale = Vector2(1.6, 0.90000004)
+[node name="ColorRect" type="ColorRect" parent="scene_battle/battlebackground/shader_durt" unique_id=210471559]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(7.70092e-07, 0.45633352, 0.7237951, 1)
+
+[node name="SubViewport3" type="SubViewport" parent="scene_battle/battlebackground/shader_durt" unique_id=1677794006]
+transparent_bg = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_durt/SubViewport3" unique_id=774509644]
+material = SubResource("ShaderMaterial_m74q3")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_getpj")
+stretch_mode = 1
+
+[node name="BackBufferCopy3" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_durt" unique_id=609033449]
 copy_mode = 2
 
-[node name="background_space" type="TextureRect" parent="scene_battle/battlebackground" unique_id=1227851630]
-unique_name_in_owner = true
-visible = false
-material = SubResource("ShaderMaterial_seu75")
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
+[node name="TextureRect3" type="TextureRect" parent="scene_battle/battlebackground/shader_durt" unique_id=1897448496]
+material = SubResource("ShaderMaterial_tko6h")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_am8a1")
+stretch_mode = 1
+
+[node name="SubViewport2" type="SubViewport" parent="scene_battle/battlebackground/shader_durt" unique_id=184918742]
+transparent_bg = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_durt/SubViewport2" unique_id=1332665322]
+material = SubResource("ShaderMaterial_m74q3")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_ryguw")
+stretch_mode = 1
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_durt" unique_id=523332322]
+copy_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="scene_battle/battlebackground/shader_durt" unique_id=1272943370]
+material = SubResource("ShaderMaterial_tko6h")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_8dc3g")
+stretch_mode = 1
+
+[node name="SubViewport" type="SubViewport" parent="scene_battle/battlebackground/shader_durt" unique_id=2054512162]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_durt/SubViewport" unique_id=833956467]
+material = SubResource("ShaderMaterial_htgcl")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("8_d13ii")
 stretch_mode = 1
 
-[node name="background_bubbles" type="TextureRect" parent="scene_battle/battlebackground" unique_id=1561665106]
-visible = false
-material = SubResource("ShaderMaterial_xuqvo")
-layout_mode = 0
-offset_right = 320.0
-offset_bottom = 180.0
-mouse_filter = 2
-texture = ExtResource("19_4lmeg")
-
-[node name="layer1" type="BackBufferCopy" parent="scene_battle/battlebackground" unique_id=2128064155]
-position = Vector2(160, 90)
-scale = Vector2(1.6, 0.90000004)
+[node name="BackBufferCopy" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_durt" unique_id=549838822]
 copy_mode = 2
 
-[node name="planar_space" type="ColorRect" parent="scene_battle/battlebackground" unique_id=800797648]
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_durt" unique_id=357610222]
+material = SubResource("ShaderMaterial_smeu8")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_f3y11")
+stretch_mode = 1
+
+[node name="shader_ooze" type="Control" parent="scene_battle/battlebackground" unique_id=1140335572]
 visible = false
-layout_mode = 0
-offset_left = 160.0
-offset_top = 90.0
-offset_right = 200.0
-offset_bottom = 130.0
-mouse_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="scene_battle/battlebackground/shader_ooze" unique_id=1575425791]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.45, 0.41489998, 0.369, 1)
+
+[node name="SubViewport2" type="SubViewport" parent="scene_battle/battlebackground/shader_ooze" unique_id=1927755979]
+transparent_bg = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_ooze/SubViewport2" unique_id=140929662]
+material = SubResource("ShaderMaterial_cpm2s")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_vivmo")
+stretch_mode = 1
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_ooze" unique_id=1314126305]
+copy_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="scene_battle/battlebackground/shader_ooze" unique_id=1709605622]
+material = SubResource("ShaderMaterial_u81y6")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_rt5wr")
+stretch_mode = 1
+
+[node name="SubViewport" type="SubViewport" parent="scene_battle/battlebackground/shader_ooze" unique_id=481266265]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_ooze/SubViewport" unique_id=517610042]
+material = SubResource("ShaderMaterial_mnw77")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_w48qg")
+stretch_mode = 1
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="scene_battle/battlebackground/shader_ooze" unique_id=667051303]
+copy_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="scene_battle/battlebackground/shader_ooze" unique_id=1815306805]
+material = SubResource("ShaderMaterial_vjgyh")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_d5iia")
+stretch_mode = 1
 
 [node name="enemy_path" type="Path2D" parent="scene_battle" unique_id=2145080062]
 unique_name_in_owner = true
@@ -2098,7 +2920,6 @@ sprite_frames = SubResource("SpriteFrames_f1p13")
 
 [node name="scene_gameend" type="Control" parent="." unique_id=570005025]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -2167,14 +2988,6 @@ offset_right = 320.0
 offset_bottom = 180.0
 texture = ExtResource("84_yvsr8")
 
-[node name="EndingCredits" type="TextureRect" parent="scene_gameend" unique_id=390546838]
-unique_name_in_owner = true
-visible = false
-layout_mode = 0
-offset_right = 320.0
-offset_bottom = 180.0
-texture = ExtResource("85_vieuh")
-
 [node name="EndingWinBlank" type="TextureRect" parent="scene_gameend" unique_id=965504452]
 unique_name_in_owner = true
 layout_mode = 0
@@ -2193,6 +3006,14 @@ theme_override_colors/default_color = Color(0.9098039, 0.6784314, 0.011764706, 1
 theme_override_fonts/normal_font = ExtResource("88_n5t1e")
 text = "would it get some"
 horizontal_alignment = 1
+
+[node name="EndingCredits" type="TextureRect" parent="scene_gameend" unique_id=390546838]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("85_vieuh")
 
 [node name="transition_battle" type="AnimatedSprite2D" parent="." unique_id=654539131]
 unique_name_in_owner = true

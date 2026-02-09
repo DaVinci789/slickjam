@@ -2,14 +2,15 @@ shader_type canvas_item;
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_nearest;
 uniform ivec2 tex_size = ivec2(320, 180);
 uniform int planar_mode = 0;
-uniform float planar_amplitude = 0.5;
+uniform float planar_amplitude = 0.0;
 
 // Rendering control
+uniform bool use_screen = false;
 uniform bool use_pixelation = true; // Snap to pixel grid for hard edges (default)
 uniform bool use_smooth_sampling = false; // Alternative: smooth filtering
 
 // Animation properties
-uniform bool auto_animate = true;
+uniform bool auto_animate = false;
 uniform float animation_speed = 0.5; // Speed of amplitude pulsing
 uniform float animation_min = 0.3; // Minimum amplitude when pulsing
 uniform float animation_max = 0.7; // Maximum amplitude when pulsing
@@ -69,15 +70,21 @@ void fragment() {
         current_amplitude = mix(animation_min, animation_max, pulse);
     }
     
-    vec2 distortion = distort(planar_mode, SCREEN_UV, current_amplitude);
+    vec2 distortion;
+    if (use_screen) 
+        distortion = distort(planar_mode, SCREEN_UV, current_amplitude);
+    else
+        distortion = distort(planar_mode, UV, current_amplitude);
     
     vec4 base_color;
     
     // Snap to pixel grid for hard pixel edges
     vec2 scale = vec2(tex_size);
     vec2 pixelated_uv = (floor(distortion * scale) + 0.5) / scale;
-    base_color = texture(SCREEN_TEXTURE, pixelated_uv);
- 
+    if (use_screen)
+        base_color = texture(SCREEN_TEXTURE, pixelated_uv);
+    else
+        base_color = texture(TEXTURE, pixelated_uv);
     
     COLOR = base_color;
     COLOR.a = 1.0;

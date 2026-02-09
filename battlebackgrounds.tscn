@@ -1,0 +1,1167 @@
+[gd_scene format=3 uid="uid://chv6nlupur3hp"]
+
+[ext_resource type="Shader" uid="uid://b3oxh1w78wt5q" path="res://battle_background_axis.gdshader" id="1_noyd7"]
+[ext_resource type="Shader" uid="uid://bt04e0mygf7ol" path="res://battle_background_planar.gdshader" id="3_5xqwh"]
+[ext_resource type="Texture2D" uid="uid://htg4o8bnjotd" path="res://image/background_NEWMEXICO.png" id="5_achgk"]
+[ext_resource type="Texture2D" uid="uid://riabpwpq6pby" path="res://image/background_bubbles.png" id="6_s06oo"]
+[ext_resource type="Texture2D" uid="uid://b2qk8d53sc3ey" path="res://image/background_blue_squares.png" id="6_sbuqm"]
+[ext_resource type="Texture2D" uid="uid://cothl1p70r255" path="res://image/background_rainbowcircles.png" id="7_m5j8h"]
+[ext_resource type="Texture2D" uid="uid://bk8we3akbnu57" path="res://image/background_toothpaste.png" id="8_jkyt4"]
+[ext_resource type="Texture2D" uid="uid://lgvbaegwde6a" path="res://image/background_checker.png" id="8_m5j8h"]
+[ext_resource type="Texture2D" uid="uid://bdxc2w7vitasb" path="res://image/background_purpledots.png" id="9_vukom"]
+[ext_resource type="Texture2D" uid="uid://bp63q80oeubs5" path="res://image/background_red_yellow_checkers.png" id="10_y3u75"]
+[ext_resource type="Texture2D" uid="uid://dbcmhskhxnm5u" path="res://image/background_space.png" id="11_c2o5m"]
+[ext_resource type="Texture2D" uid="uid://b6ewuv0ojdlmd" path="res://image/background_pink.png" id="12_c2o5m"]
+[ext_resource type="Texture2D" uid="uid://npat2krrkr1" path="res://image/background_yellow.png" id="13_avwxi"]
+
+[sub_resource type="GDScript" id="GDScript_ufgcx"]
+script/source = "extends Control
+
+func _ready() -> void:
+    if get_tree().current_scene == self:
+        Audio.kill_debug()
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_achgk"]
+shader = ExtResource("3_5xqwh")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = -0.125
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_s06oo"]
+load_path = "res://.godot/imported/background_pink_circles.png-d42d892ecbea782d69a526bae59dbad3.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sbuqm"]
+shader = ExtResource("1_noyd7")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 1
+shader_parameter/opacity = 0.64
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(42, 29)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(36, 22)
+shader_parameter/axis_amplitude = Vector2i(22, 21)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(0, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_m5j8h"]
+viewport_path = NodePath("penny/SubViewport3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yjk7l"]
+shader = ExtResource("3_5xqwh")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.295
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tvu4c"]
+load_path = "res://.godot/imported/background_orangebg.png-c89c0cf857e35f578e806fc0fe32ee1b.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k8nqa"]
+shader = ExtResource("1_noyd7")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 4
+shader_parameter/opacity = 0.9
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(3, 22)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(3, 6)
+shader_parameter/axis_amplitude = Vector2i(42, 0)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(0, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ybfoc"]
+viewport_path = NodePath("penny/SubViewport_layer2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s06oo"]
+shader = ExtResource("3_5xqwh")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = -0.155
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m5j8h"]
+shader = ExtResource("1_noyd7")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 1
+shader_parameter/opacity = 1.0
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(14, -101)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(52, 0)
+shader_parameter/axis_amplitude = Vector2i(-50, 0)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(27, 29)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_jkyt4"]
+viewport_path = NodePath("tailz/SubViewport3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vkhbn"]
+shader = ExtResource("3_5xqwh")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = -0.145
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vukom"]
+load_path = "res://.godot/imported/background_pink_stripes.png-68576a52987c522fdb55892d0962effa.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y3u75"]
+shader = ExtResource("1_noyd7")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 1
+shader_parameter/opacity = 0.44
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(0, 0)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(15, -1)
+shader_parameter/axis_amplitude = Vector2i(-17, 15)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(50, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_c2o5m"]
+viewport_path = NodePath("tailz/SubViewport_layer2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jkyt4"]
+shader = ExtResource("3_5xqwh")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = -0.165
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vukom"]
+shader = ExtResource("1_noyd7")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 2
+shader_parameter/opacity = 0.8
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-18, -49)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(51, 52)
+shader_parameter/axis_amplitude = Vector2i(-61, -22)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(-15, -15)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_y3u75"]
+viewport_path = NodePath("headz/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c2o5m"]
+shader = ExtResource("3_5xqwh")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = -0.085
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = false
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_avwxi"]
+shader = ExtResource("1_noyd7")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 4
+shader_parameter/opacity = -0.005
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-8, 20)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(77, 47)
+shader_parameter/axis_amplitude = Vector2i(-50, 32)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(-13, 8)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_7uphl"]
+viewport_path = NodePath("headz/SubViewport2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7uphl"]
+shader = ExtResource("3_5xqwh")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.055
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = false
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yjk7l"]
+load_path = "res://.godot/imported/background_NEWMEXICO.png-f7767e11bbd347e4d6ff07bf704281e5.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tvu4c"]
+shader = ExtResource("1_noyd7")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 3
+shader_parameter/opacity = 1.0
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(18, 0)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(117, 1)
+shader_parameter/axis_amplitude = Vector2i(-208, 0)
+shader_parameter/axis_shift = Vector2(0, 123)
+shader_parameter/scrolling_shift = Vector2(-4, 71)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_k8nqa"]
+viewport_path = NodePath("receiptpete/SubViewport2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ybfoc"]
+shader = ExtResource("3_5xqwh")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_o4dyi"]
+load_path = "res://.godot/imported/background_checker.png-6fa96a1fcef1adb07e35a78c286cee1f.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7m7yu"]
+shader = ExtResource("1_noyd7")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 1
+shader_parameter/opacity = 0.535
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-9, -22)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(40, 116)
+shader_parameter/axis_amplitude = Vector2i(27, -63)
+shader_parameter/axis_shift = Vector2(38, 31)
+shader_parameter/scrolling_shift = Vector2(0, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_lytlm"]
+viewport_path = NodePath("receiptpete/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gmpru"]
+shader = ExtResource("3_5xqwh")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j1soq"]
+shader = ExtResource("1_noyd7")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 1
+shader_parameter/opacity = 1.0
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-11, -31)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(26, 9)
+shader_parameter/axis_amplitude = Vector2i(11, 13)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(-5, -9)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_dg4mv"]
+viewport_path = NodePath("gryme/SubViewport2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o4dyi"]
+shader = ExtResource("3_5xqwh")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lytlm"]
+shader = ExtResource("1_noyd7")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 2
+shader_parameter/opacity = 1.0
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-10, -21)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(0, -10)
+shader_parameter/axis_amplitude = Vector2i(7, 2)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(0, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_v8fhf"]
+viewport_path = NodePath("gryme/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v8fhf"]
+shader = ExtResource("3_5xqwh")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dg4mv"]
+shader = ExtResource("1_noyd7")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 1
+shader_parameter/opacity = 1.0
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-6, -10)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(-27, 54)
+shader_parameter/axis_amplitude = Vector2i(-23, 33)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(12, -9)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_7i1po"]
+viewport_path = NodePath("battlebottle/SubViewport2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_01qgw"]
+shader = ExtResource("3_5xqwh")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mv3vk"]
+shader = ExtResource("1_noyd7")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 3
+shader_parameter/opacity = 0.53
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-2, -26)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(-13, 3)
+shader_parameter/axis_amplitude = Vector2i(20, 4)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(0, -32)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_v8iet"]
+viewport_path = NodePath("battlebottle/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7i1po"]
+shader = ExtResource("3_5xqwh")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v8iet"]
+shader = ExtResource("1_noyd7")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 3
+shader_parameter/opacity = 1.0
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-9, -6)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(7, 6)
+shader_parameter/axis_amplitude = Vector2i(8, 8)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(22, 27)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_48lm8"]
+viewport_path = NodePath("durt/SubViewport3")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_a6jma"]
+viewport_path = NodePath("durt/SubViewport2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1repa"]
+shader = ExtResource("3_5xqwh")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xb4ud"]
+shader = ExtResource("1_noyd7")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 2
+shader_parameter/opacity = 0.985
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-14, -39)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(35, 64)
+shader_parameter/axis_amplitude = Vector2i(2, -5)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(0, 3)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_k7efb"]
+viewport_path = NodePath("durt/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_48lm8"]
+shader = ExtResource("3_5xqwh")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a6jma"]
+shader = ExtResource("1_noyd7")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 2
+shader_parameter/opacity = 0.415
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(3, -20)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(0, 53)
+shader_parameter/axis_amplitude = Vector2i(8, 27)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(0, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_yjk7l"]
+viewport_path = NodePath("ooze/SubViewport2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k7efb"]
+shader = ExtResource("3_5xqwh")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/planar_mode = 0
+shader_parameter/planar_amplitude = 0.0
+shader_parameter/use_screen = false
+shader_parameter/use_pixelation = true
+shader_parameter/use_smooth_sampling = false
+shader_parameter/auto_animate = false
+shader_parameter/animation_speed = 0.5
+shader_parameter/animation_min = 0.3
+shader_parameter/animation_max = 0.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r4m7v"]
+shader = ExtResource("1_noyd7")
+shader_parameter/tex_size = Vector2i(320, 180)
+shader_parameter/tex_offset = Vector2(0, 0)
+shader_parameter/blend_mode = 3
+shader_parameter/opacity = 0.665
+shader_parameter/palette_enabled = false
+shader_parameter/palette_index = 0.0
+shader_parameter/scrolling_position = Vector2i(-17, -74)
+shader_parameter/static_position = Vector2i(0, 0)
+shader_parameter/axis_mode = Vector2i(0, 0)
+shader_parameter/axis_frequency = Vector2i(50, 21)
+shader_parameter/axis_amplitude = Vector2i(-27, 36)
+shader_parameter/axis_shift = Vector2(0, 0)
+shader_parameter/scrolling_shift = Vector2(0, 3)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_tvu4c"]
+viewport_path = NodePath("ooze/SubViewport")
+
+[node name="Control" type="Control" unique_id=614344736]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_ufgcx")
+
+[node name="penny" type="Control" parent="." unique_id=811852390]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport3" type="SubViewport" parent="penny" unique_id=730516651]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="planar2" type="TextureRect" parent="penny/SubViewport3" unique_id=715461086]
+material = SubResource("ShaderMaterial_achgk")
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("CompressedTexture2D_s06oo")
+stretch_mode = 1
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="penny" unique_id=962338916]
+copy_mode = 2
+
+[node name="axis2" type="TextureRect" parent="penny" unique_id=1307469382]
+material = SubResource("ShaderMaterial_sbuqm")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_m5j8h")
+stretch_mode = 1
+
+[node name="SubViewport_layer2" type="SubViewport" parent="penny" unique_id=1869130325]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="planar1" type="TextureRect" parent="penny/SubViewport_layer2" unique_id=1545641227]
+material = SubResource("ShaderMaterial_yjk7l")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CompressedTexture2D_tvu4c")
+stretch_mode = 1
+
+[node name="BackBufferCopy3" type="BackBufferCopy" parent="penny" unique_id=368116632]
+copy_mode = 2
+
+[node name="axis1" type="TextureRect" parent="penny" unique_id=1006406715]
+material = SubResource("ShaderMaterial_k8nqa")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_ybfoc")
+stretch_mode = 1
+
+[node name="tailz" type="Control" parent="." unique_id=729509056]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport3" type="SubViewport" parent="tailz" unique_id=731853257]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="planar2" type="TextureRect" parent="tailz/SubViewport3" unique_id=786872710]
+material = SubResource("ShaderMaterial_s06oo")
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("5_achgk")
+stretch_mode = 1
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="tailz" unique_id=92877156]
+copy_mode = 2
+
+[node name="axis2" type="TextureRect" parent="tailz" unique_id=250230786]
+material = SubResource("ShaderMaterial_m5j8h")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_jkyt4")
+stretch_mode = 1
+
+[node name="SubViewport_layer2" type="SubViewport" parent="tailz" unique_id=1798240656]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="planar1" type="TextureRect" parent="tailz/SubViewport_layer2" unique_id=2039240407]
+material = SubResource("ShaderMaterial_vkhbn")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CompressedTexture2D_vukom")
+stretch_mode = 1
+
+[node name="BackBufferCopy3" type="BackBufferCopy" parent="tailz" unique_id=1422481059]
+copy_mode = 2
+
+[node name="axis1" type="TextureRect" parent="tailz" unique_id=68110271]
+material = SubResource("ShaderMaterial_y3u75")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_c2o5m")
+stretch_mode = 1
+
+[node name="headz" type="Control" parent="." unique_id=836849560]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="headz" unique_id=772013919]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="headz" unique_id=286756010]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="headz/SubViewport" unique_id=2047401561]
+material = SubResource("ShaderMaterial_jkyt4")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_sbuqm")
+stretch_mode = 1
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="headz" unique_id=1336189971]
+copy_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="headz" unique_id=1509392812]
+material = SubResource("ShaderMaterial_vukom")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_y3u75")
+stretch_mode = 1
+
+[node name="SubViewport2" type="SubViewport" parent="headz" unique_id=1580933795]
+transparent_bg = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="headz/SubViewport2" unique_id=302678829]
+material = SubResource("ShaderMaterial_c2o5m")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_m5j8h")
+stretch_mode = 1
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="headz" unique_id=714396334]
+copy_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="headz" unique_id=764577871]
+material = SubResource("ShaderMaterial_avwxi")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_7uphl")
+stretch_mode = 1
+
+[node name="receiptpete" type="Control" parent="." unique_id=454488636]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport2" type="SubViewport" parent="receiptpete" unique_id=300282805]
+transparent_bg = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="receiptpete/SubViewport2" unique_id=978229133]
+material = SubResource("ShaderMaterial_7uphl")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CompressedTexture2D_yjk7l")
+stretch_mode = 1
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="receiptpete" unique_id=1412512914]
+copy_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="receiptpete" unique_id=1082912171]
+material = SubResource("ShaderMaterial_tvu4c")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_k8nqa")
+stretch_mode = 1
+
+[node name="SubViewport" type="SubViewport" parent="receiptpete" unique_id=1146248235]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="receiptpete/SubViewport" unique_id=410559862]
+material = SubResource("ShaderMaterial_ybfoc")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CompressedTexture2D_o4dyi")
+stretch_mode = 1
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="receiptpete" unique_id=38322220]
+copy_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="receiptpete" unique_id=343881333]
+material = SubResource("ShaderMaterial_7m7yu")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_lytlm")
+stretch_mode = 1
+
+[node name="gryme" type="Control" parent="." unique_id=1667674161]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport2" type="SubViewport" parent="gryme" unique_id=76362602]
+transparent_bg = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="gryme/SubViewport2" unique_id=418655797]
+material = SubResource("ShaderMaterial_gmpru")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_m5j8h")
+stretch_mode = 1
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="gryme" unique_id=849673680]
+copy_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="gryme" unique_id=155864534]
+material = SubResource("ShaderMaterial_j1soq")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_dg4mv")
+stretch_mode = 1
+
+[node name="SubViewport" type="SubViewport" parent="gryme" unique_id=292383822]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="gryme/SubViewport" unique_id=1626367771]
+material = SubResource("ShaderMaterial_o4dyi")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_s06oo")
+stretch_mode = 1
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="gryme" unique_id=2066394492]
+copy_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="gryme" unique_id=1475276285]
+material = SubResource("ShaderMaterial_lytlm")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_v8fhf")
+stretch_mode = 1
+
+[node name="battlebottle" type="Control" parent="." unique_id=826957155]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport2" type="SubViewport" parent="battlebottle" unique_id=1185540174]
+transparent_bg = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="battlebottle/SubViewport2" unique_id=563614319]
+material = SubResource("ShaderMaterial_v8fhf")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_m5j8h")
+stretch_mode = 1
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="battlebottle" unique_id=704918454]
+copy_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="battlebottle" unique_id=1381862292]
+material = SubResource("ShaderMaterial_dg4mv")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_7i1po")
+stretch_mode = 1
+
+[node name="SubViewport" type="SubViewport" parent="battlebottle" unique_id=1511052846]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="battlebottle/SubViewport" unique_id=443222190]
+material = SubResource("ShaderMaterial_01qgw")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_jkyt4")
+stretch_mode = 1
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="battlebottle" unique_id=602618750]
+copy_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="battlebottle" unique_id=1795942241]
+material = SubResource("ShaderMaterial_mv3vk")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_v8iet")
+stretch_mode = 1
+
+[node name="durt" type="Control" parent="." unique_id=2124501872]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="durt" unique_id=710077635]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(7.70092e-07, 0.45633352, 0.7237951, 1)
+
+[node name="SubViewport3" type="SubViewport" parent="durt" unique_id=431411663]
+transparent_bg = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="durt/SubViewport3" unique_id=1460965649]
+material = SubResource("ShaderMaterial_7i1po")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_vukom")
+stretch_mode = 1
+
+[node name="BackBufferCopy3" type="BackBufferCopy" parent="durt" unique_id=1069568334]
+copy_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="durt" unique_id=944404284]
+material = SubResource("ShaderMaterial_v8iet")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_48lm8")
+stretch_mode = 1
+
+[node name="SubViewport2" type="SubViewport" parent="durt" unique_id=275505185]
+transparent_bg = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="durt/SubViewport2" unique_id=1491742430]
+material = SubResource("ShaderMaterial_7i1po")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_y3u75")
+stretch_mode = 1
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="durt" unique_id=247540647]
+copy_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="durt" unique_id=675293340]
+material = SubResource("ShaderMaterial_v8iet")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_a6jma")
+stretch_mode = 1
+
+[node name="SubViewport" type="SubViewport" parent="durt" unique_id=1471711985]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="durt/SubViewport" unique_id=1454714568]
+material = SubResource("ShaderMaterial_1repa")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_c2o5m")
+stretch_mode = 1
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="durt" unique_id=805117041]
+copy_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="durt" unique_id=2092671679]
+material = SubResource("ShaderMaterial_xb4ud")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_k7efb")
+stretch_mode = 1
+
+[node name="ooze" type="Control" parent="." unique_id=538543863]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="ooze" unique_id=1425634275]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.45, 0.41489998, 0.369, 1)
+
+[node name="SubViewport2" type="SubViewport" parent="ooze" unique_id=306106613]
+transparent_bg = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="ooze/SubViewport2" unique_id=359188007]
+material = SubResource("ShaderMaterial_48lm8")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_c2o5m")
+stretch_mode = 1
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="ooze" unique_id=628314273]
+copy_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="ooze" unique_id=1689541433]
+material = SubResource("ShaderMaterial_a6jma")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_yjk7l")
+stretch_mode = 1
+
+[node name="SubViewport" type="SubViewport" parent="ooze" unique_id=240973030]
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(320, 180)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="ooze/SubViewport" unique_id=1275299981]
+material = SubResource("ShaderMaterial_k7efb")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_avwxi")
+stretch_mode = 1
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="ooze" unique_id=363045584]
+copy_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="ooze" unique_id=1626305453]
+material = SubResource("ShaderMaterial_r4m7v")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_tvu4c")
+stretch_mode = 1

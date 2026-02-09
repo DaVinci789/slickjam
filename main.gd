@@ -57,8 +57,8 @@ class Command:
         args = _args
 
 class Settings extends Node:
-    var level_music := 5
-    var level_sfx := 5
+    var level_music := 10
+    var level_sfx := 10
     var window_mode := DisplayServer.WindowMode.WINDOW_MODE_WINDOWED
     var where := "pause"
     var hovering := "none"
@@ -88,6 +88,7 @@ class Settings extends Node:
                         level_music = volume_part + 1
                         if volume_part == 0 and old_level == 1:
                             level_music = 0
+                        Audio.create_sfx(Audio.SoundEffectType.UI_Pause_Volume_Change)
                     pass)
             sfx_part.gui_input.connect(
                 func(event: InputEvent) -> void:
@@ -96,6 +97,7 @@ class Settings extends Node:
                         level_sfx = volume_part + 1
                         if volume_part == 0 and old_level == 1:
                             level_sfx = 0
+                        Audio.create_sfx(Audio.SoundEffectType.UI_Pause_Volume_Change)
                     pass)
 
     func _process(delta: float) -> void:
@@ -104,11 +106,13 @@ class Settings extends Node:
         if not just_entered and Input.is_action_just_pressed("input_interrupt"):
             settings_node.visible = false
             get_tree().paused = false
+            Audio.create_sfx(Audio.SoundEffectType.UI_Pause_Close)
         if Input.is_action_just_pressed("input_action"):
             match hovering:
                 "label_resume":
                     get_tree().paused = false
                     settings_node.visible = false
+                    Audio.create_sfx(Audio.SoundEffectType.UI_Pause_Close)
                 "label_audio":
                     where = "audio"
                 "label_fullscreen":
@@ -138,8 +142,8 @@ class Settings extends Node:
         var sfx_bus := AudioServer.get_bus_index("Sound Effect")
         var music_normalized: float = level_music / 10.0
         var sfx_normalized: float = level_sfx / 10.0
-        AudioServer.set_bus_volume_db(music_bus, lerpf(-40.0, 0.0, music_normalized * music_normalized))
-        AudioServer.set_bus_volume_db(sfx_bus, lerpf(-40.0, 0.0, sfx_normalized * sfx_normalized))
+        AudioServer.set_bus_volume_db(music_bus, linear_to_db(music_normalized))
+        AudioServer.set_bus_volume_db(sfx_bus, linear_to_db(sfx_normalized))
         AudioServer.set_bus_mute(music_bus, level_music == 0)
         AudioServer.set_bus_mute(sfx_bus, level_sfx == 0)
         for i: int in range(10):
@@ -164,6 +168,7 @@ class EnemyConfigData:
     var transition_color := Color.BLUE_VIOLET
     var background_layers: Array[String] = []
     var attack_patterns: Array[String] = []
+    var spawn_probs: Array[int] = []
 
 func get_sprite_rect(sprite: Variant) -> Rect2:
     var result: Rect2 = Rect2(Vector2.INF, Vector2.ZERO)
@@ -208,6 +213,7 @@ var locations: Array[String] = ["front", "side_left", "back", "side_right",]
 var location_index: int = 0
 @export var max_player_height: float = 50.0
 @export var mouse_speed_decay: float = 5.0
+@export var timer_shake_intensity: float = 2.0
 
 var thing_battling: Entity
 var _death_pending: bool = false
@@ -265,13 +271,13 @@ func spawn_cars() -> void:
     %cars.add_child(car1)
     %cars.add_child(car2)
     car_current = car0
-    _spawn_dirt(car0, 10.0, Vector2(21, 27), Vector2(1, 7), Vector2(9, 20), Vector2(1, 7))
-    _spawn_dirt(car1, 10.0, Vector2(59, 78), Vector2(28, 58), Vector2(79, 107), Vector2(28, 58))
-    _spawn_dirt(car2, 10.0, Vector2(1, 7), Vector2(21, 27), Vector2(28, 58), Vector2(79, 107))
+    _spawn_dirt(car0, 10.0, Vector2(21, 27), Vector2(1, 7), Vector2(9, 20), Vector2(1, 7), 1)
+    _spawn_dirt(car1, 10.0, Vector2(59, 78), Vector2(28, 58), Vector2(79, 107), Vector2(28, 58), 2)
+    _spawn_dirt(car2, 10.0, Vector2(1, 7), Vector2(21, 27), Vector2(28, 58), Vector2(79, 107), 3)
 
 func _spawn_dirt(car: Entity, min_distance: float,
         front_frame_range: Vector2, right_frame_range: Vector2,
-        back_frame_range: Vector2, left_frame_range: Vector2) -> void:
+        back_frame_range: Vector2, left_frame_range: Vector2, day: int) -> void:
     var face_frame_ranges: Dictionary[String, Vector2] = {
         "car_front": front_frame_range,
         "car_right": right_frame_range,
@@ -280,7 +286,13 @@ func _spawn_dirt(car: Entity, min_distance: float,
     }
     var enemy_frame_map: Dictionary[Entity.EnemyType, int] = {}
     var enemy_frame_count: int = dirt_frames.get_frame_count("Enemy") - 1
-    var enemy_type_count: int = Entity.EnemyType.size() - 1 # exclude None
+    var day_index: int = day - 1
+    var spawn_die: Array[Entity.EnemyType] = []
+    for enemy_name: String in enemy_config_data:
+        var faces: int = enemy_config_data[enemy_name].spawn_probs[day_index]
+        var etype: Entity.EnemyType = Entity.EnemyType[enemy_name]
+        for f: int in faces:
+            spawn_die.append(etype)
     for polygon: Polygon2D in car.polygons:
         var face_name: String = polygon.name.replace("_polygon", "")
         var face_sprite: Node = car.find_child(face_name)
@@ -302,7 +314,8 @@ func _spawn_dirt(car: Entity, min_distance: float,
         for j: int in range(4):
             spawn_list.append({"grime_type": Entity.GrimeType.None, "enemy_type": Entity.EnemyType.None, "animation": "None", "frame": randi_range(frame_min, frame_max)})
         for j: int in range(4):
-            var etype: Entity.EnemyType = (randi_range(1, enemy_type_count) as Entity.EnemyType)
+            var etype: Entity.EnemyType = spawn_die.pick_random()
+            assert(enemy_config_data[Entity.EnemyType.keys()[etype]].spawn_probs[day_index] > 0, "Enemy %s has 0 spawn prob on day %d" % [Entity.EnemyType.keys()[etype], day])
             if not enemy_frame_map.has(etype):
                 enemy_frame_map[etype] = randi_range(0, enemy_frame_count)
             spawn_list.append({"grime_type": Entity.GrimeType.Enemy, "enemy_type": etype, "animation": "Enemy", "frame": enemy_frame_map[etype]})
@@ -393,6 +406,22 @@ func _spawn_dirt(car: Entity, min_distance: float,
             entity.global_position = pos
             placed_rects.append(Rect2(pos - half_size, sprite_size))
 
+func _shake_timer(good: bool) -> void:
+    var s: float = timer_shake_intensity
+    var base_pos: Vector2 = %timer.position
+    var blink_color: Color = Color.GREEN if good else Color.RED
+    for child: Node in %timer.get_children():
+        child.modulate = blink_color
+    var shake_tween: Tween = get_tree().create_tween()
+    shake_tween.tween_property(%timer, "position", base_pos + Vector2(randf_range(-s, s), randf_range(-s, s)), 0.05)
+    shake_tween.tween_property(%timer, "position", base_pos + Vector2(randf_range(-s, s), randf_range(-s, s)), 0.05)
+    shake_tween.tween_property(%timer, "position", base_pos + Vector2(randf_range(-s * 0.5, s * 0.5), randf_range(-s * 0.5, s * 0.5)), 0.05)
+    shake_tween.tween_property(%timer, "position", base_pos, 0.05)
+    shake_tween.tween_callback(
+        func() -> void:
+            for child: Node in %timer.get_children():
+                child.modulate = Color.WHITE)
+
 func _update_timer_display() -> void:
     var clamped: int = maxi(int(ceil(game_clock)), 0)
     var minutes: int = clamped / 60
@@ -415,6 +444,7 @@ func _advance_day() -> void:
     if _day_transitioning:
         return
     _day_transitioning = true
+    Audio.create_sfx(Audio.SoundEffectType.Stinger_Day_End)
     %transition_battle.visible = true
     %transition_battle.animation = "horizontal"
     %transition_battle.frame = 17
@@ -430,7 +460,8 @@ func _advance_day() -> void:
                 _day_transitioning = false
                 return
             day_current += 1
-            location_index = 0)
+            location_index = 0
+            %timer.position.y = -20.0)
     tween.tween_method(
         func(value: Color) -> void:
             %transition_battle.material.set_shader_parameter("transition_color", value)
@@ -438,7 +469,8 @@ func _advance_day() -> void:
     tween.tween_callback(
         func() -> void:
             %transition_battle.visible = false
-            _day_transitioning = false)
+            _day_transitioning = false
+            _animate_clock_delta(150.0))
 
 func _animate_clock_delta(delta_value: float) -> void:
     if delta_value == 0.0:
@@ -483,17 +515,21 @@ func _ready() -> void:
         enemy_config_datum.background_layers.assign(background_layers)
         var attack_patterns: Array = enemy_data.get_value(enemy_name, "attack_patterns")
         enemy_config_datum.attack_patterns.assign(attack_patterns)
+        var spawn_probs: Array = enemy_data.get_value(enemy_name, "spawn_probs")
+        enemy_config_datum.spawn_probs.assign(spawn_probs)
         enemy_config_data[enemy_name] = enemy_config_datum
     
     %timer.position = Vector2(201, -20)
     game_clock = game_clock_start
     _update_timer_display()
     settings.settings_node = %settings
+    settings._process(0.0)
+    settings.settings_node.visible = false
     add_child(settings)
     DisplayServer.window_set_mode(settings.window_mode)
     
     Audio.kill_debug()
-    Audio.create_music(Audio.MusicType.Wash)
+    Audio.create_music([Audio.MusicType.Wash, Audio.MusicType.Wash0].pick_random())
     for area: Area2D in %ui_left.area_clickable:
         area.area_entered.connect(
             func(other_area: Area2D) -> void:
@@ -553,11 +589,6 @@ func _ready() -> void:
     spawn_cars()
     if OS.has_feature("release"):
         scene_current = Scene.Title
-    # Initialize grime for starting location
-    #grime.clear()
-    #for child in car_current.get_child(location_index).get_children():
-        #if child is Entity:
-            #grime.append(child)
 
 ##### UI Animation Functions #####
 func ui_anim_enemy_enter() -> void:
@@ -596,6 +627,8 @@ func _battle_transition_in_anim_finished() -> void:
         func() -> void:
             if not battle or battle.phase != BattlePhase.TransitionIn:
                 return
+            var sfx: int = Audio.SoundEffectType["Cry_%s" % Util.name_from_enemy_enum(thing_battling.enemy_type)]
+            Audio.create_sfx(sfx)
             %transition_battle.visible = false
             _death_pending = false
             _battle_start_enemy_enter())
@@ -668,6 +701,7 @@ func _process(delta: float) -> void:
     if Input.is_action_just_pressed("input_interrupt"):
         settings.just_entered = true
         get_tree().paused = true
+        Audio.create_sfx(Audio.SoundEffectType.UI_Pause_Open)
     if (not %ui_left.mouse_hover and not %ui_right.mouse_hover) or Input.is_action_just_released("input_action"):
         check_hose = true
     if scene_current != Scene.Wash and scene_current != Scene.Battle:
@@ -688,6 +722,7 @@ func _process(delta: float) -> void:
     
     if scene_current == Scene.Title:
         if Input.is_action_just_pressed("input_action"):
+            Audio.create_sfx(Audio.SoundEffectType.UI_Title_Screen)
             %title_screen_anim.play("begin")
             %title_screen_anim.animation_finished.connect(
                 func(anim_name: String) -> void:
@@ -700,11 +735,41 @@ func _process(delta: float) -> void:
                         scene_current = Scene.Wash
                     pass)
     if scene_current == Scene.GameEnd:
-        if Input.is_action_just_pressed("input_action"):
-            %title_screen_anim.play("RESET")
-            scene_current = Scene.Title
-            Audio.stop_all_music()
-            Audio.create_music(Audio.MusicType.Wash)
+        if Input.is_action_just_pressed("input_action") and not _day_transitioning:
+            _day_transitioning = true
+            %transition_battle.visible = true
+            var tween := get_tree().create_tween()
+            tween.tween_method(
+                func(value: Color) -> void:
+                    %transition_battle.material.set_shader_parameter("transition_color", value)
+            , Color.TRANSPARENT, Color.BLACK, 1.0)
+            tween.tween_callback(
+                func() -> void:
+                    %EndingCredits.visible = true)
+            tween.tween_method(
+                func(value: Color) -> void:
+                    %transition_battle.material.set_shader_parameter("transition_color", value)
+            , Color.BLACK, Color.TRANSPARENT, 1.0)
+            tween.tween_interval(3.0)
+            tween.tween_method(
+                func(value: Color) -> void:
+                    %transition_battle.material.set_shader_parameter("transition_color", value)
+            , Color.TRANSPARENT, Color.BLACK, 1.0)
+            tween.tween_callback(
+                func() -> void:
+                    %EndingCredits.visible = false
+                    %title_screen_anim.play("RESET")
+                    scene_current = Scene.Title
+                    Audio.stop_all_music()
+                    Audio.create_music([Audio.MusicType.Wash, Audio.MusicType.Wash0].pick_random()))
+            tween.tween_method(
+                func(value: Color) -> void:
+                    %transition_battle.material.set_shader_parameter("transition_color", value)
+            , Color.BLACK, Color.TRANSPARENT, 1.0)
+            tween.tween_callback(
+                func() -> void:
+                    %transition_battle.visible = false
+                    _day_transitioning = false)
     
     var current_mouse_pos: Vector2 = get_global_mouse_position()
     var instant_speed: float = current_mouse_pos.distance_to(_prev_mouse_pos) / delta
@@ -794,8 +859,10 @@ func _physics_process(delta: float) -> void:
                         elif scene_current == Scene.Battle:
                             death_command = Command.new(CommandType.Battle_End, [the_grime])
 
-                        the_grime.hp -= droplet.damage_deals
-                        print(the_grime.hp)
+                        var speed_multiplier: float = 1.0
+                        var damage: float = droplet.damage_deals * speed_multiplier
+                        the_grime.hp -= damage
+                        print("dmg: %.2f  mult: %.2fx" % [damage, speed_multiplier])
                         the_grime.sprite.material.set_shader_parameter("hit_effect", 0.5)
 
                         # Only create/restart sound if entity wasn't already being hit
@@ -805,7 +872,9 @@ func _physics_process(delta: float) -> void:
 
                         if not was_already_being_hit:
                             # Entity wasn't flashing - create new sound
-                            if the_grime.grime_type == Entity.GrimeType.Enemy:
+                            if scene_current == Scene.Battle:
+                                hit_sounds[the_grime] = Audio.create_2d_sfx_at_location(droplet.droplet_sprite.global_position, [Audio.SoundEffectType.Battle_Take_Damage_0, Audio.SoundEffectType.Battle_Take_Damage_1].pick_random())
+                            elif the_grime.grime_type == Entity.GrimeType.Enemy:
                                 hit_sounds[the_grime] = Audio.create_2d_sfx_at_location(droplet.droplet_sprite.global_position, Audio.SoundEffectType.Wash_Monster)
                             elif the_grime.grime_type == Entity.GrimeType.None:
                                 hit_sounds[the_grime] = Audio.create_2d_sfx_at_location(droplet.droplet_sprite.global_position, Audio.SoundEffectType.Wash_Dirt)
@@ -851,9 +920,11 @@ func _physics_process(delta: float) -> void:
                 transition_color.a = 0.5
                 %transition_battle.visible = true
                 %transition_battle.material.set_shader_parameter("transition_color", transition_color)
+                Audio.create_sfx(Audio.SoundEffectType.Battle_Transition)
                 %transition_battle.play(["circle", "horizontal", "split"].pick_random())
                 %transition_battle.animation_finished.connect(_battle_transition_in_anim_finished, CONNECT_ONE_SHOT)
             CommandType.Battle_End:
+                Audio.create_sfx(Audio.SoundEffectType.Stinger_Victory)
                 battle.phase = BattlePhase.TransitionOut
                 #%battle_cursor.visible = false
                 #%ui_anim.stop()
@@ -931,22 +1002,44 @@ func _physics_process(delta: float) -> void:
                                         continue
                                     child.hp = 0.0
                                     child.visible = false
+                    ["win", ..]:
+                        day_current = 3
+                        _advance_day()
+                    ["day", var day_str]:
+                        var day_num: int = int(day_str)
+                        if day_num >= 1 and day_num <= 3:
+                            day_current = day_num
+                            location_index = 0
+                            spawn_cars()
                     ["go", "title"]:
                         scene_current = Scene.Title
                     ["go", "wash"]:
                         Audio.stop_all_music()
-                        Audio.create_music(Audio.MusicType.Wash)
+                        Audio.create_music([Audio.MusicType.Wash, Audio.MusicType.Wash0].pick_random())
                         #_reset_battle_state()
                         scene_current = Scene.Wash
                     ["go", "battle"]:
                         Audio.stop_all_music()
-                        Audio.create_music(Audio.MusicType.Battle)
+                        Audio.create_music([Audio.MusicType.Battle, Audio.MusicType.Battle1].pick_random())
                         scene_current = Scene.Battle
                     ["do", "player"]:
                         if scene_current == Scene.Battle:
                             _battle_start_player_enter()
                     ["go", "transition"]:
                         commands.append(Command.new(CommandType.Battle_Start))
+                    ["battle", var enemy_name]:
+                        var upper_name: String = enemy_name.to_pascal_case()
+                        if upper_name in Entity.EnemyType:
+                            var fake_entity := Entity.new()
+                            fake_entity.enemy_type = Entity.EnemyType[upper_name]
+                            fake_entity.grime_type = Entity.GrimeType.Enemy
+                            add_child(fake_entity)
+                            thing_battling = fake_entity
+                            Audio.stop_all_music()
+                            Audio.create_music([Audio.MusicType.Battle, Audio.MusicType.Battle1].pick_random())
+                            commands.append(Command.new(CommandType.Battle_Start, [fake_entity]))
+                        else:
+                            push_warning("Unknown enemy type: %s" % enemy_name)
                     _:
                         push_warning("%s not found" % debug_command)
                 %debug_edit.text = ""
@@ -991,6 +1084,7 @@ func _physics_process(delta: float) -> void:
                 if child is Entity:
                     grime.append(child)
             if not _day_transitioning and not battle and _is_car_clean(car_current):
+                Audio.create_sfx(Audio.SoundEffectType.Car_Done)
                 _advance_day()
         Scene.Battle:
             $scene_battle.visible  = true
@@ -1031,6 +1125,8 @@ func _physics_process(delta: float) -> void:
                                     if game_clock_histories[Util.name_from_enemy_enum(thing_battling.enemy_type)] > battle.clock_delta:
                                         game_clock_histories[Util.name_from_enemy_enum(thing_battling.enemy_type)] = battle.clock_delta
                                     _spawn_hit_vfx(%battle_patterns.last_bad_hit_position, false)
+                                    Audio.create_sfx([Audio.SoundEffectType.Battle_Hit_0, Audio.SoundEffectType.Battle_Hit_1].pick_random())
+                                    _shake_timer(false)
                                 EnemyPatterns.HitType.Good:
                                     battle.clock_delta += 5.0
                                     var particler: CPUParticles2D = %particles_good.duplicate()
@@ -1039,6 +1135,8 @@ func _physics_process(delta: float) -> void:
                                     add_child(particler)
                                     particler.emitting = true
                                     _spawn_hit_vfx(%battle_patterns.last_good_hit_position, true)
+                                    Audio.create_sfx([Audio.SoundEffectType.Battle_Power_Up].pick_random())
+                                    _shake_timer(true)
 
                         battle.turn_timer -= delta
                         if battle.turn_timer <= 0.0:
@@ -1077,8 +1175,8 @@ func _physics_process(delta: float) -> void:
                 %background_carwash.get_child(car_sprite_index).visible = false
         car_sprite_index += 1
 
-    %background_pink.material.set_shader_parameter("tex_offset", pink_offset)
-    %background_yellow.material.set_shader_parameter("tex_offset", yellow_offset)
+    #%background_pink.material.set_shader_parameter("tex_offset", pink_offset)
+    #%background_yellow.material.set_shader_parameter("tex_offset", yellow_offset)
 
     var mouse_pos: Vector2 = get_global_mouse_position()
     mouse_pos.y = maxf(mouse_pos.y, max_player_height)
@@ -1120,6 +1218,7 @@ func _physics_process(delta: float) -> void:
             %transition_battle.animation = "horizontal"
             %transition_battle.frame = 17
             Audio.stop_all_music()
+            Audio.create_sfx(Audio.SoundEffectType.Stinger_Game_Over)
             var tween := get_tree().create_tween()
             tween.tween_method(
                 func(value: Color) -> void:

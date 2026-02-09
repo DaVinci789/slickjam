@@ -20,10 +20,7 @@ uniform ivec2 axis_mode = ivec2(0, 0);
 uniform ivec2 axis_frequency = ivec2(10, 10);
 uniform ivec2 axis_amplitude = ivec2(5, 5);
 uniform vec2 axis_shift = vec2(0.0, 0.0);
-
-// Animation properties
-uniform bool auto_animate = true;
-uniform vec2 animation_speed = vec2(10.0, 5.0);
+uniform vec2 scrolling_shift = vec2(0.0, 0.0);
 
 int distort(int d_mode, ivec2 f_position, int i_frequency, int i_amplitude, float i_shift) {
     int offset_pos = 0;
@@ -53,16 +50,11 @@ int distort(int d_mode, ivec2 f_position, int i_frequency, int i_amplitude, floa
 }
 
 void fragment() {
-    // Animate axis shift
-    vec2 current_shift = axis_shift;
-    if (auto_animate) {
-        current_shift += TIME * animation_speed;
-    }
-
     // Convert UV to pixel coordinates
     ivec2 pixel_coords = ivec2(UV * vec2(tex_size));
 
-    // Axis distortion
+    // Axis distortion (axis_shift + scrolling_shift * TIME controls sine phase)
+    vec2 current_shift = axis_shift + scrolling_shift * TIME;
     ivec2 distortion = ivec2(
         distort(axis_mode.x,
                 ivec2(pixel_coords.x, pixel_coords.y),
@@ -76,9 +68,12 @@ void fragment() {
                 current_shift.y)
     );
 
-    // Apply distortion
+    // Texture scrolling driven by scrolling_position * TIME (pixels/sec)
+    vec2 scroll_offset = fract(vec2(scrolling_position) * TIME / vec2(tex_size));
+
+    // Apply distortion + scrolling
     vec2 distorted_uv =
-        UV + tex_offset + vec2(distortion) / vec2(tex_size);
+        UV + tex_offset + scroll_offset + vec2(distortion) / vec2(tex_size);
 
     // Sample source texture
     vec4 base_color = texture(TEXTURE, distorted_uv);

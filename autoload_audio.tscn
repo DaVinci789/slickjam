@@ -9,17 +9,27 @@
 [ext_resource type="AudioStream" uid="uid://bd8jwmuqxc8qm" path="res://sound/sfx_wash_monster_loop.wav" id="6_4wlc2"]
 [ext_resource type="AudioStream" uid="uid://bw063wmyubj15" path="res://sound/bgm_battle_loop_1.wav" id="6_8e1u0"]
 [ext_resource type="AudioStream" uid="uid://b7go87mluhyet" path="res://sound/sfx_wash_dirt_loop.wav" id="7_xu6jv"]
+[ext_resource type="AudioStream" uid="uid://codwn7bv2b3m4" path="res://sound/sfx_ui_Pause_Menu_Open.wav" id="8_idkv2"]
 [ext_resource type="AudioStream" uid="uid://cofil3ya2dwle" path="res://sound/sfx_enemy_Durt.wav" id="8_xlx2h"]
 [ext_resource type="AudioStream" uid="uid://dek0uj4ewn3dw" path="res://sound/sfx_enemy_Gryme.wav" id="9_el8ee"]
+[ext_resource type="AudioStream" uid="uid://dqop5wudrc4iq" path="res://sound/sfx_ui_Pause_Menu_Close.wav" id="9_oohmv"]
 [ext_resource type="AudioStream" uid="uid://devspcoubaclj" path="res://sound/bgm_battle_loop_2.wav" id="10_4wlc2"]
+[ext_resource type="AudioStream" uid="uid://vcd1dj65yd2r" path="res://sound/sfx_ui_Sound_Volume_Change.wav" id="10_358ls"]
 [ext_resource type="AudioStream" uid="uid://bu01pmlg6wehj" path="res://sound/sfx_enemy_Battlebottle.wav" id="10_h4olp"]
+[ext_resource type="AudioStream" uid="uid://mddrhd4ott6j" path="res://sound/sfx_ui_Title_Screen.wav" id="11_byx1f"]
 [ext_resource type="AudioStream" uid="uid://ib3htwn8x6nf" path="res://sound/sfx_enemy_Ooze.wav" id="11_ee5b0"]
 [ext_resource type="AudioStream" uid="uid://j8dgk871cg0s" path="res://sound/sfx_enemy_Penny.wav" id="12_2gmnu"]
+[ext_resource type="AudioStream" uid="uid://bs0o2b1yangpl" path="res://sound/sfx_Battle_Transition.wav" id="12_mmb7o"]
+[ext_resource type="AudioStream" uid="uid://day8vi2odjdmw" path="res://sound/sfx_Generic_Hit_1.wav" id="13_ilgs6"]
 [ext_resource type="AudioStream" uid="uid://ho4a4cper76m" path="res://sound/sfx_enemy_Heads.wav" id="13_kqxfc"]
 [ext_resource type="AudioStream" uid="uid://bkd66784nd6g6" path="res://sound/sfx_enemy_Tailz.wav" id="14_1jxj3"]
+[ext_resource type="AudioStream" uid="uid://cwa66lxau0b6x" path="res://sound/sfx_Generic_Hit_2.wav" id="14_d0w13"]
+[ext_resource type="AudioStream" uid="uid://dxlyi25lsg5u" path="res://sound/sfx_Enemy_Take_Damage_1.wav" id="15_iqxc1"]
 [ext_resource type="AudioStream" uid="uid://bqhip51bm775h" path="res://sound/sfx_enemy_Receiptpete.wav" id="15_viofx"]
+[ext_resource type="AudioStream" uid="uid://ci3h3qw3s0mov" path="res://sound/sfx_Enemy_Take_Damage_2.wav" id="16_5losc"]
 [ext_resource type="AudioStream" uid="uid://b73tgykj3l2ux" path="res://sound/stinger_victory.wav" id="16_kthm8"]
 [ext_resource type="AudioStream" uid="uid://we2a6yii0hoo" path="res://sound/stinger_day_end.wav" id="17_idkv2"]
+[ext_resource type="AudioStream" uid="uid://hxeejeexkw4q" path="res://sound/sfx_power_up.wav" id="17_oohmv"]
 [ext_resource type="AudioStream" uid="uid://bk7ucnor405gn" path="res://sound/stinger_game_over.wav" id="18_oohmv"]
 
 [sub_resource type="Resource" id="Resource_rcc7q"]
@@ -51,6 +61,69 @@ metadata/_custom_type_script = "uid://dd251rhonu7ym"
 [sub_resource type="Resource" id="Resource_357nh"]
 script = ExtResource("2_gmbc1")
 sound_effect = ExtResource("7_xu6jv")
+bus = &"Sound Effect"
+metadata/_custom_type_script = "uid://dd251rhonu7ym"
+
+[sub_resource type="Resource" id="Resource_esqsk"]
+script = ExtResource("2_gmbc1")
+sound_effect = ExtResource("8_idkv2")
+bus = &"Sound Effect"
+metadata/_custom_type_script = "uid://dd251rhonu7ym"
+
+[sub_resource type="Resource" id="Resource_hpj7k"]
+script = ExtResource("2_gmbc1")
+sound_effect = ExtResource("9_oohmv")
+bus = &"Sound Effect"
+metadata/_custom_type_script = "uid://dd251rhonu7ym"
+
+[sub_resource type="Resource" id="Resource_qrlcd"]
+script = ExtResource("2_gmbc1")
+sound_effect = ExtResource("10_358ls")
+bus = &"Sound Effect"
+metadata/_custom_type_script = "uid://dd251rhonu7ym"
+
+[sub_resource type="Resource" id="Resource_3ftr1"]
+script = ExtResource("2_gmbc1")
+sound_effect = ExtResource("11_byx1f")
+bus = &"Sound Effect"
+metadata/_custom_type_script = "uid://dd251rhonu7ym"
+
+[sub_resource type="Resource" id="Resource_kaj6d"]
+script = ExtResource("2_gmbc1")
+sound_effect = ExtResource("12_mmb7o")
+bus = &"Sound Effect"
+pitch_randomness = 0.16
+metadata/_custom_type_script = "uid://dd251rhonu7ym"
+
+[sub_resource type="Resource" id="Resource_xuso5"]
+script = ExtResource("2_gmbc1")
+sound_effect = ExtResource("13_ilgs6")
+bus = &"Sound Effect"
+metadata/_custom_type_script = "uid://dd251rhonu7ym"
+
+[sub_resource type="Resource" id="Resource_2a0or"]
+script = ExtResource("2_gmbc1")
+sound_effect = ExtResource("14_d0w13")
+bus = &"Sound Effect"
+metadata/_custom_type_script = "uid://dd251rhonu7ym"
+
+[sub_resource type="Resource" id="Resource_yn45i"]
+script = ExtResource("2_gmbc1")
+sound_effect = ExtResource("15_iqxc1")
+bus = &"Sound Effect"
+volume = 15.0
+metadata/_custom_type_script = "uid://dd251rhonu7ym"
+
+[sub_resource type="Resource" id="Resource_hbr28"]
+script = ExtResource("2_gmbc1")
+sound_effect = ExtResource("16_5losc")
+bus = &"Sound Effect"
+volume = 15.0
+metadata/_custom_type_script = "uid://dd251rhonu7ym"
+
+[sub_resource type="Resource" id="Resource_klhas"]
+script = ExtResource("2_gmbc1")
+sound_effect = ExtResource("17_oohmv")
 bus = &"Sound Effect"
 metadata/_custom_type_script = "uid://dd251rhonu7ym"
 
@@ -127,6 +200,13 @@ bus = &"Music"
 limit = 1
 metadata/_custom_type_script = "uid://dd251rhonu7ym"
 
+[sub_resource type="Resource" id="Resource_oohmv"]
+script = ExtResource("2_gmbc1")
+sound_effect = ExtResource("5_1dk6e")
+bus = &"Music"
+limit = 1
+metadata/_custom_type_script = "uid://dd251rhonu7ym"
+
 [sub_resource type="Resource" id="Resource_t0jgv"]
 script = ExtResource("2_gmbc1")
 sound_effect = ExtResource("6_8e1u0")
@@ -142,12 +222,23 @@ limit = 1
 metadata/_custom_type_script = "uid://dd251rhonu7ym"
 
 [node name="Audio" type="Node2D" unique_id=1812916011]
+process_mode = 3
 script = ExtResource("1_jxh8p")
 sound_effect_Water_Hose = SubResource("Resource_rcc7q")
 sound_effect_Car_Done = SubResource("Resource_1dk6e")
 sound_effect_Cleaned_Dirt = SubResource("Resource_4wlc2")
 sound_effect_Wash_Monster = SubResource("Resource_xu6jv")
 sound_effect_Wash_Dirt = SubResource("Resource_357nh")
+sound_effect_UI_Pause_Open = SubResource("Resource_esqsk")
+sound_effect_UI_Pause_Close = SubResource("Resource_hpj7k")
+sound_effect_UI_Pause_Volume_Change = SubResource("Resource_qrlcd")
+sound_effect_UI_Title_Screen = SubResource("Resource_3ftr1")
+sound_effect_Battle_Transition = SubResource("Resource_kaj6d")
+sound_effect_Battle_Hit_0 = SubResource("Resource_xuso5")
+sound_effect_Battle_Hit_1 = SubResource("Resource_2a0or")
+sound_effect_Battle_Take_Damage_0 = SubResource("Resource_yn45i")
+sound_effect_Battle_Take_Damage_1 = SubResource("Resource_hbr28")
+sound_effect_Battle_Power_Up = SubResource("Resource_klhas")
 sound_effect_Cry_Durt = SubResource("Resource_358ls")
 sound_effect_Cry_Gryme = SubResource("Resource_byx1f")
 sound_effect_Cry_Battlebottle = SubResource("Resource_mmb7o")
@@ -160,6 +251,7 @@ sound_effect_Stinger_Victory = SubResource("Resource_jw44i")
 sound_effect_Stinger_Day_End = SubResource("Resource_wn1d6")
 sound_effect_Stinger_Game_Over = SubResource("Resource_fhlif")
 music_Wash = SubResource("Resource_gjm0y")
+music_Wash0 = SubResource("Resource_oohmv")
 music_Battle = SubResource("Resource_t0jgv")
 music_Battle1 = SubResource("Resource_u7wg7")
 metadata/_edit_lock_ = true
